@@ -1,0 +1,29 @@
+.item {
+    cursor: pointer;
+    display: flex;
+    padding: 5px;
+    border-radius: 4px;
+    width: 150px;
+    justify-content: center;
+    margin: 5px 0;
+
+    span {
+        color: var(--button-primary);
+        font-size: 14px;
+        margin-right: 8px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
+    &:hover {
+        background: var(--hover-action);
+        transition: all ease-in-out 0.1s;
+
+        >p,
+        span {
+            color: white;
+        }
+    }
+}

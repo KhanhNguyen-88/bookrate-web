@@ -1,0 +1,39 @@
+
+/*
+    Màu chính: Hồng (RGB: 255, 111, 97)
+    Màu phụ: Trắng (RGB: 255, 255, 255)
+    Màu nhấn: Xám nhạt (RGB: 240, 240, 240)
+    Màu bổ sung: Xanh dương nhẹ (RGB: 107, 185, 240)
+    Màu accent: Vàng (RGB: 255, 215, 0)
+*/
+:root{
+    --main-color: rgb(254, 44, 85);
+    --second-color: rgb(107, 185, 240);
+    --special-color: rgb(228, 232, 236);
+    --button-primary: rgb(204, 194, 6);
+    //
+    --hover-action: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+}
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+li{
+    list-style: none;
+}
+html{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+ul{
+    list-style: none;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+input, button{
+    outline: none;
+    border: none;
+    padding: 0 8px;
+}

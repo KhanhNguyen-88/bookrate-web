@@ -1,0 +1,58 @@
+.header {
+    position: fixed;
+    width: 100%;
+}
+
+.content {
+    display: flex;
+    height: 682px;
+}
+
+.sidebar {
+    overflow-y: hidden;
+    &:hover {
+        overflow-y: scroll;
+    }
+    margin-top: 48px;
+    position: fixed;
+    display: flex;
+    width: 200px;
+    height: 100%;
+
+    >:first-child {
+        width: 100%;
+    }
+}
+
+/* Tùy chỉnh thanh cuộn */
+.sidebar::-webkit-scrollbar {
+    width: 4px;
+    /* Độ rộng của scrollbar */
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #f3dbdb;
+    /* Màu nền của track */
+    border-radius: 10px;
+    /* Bo góc cho track */
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #dad3d3;
+    /* Màu của thanh cuộn */
+    border-radius: 10px;
+    /* Bo góc cho thanh cuộn */
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Màu khi hover */
+}
+
+.main-content {
+    margin: 48px 0 0 200px;
+    width: 100%;
+    height: fit-content;
+    background-color: #f0f2f5;
+    border-radius: 10px;
+}

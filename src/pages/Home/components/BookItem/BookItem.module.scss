@@ -1,0 +1,157 @@
+.book {
+    height: fit-content;
+    margin: 18px 0;
+    padding-right: 8px;
+    display: flex;
+    width: 100%;
+}
+.thumbnail {
+    width: 40%;
+    height: 60%;
+    padding: 10px 0;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    flex-direction: column;
+    img{
+        width: 85%;
+        height: 50%;
+        border-radius: 0 10px 10px 0;
+        margin: 0 auto;
+    }
+    .btnGroup{
+        margin: 0 auto;
+        height: 40%;
+        width: 85%;
+        display: flex;
+        flex-direction: column;
+        .wtRead{
+            display: flex;
+            margin: 10px 0;
+            span{
+                width: 2px;
+            }
+            >:first-child{
+                width: 80%;
+                border-radius: 99px 0px 0px 99px;
+            }
+            >:last-child{
+                width: 20%;
+                margin: 0;
+                border-radius: 0 99px 99px 0;
+            }
+        }
+        >:last-child{
+            border-radius: 99px;
+
+        }
+    }
+}
+.info {
+    padding: 0 12px;
+    width: 60% ;
+    height: 60%;
+}
+
+.title {
+    font-size: 32px;
+}
+
+.author {
+    font-size: 18px;
+    font-weight: 300;
+    margin: 8px 0;
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+.rate {
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    &:hover{
+        background-color: var(--special-color);
+        border-radius: 8px;
+        cursor: pointer;
+    }
+}
+
+.ratingIcon {
+    font-size: 26px;
+    color: #e87400;
+}
+
+.points {
+    font-size: 26px;
+    font-weight: bolder;
+    margin-left: 18px;
+}
+
+.rateInfo {
+    color: gray;
+    font-size: 14px;
+    margin: 0px 8px ;
+}
+
+.ratings {
+    margin-right: 8px;
+}
+
+// .reviews {}
+
+.award {
+    margin: 14px 0;
+    >:first-child{
+        background-color: #f0bf6e;
+        padding: 0 12px;
+        border-radius: 0 22px;
+    }
+}
+
+.awardName {
+    margin-left: 12px;
+    font-weight: 600;
+    text-decoration: underline;
+    &:hover{
+        opacity: 0.6;
+    }
+}
+
+.intro {
+    font-style: italic;
+    text-align: justify;
+}
+
+.genres {
+    font-size: 14px;
+    display: flex;
+    margin: 8px 0;
+    p{
+        width: 100px;
+    }
+    a{
+        font-weight: 600;
+        &:hover{
+            text-decoration: underline var(--second-color) 2px;
+            transition: all ease-in-out 0.3s;
+        }
+    }
+}
+
+.editionInfo {
+    font-size: 14px;
+    ul{
+        li{
+            display: flex;
+            >:first-child{
+                width: 100px;
+            }
+            p{
+                text-align: left;
+            }
+            .detail{
+                color: gray;
+            }
+        }
+    }
+}
