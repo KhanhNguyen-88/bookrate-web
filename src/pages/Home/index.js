@@ -1,18 +1,15 @@
-import {
-  faComment,
-  faShareNodes
-} from "@fortawesome/free-solid-svg-icons";
+import { faComment, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 
 import Button from "../../components/Button";
-import UserComment from "../../components/UserComment";
+import UserComment from "./components/UserComment";
 import ActionBar from "./components/ActionBar";
 import BookItem from "./components/BookItem";
 import style from "./Home.module.scss";
-import {getToken} from "../../services/localStorageService"
+import { getToken } from "../../services/localStorageService";
 
 const cx = classNames.bind(style);
 const ACTION_ITEMS = [
@@ -36,6 +33,14 @@ const BOOK_ITEMS = [
     published: "April 25, 2023 by Berkley",
     ISBN: "9780593441275 ",
     language: "English",
+    firstComment: {
+      userAvatar:
+        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+      userName: "Nguyen Van Khanh",
+      userComment: "Bad book!",
+      commentPublished: "10d",
+      totalLikes: 2,
+    },
   },
   {
     thumbnail:
@@ -53,6 +58,14 @@ const BOOK_ITEMS = [
     published: "First published April 2, 2024",
     ISBN: null,
     language: "English",
+    firstComment: {
+      userAvatar:
+        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+      userName: "Hoang Tuan An",
+      userComment: "Amazing book!",
+      commentPublished: "2d",
+      totalLikes: 2,
+    },
   },
   {
     thumbnail:
@@ -70,6 +83,14 @@ const BOOK_ITEMS = [
     published: "April 25, 2023 by Berkley",
     ISBN: "9780593441275 ",
     language: "English",
+    firstComment: {
+      userAvatar:
+        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+      userName: "Nguyen Van Khanh",
+      userComment: "Good book!",
+      commentPublished: "2d",
+      totalLikes: 2,
+    },
   },
   {
     thumbnail:
@@ -87,6 +108,14 @@ const BOOK_ITEMS = [
     published: "April 25, 2023 by Berkley",
     ISBN: "9780593441275 ",
     language: "English",
+    firstComment: {
+      userAvatar:
+        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+      userName: "Nguyen Van Khanh",
+      userComment: "Good book!",
+      commentPublished: "2d",
+      totalLikes: 2,
+    },
   },
 ];
 function Home() {
@@ -139,7 +168,9 @@ function Home() {
                 <Button to>See more comments</Button>
               </div>
               <div className={cx("firstCom")}>
-                <UserComment></UserComment>
+                <UserComment
+                  userFirstComment={item.firstComment}
+                ></UserComment>
               </div>
             </div>
           </div>
