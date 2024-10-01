@@ -33,6 +33,10 @@ const BOOK_ITEMS = [
     published: "April 25, 2023 by Berkley",
     ISBN: "9780593441275 ",
     language: "English",
+    interactiveInfo: {
+      totalComment:100,
+      totalShare: 10
+    },
     firstComment: {
       userAvatar:
         "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
@@ -41,6 +45,7 @@ const BOOK_ITEMS = [
       commentPublished: "10d",
       totalLikes: 2,
     },
+    cost:"$11.1",
   },
   {
     thumbnail:
@@ -58,6 +63,10 @@ const BOOK_ITEMS = [
     published: "First published April 2, 2024",
     ISBN: null,
     language: "English",
+    interactiveInfo: {
+      totalComment:100,
+      totalShare: 10
+    },
     firstComment: {
       userAvatar:
         "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
@@ -66,23 +75,28 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
+    cost:"$11.1",
   },
   {
     thumbnail:
-      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1660145160i/61718053.jpg",
-    title: "Happy Place",
-    author: "Emily Henry",
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1664729357i/62848145.jpg",
+    title: "The Housemaid's Secret",
+    author: "Freida McFadden",
     intro:
-      "Harriet and Wyn have been the perfect couple since they met in college—they go together like salt and pepper, honey and tea, lobster and rolls. Except, now—for reasons they’re still not discussing—they don’t.",
-    points: "3.9",
-    ratings: "1,053,411 ",
-    reviews: "125,789",
-    awards: ["Winner for Best Romance (2023)"],
+      "As he continues showing me their incredible penthouse apartment, I have a terrible feeling about the woman behind closed doors. But I can't risk losing this job – not if I want to keep my darkest secret safe . . .",
+    points: "4.6",
+    ratings: "799,971",
+    reviews: "55,172",
+    awards: ["Winner for Best Mystery & Thriller (2023)"],
     genres: ["Romance", "Fiction", "AudioBook"],
-    format: "400 pages, Hardcover",
-    published: "April 25, 2023 by Berkley",
-    ISBN: "9780593441275 ",
+    format: "318 pages, Kindle Edition",
+    published: "February 20, 2023 by Bookouture",
+    ISBN: "9781837901319",
     language: "English",
+    interactiveInfo: {
+      totalComment:100,
+      totalShare: 10
+    },
     firstComment: {
       userAvatar:
         "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
@@ -91,23 +105,28 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
+    cost:"$11.1",
   },
   {
     thumbnail:
-      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1660145160i/61718053.jpg",
-    title: "Happy Place",
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1394264018i/21094869.jpg",
+    title: "BookRags",
     author: "Emily Henry",
     intro:
-      "Harriet and Wyn have been the perfect couple since they met in college—they go together like salt and pepper, honey and tea, lobster and rolls. Except, now—for reasons they’re still not discussing—they don’t.",
-    points: "3.9",
-    ratings: "1,053,411 ",
-    reviews: "125,789",
-    awards: ["Winner for Best Romance (2023)"],
-    genres: ["Romance", "Fiction", "AudioBook"],
-    format: "400 pages, Hardcover",
-    published: "April 25, 2023 by Berkley",
-    ISBN: "9780593441275 ",
+      "The 'The Lovely Bones' lesson plan contains a variety of teaching materials that cater to all learning styles. Inside you'll find 30 Daily Lessons, 20 Fun Activities, 180 Multiple Choice Questions, 60 Short Essay Questions, 20 Essay Questions, Quizzes/Homework Assignments, Tests, and more.",
+    points: "3.0",
+    ratings: "3",
+    reviews: "0",
+    awards: [""],
+    genres: ["Education"],
+    format: "347 pages, Kindle Edition",
+    published: "January 11, 2012",
+    ISBN: "",
     language: "English",
+    interactiveInfo: {
+      totalComment:100,
+      totalShare: 10
+    },
     firstComment: {
       userAvatar:
         "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
@@ -116,6 +135,7 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
+    cost:"$11.1",
   },
 ];
 function Home() {
@@ -157,8 +177,8 @@ function Home() {
           <BookItem key={index} item={item} />
           <div className={cx("bar")}>
             <div className={cx("subBar")}>
-              <li>100 Comments</li>
-              <li>200 Share</li>
+              <li>{item.interactiveInfo.totalComment} Comments</li>
+              <li>{item.interactiveInfo.totalShare} Shares</li>
             </div>
             <div className={cx("actionBar")}>
               <ActionBar items={ACTION_ITEMS} />

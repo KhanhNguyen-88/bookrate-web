@@ -6,11 +6,19 @@ import style from "./BookItem.module.scss";
 
 const cx = classNames.bind(style);
 function BookItem({ item }) {
-  const renderBookGenres = ()=>{
-    return item.genres.map((item, index)=>{
-      return <Button key={index} to>{item}</Button>
-    })
-  }
+  const stars = Math.round(+item.points);
+  const starsNumber = `h${stars}Stars`
+  const classesStar = cx("ratingIcon", starsNumber)
+  const renderBookGenres = () => {
+    return item.genres.map((item, index) => {
+      return (
+        <Button key={index} to>
+          {item}
+        </Button>
+      );
+    });
+  };
+
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
@@ -23,7 +31,7 @@ function BookItem({ item }) {
               <FontAwesomeIcon icon={faChevronDown} />
             </Button>
           </div>
-          <Button second>$11.1 Buy</Button>
+          <Button second>{item.cost} Buy</Button>
         </div>
       </div>
       <div className={cx("info")}>
@@ -33,20 +41,20 @@ function BookItem({ item }) {
         </h6>
         <div>
           <div className={cx("rate")}>
-            <div className={cx("ratingIcon")}>
-              <span>
+            <div className={classesStar}>
+              <span className={cx("star-1")}>
                 <FontAwesomeIcon icon={faStar} />
               </span>
-              <span>
+              <span className={cx("star-2")}>
                 <FontAwesomeIcon icon={faStar} />
               </span>
-              <span>
+              <span className={cx("star-3")}>
                 <FontAwesomeIcon icon={faStar} />
               </span>
-              <span>
+              <span className={cx("star-4")}>
                 <FontAwesomeIcon icon={faStar} />
               </span>
-              <span>
+              <span className={cx("star-5")}>
                 <FontAwesomeIcon icon={faStar} />
               </span>
             </div>

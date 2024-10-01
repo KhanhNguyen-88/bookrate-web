@@ -78,7 +78,129 @@
 
 .ratingIcon {
     font-size: 26px;
-    color: #e87400;
+    svg{
+        path{
+            fill: white;
+            stroke: black;
+            stroke-width: 10px;
+        }
+    }
+   
+}
+.h1Stars{
+    .star-1{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+}
+.h2Stars{
+    .star-1{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-2{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+}
+.h3Stars{
+    .star-1{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-2{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-3{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+}
+.h4Stars{
+    .star-1{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-2{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-3{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-4{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+}
+.h5Stars{
+    .star-1{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-2{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-3{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-4{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
+    .star-5{
+        path{
+            fill: #e87400;
+            stroke: #e87400;
+            stroke-width: 10px;
+        }
+    }
 }
 
 .points {
