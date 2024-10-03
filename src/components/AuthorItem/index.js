@@ -11,7 +11,7 @@ function AuthorItem({authorInfo}) {
             <h5 className = {cx("name")}>{authorInfo.name}</h5>
             <ul>
                 <li className = {cx("totalBook")}><p>{authorInfo.totalBooks} Books</p></li>
-                <li className = {cx("followers")}><p>{authorInfo.followers} Followers</p></li>
+                {authorInfo.followers ? (<li className = {cx("followers")}><p>{authorInfo.followers} Followers</p></li>):<li/>}
             </ul>
         </div>
     </Link>;

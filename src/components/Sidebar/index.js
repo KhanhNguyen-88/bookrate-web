@@ -12,6 +12,7 @@ import MenuItem from "../MenuItem";
 import UnderLine from "../UnderLine";
 import style from "./Sidebar.module.scss";
 import UserItem from "../UserItem";
+import AuthorItem from "../AuthorItem";
 
 const cx = classNames.bind(style);
 
@@ -19,7 +20,7 @@ function Sidebar({ userData, userFollowingData}) {
   
   const renderUserFollowing = () =>{
     return userFollowingData.map((userFollowing, index)=>{
-      return <UserItem userFollowing={userFollowing} key={index}></UserItem>
+      return <AuthorItem authorInfo={userFollowing} key={index}></AuthorItem>
     })
   }
   const SIDEBAR_ITEMS = [
@@ -69,7 +70,7 @@ function Sidebar({ userData, userFollowingData}) {
       </ul>
       {userFollowingData ? (
         <div className = {cx("following")}>
-          <h5>Đang theo dõi</h5>
+          <h5>Tác giả đang theo dõi</h5>
           <ul className = {cx("userFollowing")}>
             {renderUserFollowing()}
           </ul>

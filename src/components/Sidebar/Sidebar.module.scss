@@ -8,11 +8,12 @@
 .loginTip {
     margin-left: 10px;
     height: 300px;
-    width: 80%;
+    width: 100%;
     h5 {
         font-weight: 500;
         color: gray;
         margin-bottom: 20px;
+        margin-left: 10px;
     }
     a{
         margin-left: 20px;
@@ -21,12 +22,13 @@
 
 .following {
     margin-left: 5px;
-    width: 80%;
+    width: 100%;
 
     >h5 {
         color: gray;
         font-weight: 500;
         margin-top: 10px;
+        margin-left: 10px;
     }
 }
 
