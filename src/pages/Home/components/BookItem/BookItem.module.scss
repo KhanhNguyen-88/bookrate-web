@@ -57,16 +57,18 @@
 }
 
 .author {
-    font-size: 18px;
-    font-weight: 300;
-    margin: 8px 0;
-    &:hover{
-        text-decoration: underline;
+    display: flex;
+    margin: 20px 0;
+    >p{
+        font-size: 14px;
+        width: 100px;
     }
 }
 
 .rate {
     display: flex;
+    justify-content: start;
+    margin: 10px 0;
     padding: 10px;
     align-items: center;
     &:hover{
@@ -76,147 +78,17 @@
     }
 }
 
-.ratingIcon {
-    font-size: 26px;
-    svg{
-        path{
-            fill: white;
-            stroke: black;
-            stroke-width: 10px;
-        }
-    }
-   
-}
-.h1Stars{
-    .star-1{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-}
-.h2Stars{
-    .star-1{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-2{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-}
-.h3Stars{
-    .star-1{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-2{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-3{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-}
-.h4Stars{
-    .star-1{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-2{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-3{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-4{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-}
-.h5Stars{
-    .star-1{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-2{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-3{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-4{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-    .star-5{
-        path{
-            fill: #e87400;
-            stroke: #e87400;
-            stroke-width: 10px;
-        }
-    }
-}
-
 .points {
     font-size: 26px;
     font-weight: bolder;
-    margin-left: 18px;
-}
-
-.rateInfo {
-    color: gray;
-    font-size: 14px;
-    margin: 0px 8px ;
+    margin: 0 18px;
 }
 
 .ratings {
     margin-right: 8px;
+    color: gray;
+    font-size: 14px;
+    margin: 0px 8px ;
 }
 
 // .reviews {}

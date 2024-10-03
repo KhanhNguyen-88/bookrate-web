@@ -3,10 +3,10 @@ import classNames from "classnames/bind";
 import style from "./Button.module.scss"
 
 const cx = classNames.bind(style)
-function Button({btnHeader, second,primary, children, onclick, to, href, leftIcon}) {
+function Button({btnHeader, second, btnGenres, primary, children, onclick, to, href, leftIcon}) {
     let Com = "button"
     const Classes = cx("wrapper", {
-        primary, second, btnHeader
+        primary, second, btnHeader, btnGenres
     })
     const props ={
         onclick,

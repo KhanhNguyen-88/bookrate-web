@@ -1,0 +1,31 @@
+.wrapper{
+    cursor: pointer;
+    display: flex;
+    padding: 5px 2px;
+    border-radius: 2px;
+    margin: 8px 0;
+    justify-content: start;
+    img{
+        &:hover{
+            opacity: 0.6;
+        }
+    }
+    &:hover{
+        background-color: var(--special-color);
+    }
+}
+.info{
+    display: flex;
+    flex-direction: column;
+    ul{
+        display: flex;
+        li{
+            font-size: 12px;
+            margin: 2px;
+            color: gray;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}

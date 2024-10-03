@@ -23,26 +23,26 @@ function Sidebar({ userData, userFollowingData}) {
     })
   }
   const SIDEBAR_ITEMS = [
-    { name: "Home", path: "/", icon: <FontAwesomeIcon icon={faHome} /> },
+    { name: "Trang chủ", path: "/", icon: <FontAwesomeIcon icon={faHome} /> },
     {
-      name: "Explore",
+      name: "Khám phá",
       path: "/explore",
       icon: <FontAwesomeIcon icon={faCompass} />,
     },
     {
-      name: "Following",
+      name: "Yêu thích",
       path: "/follow",
       icon: <FontAwesomeIcon icon={faAddressBook} />,
     },
     {
-      name: "Ranking",
+      name: "BXH",
       path: "/rank",
       icon: <FontAwesomeIcon icon={faRankingStar} />,
     },
     {
-      name: "Profile",
+      name: "Cá nhân",
       path: "/profile",
-      icon: userData ? <img src={userData.userAvatar}></img> : <FontAwesomeIcon icon={faUser} /> ,
+      icon: !userData ? <img src={userData.userAvatar}></img> : <FontAwesomeIcon icon={faUser} /> ,
     },
   ];
   const renderMenuItems = () => {
@@ -62,14 +62,14 @@ function Sidebar({ userData, userFollowingData}) {
     });
   };
   return (
-    <div>
+    <div className = {cx("wrapper")}>
       <ul className={cx("menu")}>
         {renderMenuItems()}
         <UnderLine />
       </ul>
       {userFollowingData ? (
         <div className = {cx("following")}>
-          <h5>Following account</h5>
+          <h5>Đang theo dõi</h5>
           <ul className = {cx("userFollowing")}>
             {renderUserFollowing()}
           </ul>
@@ -77,13 +77,13 @@ function Sidebar({ userData, userFollowingData}) {
         </div>
       ) : (
         <div className={cx("loginTip")}>
-          <h5>Log in to create and view comments</h5>
+          <h5>Hãy đăng nhập để có trải nghiệm tốt hơn</h5>
           <Button
             primary
             to={"/login"}
             leftIcon={<FontAwesomeIcon icon={faRightFromBracket} />}
           >
-            Login
+            Đăng nhập
           </Button>
           <UnderLine />
         </div>

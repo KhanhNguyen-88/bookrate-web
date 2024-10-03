@@ -27,29 +27,29 @@ import { Link } from "react-router-dom";
 
 const MENU_ITEMS = [
   {
-    name: "Language",
+    name: "Ngôn ngữ",
     leftIcon: <FontAwesomeIcon icon={faEarthAmerica} />,
     children: {
-      title: "Language",
+      title: "Ngôn ngữ",
       data: [
-        { name: "English", leftIcon: <FontAwesomeIcon icon={faE} /> },
-        { name: "Vietnamese", leftIcon: <FontAwesomeIcon icon={faStar} /> },
+        { name: "Tiếng Anh", leftIcon: <FontAwesomeIcon icon={faE} /> },
+        { name: "Tiếng Việt", leftIcon: <FontAwesomeIcon icon={faStar} /> },
       ],
     },
   },
   {
-    name: "Themes",
+    name: "Chế độ nền",
     leftIcon: <FontAwesomeIcon icon={faSun} />,
     children: {
-      title: "Themes",
+      title: "Nền",
       data: [
-        { name: "Dark", leftIcon: <FontAwesomeIcon icon={faMoon} /> },
-        { name: "Light", leftIcon: <FontAwesomeIcon icon={faSun} /> },
+        { name: "Tối", leftIcon: <FontAwesomeIcon icon={faMoon} /> },
+        { name: "Sáng", leftIcon: <FontAwesomeIcon icon={faSun} /> },
       ],
     },
   },
   {
-    name: "Feedback and help",
+    name: "Hỏi đáp",
     leftIcon: <FontAwesomeIcon icon={faQuestion} />,
   },
 ];
@@ -94,7 +94,7 @@ function Header({ userData }) {
        </Link>
       </div>
       <div className={cx("search")}>
-        <input placeholder="Search"></input>
+        <input placeholder="Tìm kiếm sách!..."></input>
         <span className={cx("searchIcon")}>
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </span>
@@ -107,7 +107,7 @@ function Header({ userData }) {
         </span>
       </div>
       <div className={cx("action")}>
-        {userData ? (
+        {!userData ? (
           <div className={cx("actionLogin")}>
             <Button
               to
@@ -127,10 +127,10 @@ function Header({ userData }) {
         ) : (
           <div className={cx("actionNotLogin")}>
             <Button btnHeader primary to={"/login"}>
-              Log in
+              Đăng nhập
             </Button>
             <Button btnHeader primary to>
-              Register
+              Đăng ký
             </Button>
             <Tippy
               delay={[0, 500]}

@@ -1,0 +1,43 @@
+.wrapper{
+    margin: 10px auto;
+    width: 98%;
+    height: 100%;
+}
+.content{
+    display: flex;
+}
+.containerSmallBook{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 60%;
+    background-color: white;
+    margin-top: 10px;
+    border-radius: 4px;
+    h3{
+        margin-left: 18px;
+        margin-top: 8px;
+        font-style: italic;
+        color: var(--button-primary);
+        font-weight: 600;
+    }
+}
+.books{
+}
+.containerAuthor{
+    width: 35%;
+    height: 100%;
+    background-color: white;
+    margin: 10px auto;
+    border-radius: 4px;
+    h4{
+        margin-left: 18px;
+        margin-top: 8px;
+        font-style: italic;
+        color: var(--button-primary);
+        font-weight: 600;
+    }
+}
+.authors{
+    margin: 10px;
+}

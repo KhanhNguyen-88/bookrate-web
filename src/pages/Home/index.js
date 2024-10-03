@@ -21,7 +21,12 @@ const BOOK_ITEMS = [
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1660145160i/61718053.jpg",
     title: "Happy Place",
-    author: "Emily Henry",
+    author: {
+      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
+      name: "Emily Henry",
+      totalBooks:17,
+      followers:10,
+    },
     intro:
       "Harriet and Wyn have been the perfect couple since they met in college—they go together like salt and pepper, honey and tea, lobster and rolls. Except, now—for reasons they’re still not discussing—they don’t.",
     points: "3.9",
@@ -51,7 +56,12 @@ const BOOK_ITEMS = [
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1692118145i/195820807.jpg",
     title: "Just for the Summer",
-    author: "Abby Jimenez",
+    author: {
+      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
+      name: "Abby Jimenez",
+      totalBooks:17,
+      followers:10,
+    },
     intro:
       "Justin has a curse, and thanks to a Reddit thread, it's now all over the internet. Every woman he dates goes on to find their soul mate the second they break up. When a woman slides into his DMs with the same problem, they come up with a plan: They'll date each other and break up. Their curses will cancel each other’s out, and they’ll both go on to find the love of their lives. It’s a bonkers idea… and it just might work.",
     points: "4.40",
@@ -81,7 +91,12 @@ const BOOK_ITEMS = [
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1664729357i/62848145.jpg",
     title: "The Housemaid's Secret",
-    author: "Freida McFadden",
+    author: {
+      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1701487498i/7244758._UX200_CR0,4,200,200_.jpg",
+      name: "Freida McFadden",
+      totalBooks:17,
+      followers:10,
+    },
     intro:
       "As he continues showing me their incredible penthouse apartment, I have a terrible feeling about the woman behind closed doors. But I can't risk losing this job – not if I want to keep my darkest secret safe . . .",
     points: "4.6",
@@ -110,8 +125,13 @@ const BOOK_ITEMS = [
   {
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1394264018i/21094869.jpg",
-    title: "BookRags",
-    author: "Emily Henry",
+    title: "The Lovely Bones",
+    author: {
+      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/user/u_700x933.png",
+      name: "BookRags",
+      totalBooks:17,
+      followers:10,
+    },
     intro:
       "The 'The Lovely Bones' lesson plan contains a variety of teaching materials that cater to all learning styles. Inside you'll find 30 Daily Lessons, 20 Fun Activities, 180 Multiple Choice Questions, 60 Short Essay Questions, 20 Essay Questions, Quizzes/Homework Assignments, Tests, and more.",
     points: "3.0",

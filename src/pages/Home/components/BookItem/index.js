@@ -1,14 +1,13 @@
-import { faChevronDown, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
+import AuthorItem from "../../../../components/AuthorItem";
 import Button from "../../../../components/Button";
+import ShowStars from "../../../../components/ShowStars";
 import style from "./BookItem.module.scss";
 
 const cx = classNames.bind(style);
 function BookItem({ item }) {
-  const stars = Math.round(+item.points);
-  const starsNumber = `h${stars}Stars`
-  const classesStar = cx("ratingIcon", starsNumber)
   const renderBookGenres = () => {
     return item.genres.map((item, index) => {
       return (
@@ -25,44 +24,22 @@ function BookItem({ item }) {
         <img src={item.thumbnail} alt="book-img" />
         <div className={cx("btnGroup")}>
           <div className={cx("wtRead")}>
-            <Button second>Want to read</Button>
+            <Button second>Quan tâm</Button>
             <span></span>
             <Button second>
               <FontAwesomeIcon icon={faChevronDown} />
             </Button>
           </div>
-          <Button second>{item.cost} Buy</Button>
+          <Button second>{item.cost} Tìm mua</Button>
         </div>
       </div>
       <div className={cx("info")}>
         <h3 className={cx("title")}>{item.title}</h3>
-        <h6 className={cx("author")}>
-          <Button to={"/author"}>{item.author}</Button>
-        </h6>
         <div>
           <div className={cx("rate")}>
-            <div className={classesStar}>
-              <span className={cx("star-1")}>
-                <FontAwesomeIcon icon={faStar} />
-              </span>
-              <span className={cx("star-2")}>
-                <FontAwesomeIcon icon={faStar} />
-              </span>
-              <span className={cx("star-3")}>
-                <FontAwesomeIcon icon={faStar} />
-              </span>
-              <span className={cx("star-4")}>
-                <FontAwesomeIcon icon={faStar} />
-              </span>
-              <span className={cx("star-5")}>
-                <FontAwesomeIcon icon={faStar} />
-              </span>
-            </div>
+            <ShowStars points={item.points} />
             <div className={cx("points")}>{item.points}</div>
-            <div className={cx("rateInfo")}>
-              <span className={cx("ratings")}>{item.ratings} ratings</span>
-              <span className={cx("reviews")}>{item.reviews} reviews</span>
-            </div>
+            <span className={cx("ratings")}>{item.ratings} ratings</span>
           </div>
         </div>
         <div className={cx("award")}>
@@ -97,6 +74,10 @@ function BookItem({ item }) {
               <p className={cx("detail")}>{item.language}</p>
             </li>
           </ul>
+        </div>
+        <div className={cx("author")}>
+          <p>About author</p>
+          <AuthorItem authorInfo={item.author} />
         </div>
       </div>
     </div>

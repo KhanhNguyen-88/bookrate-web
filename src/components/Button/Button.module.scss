@@ -1,36 +1,69 @@
-.wrapper{
-    +.wrapper{
+.wrapper {
+    +.wrapper {
         margin-left: 8px;
     }
 }
-.primary{
+
+.primary {
     font-weight: 600;
     cursor: pointer;
     color: white;
     padding: 6px 8px;
     background-color: var(--button-primary);
     border-radius: 4px;
-    &:hover{
+
+    &:hover {
         color: white;
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
     }
 }
-.leftIcon{
+
+.leftIcon {
     margin-right: 2px;
 }
-.second{
+
+.second {
     font-weight: 800;
     cursor: pointer;
     color: white;
     padding: 6px 8px;
     background-color: var(--main-color);
     border-radius: 4px;
-    &:hover{
+
+    &:hover {
         color: white;
         background: var(--button-primary);
     }
 }
-.btnHeader{
+
+.btnGenres {
+    font-size: 14px;
+    font-weight: 300;
+    cursor: pointer;
+    color: black;
+    padding: 6px 8px;
+    background-color: var(--special-color);
+    border-radius: 4px;
+    box-shadow: 1px 1px 2px violet;
+
+    .leftIcon {
+        // color: rgb(255, 98, 0);
+        color: rgb(52, 98, 133);
+    }
+
+    &:hover {
+        color: white;
+        background: var(--button-primary);
+
+        .leftIcon {
+            color: white;
+
+        }
+    }
+
+}
+
+.btnHeader {
     padding: 6px 10px;
     font-size: 14px;
     font-weight: 700;
