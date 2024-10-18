@@ -11,23 +11,37 @@ import {
 } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined"; // Icon gạch bỏ mắt
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
+// import GoogleIcon from "@mui/icons-material/Google";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames/bind";
 import { getToken, setToken } from "../../services/localStorageService";
 import style from "./Login.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faKey, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { faEye, faUser } from "@fortawesome/free-regular-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const cx = classNames.bind(style);
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+  const [snackBarMessage, setSnackBarMessage] = useState("");
+  const [showPass, setShowPass] = useState("password");
   const navigate = useNavigate();
 
+  const handleShow = () => {
+    if (showPass === "password") {
+      setShowPass("text");
+    } else {
+      setShowPass("password");
+    }
+  };
+  const handleRegister = () => {
+    navigate("/register");
+  };
   const handleCloseSnackBar = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -35,30 +49,17 @@ export default function Login() {
 
     setSnackBarOpen(false);
   };
-
-  const handleClick = () => {
-    alert(
-      "Please refer to Oauth2 series for this implemetation guidelines. https://www.youtube.com/playlist?list=PL2xsxmVse9IbweCh6QKqZhousfEWabSeq"
-    );
-  };
-
-  // useEffect(() => {
-  //   const accessToken = getToken();
-
-  //   if (accessToken) {
-  //     navigate("/");
-  //   }
-  // }, [navigate]);
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [snackBarOpen, setSnackBarOpen] = useState(false);
-  const [snackBarMessage, setSnackBarMessage] = useState("");
+  useEffect(() => {
+    const accessToken = getToken();
+    if (accessToken) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetch("http://localhost:8081/auth/login", {
+    fetch("http://localhost:8081/api/user/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json", // Set the content type to JSON
@@ -79,7 +80,8 @@ export default function Login() {
           throw new Error(data.message);
         }
 
-        setToken(data.data?.token);
+        setToken(data.result?.token);
+        console.log(data.result?.token);
 
         navigate("/");
       })
@@ -116,8 +118,8 @@ export default function Login() {
         sx={{
           backgroundImage:
             'url("https://images.gr-assets.com/misc/1716925923-1716925923_goodreads_misc.png")',
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
         }}
       >
         <Card
@@ -160,7 +162,7 @@ export default function Login() {
               onSubmit={handleSubmit}
             >
               <TextField
-                label="Username"
+                label="Tên đăng nhập"
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -177,8 +179,8 @@ export default function Login() {
                 }}
               />
               <TextField
-                label="Password"
-                type="password"
+                type={showPass}
+                label="Mật khẩu"
                 variant="outlined"
                 fullWidth
                 margin="normal"
@@ -187,8 +189,9 @@ export default function Login() {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton>
-                        <RemoveRedEyeOutlinedIcon />
+                      <IconButton onClick={handleShow}>
+                        {(showPass === "text") ? <VisibilityOffOutlinedIcon /> :
+                        <RemoveRedEyeOutlinedIcon />}
                       </IconButton>
                     </InputAdornment>
                   ),
@@ -207,31 +210,20 @@ export default function Login() {
                 }}
                 startIcon={<FontAwesomeIcon icon={faRightFromBracket} />}
               >
-                Login
+                Đăng nhập
               </Button>
               <Divider></Divider>
             </Box>
 
             <Box display="flex" flexDirection="column" width="100%" gap="25px">
-              {/* <Button
-                  type="button"
-                  variant="contained"
-                  color="secondary"
-                  size="large"
-                  onClick={handleClick}
-                  fullWidth
-                  sx={{ gap: "10px" }}
-                >
-                  <GoogleIcon />
-                  Continue with Google
-                </Button> */}
               <Button
                 type="submit"
                 variant="contained"
                 color="success"
                 size="large"
+                onClick={handleRegister}
               >
-                Create an account
+                Tạo tài khoản
               </Button>
             </Box>
           </CardContent>

@@ -42,13 +42,13 @@
     cursor: pointer;
     color: black;
     padding: 6px 8px;
-    background-color: var(--special-color);
     border-radius: 4px;
-    box-shadow: 1px 1px 2px violet;
+    background-color: white;
+    box-shadow: 0px 0px 2px gray;
 
     .leftIcon {
         // color: rgb(255, 98, 0);
-        color: rgb(52, 98, 133);
+        color: var(--button-primary);
     }
 
     &:hover {
@@ -64,7 +64,27 @@
 }
 
 .btnHeader {
-    padding: 6px 10px;
+    padding: 8px;
+    text-align: center;
+    width: 70px;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    background-color: var(--button-primary);
+    border-radius: 4px;
+
+    &:hover {
+        color: white;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), rgb(254, 44, 85);
+    }
+}
+.linkAuthor{
+    font-size: 14px;
+    color: gray;
+    font-style: italic;
+    text-decoration: underline;
+    &:hover{
+        color: var(--button-primary);
+    }
 }

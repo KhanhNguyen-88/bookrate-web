@@ -8,37 +8,32 @@ import style from "./DefaultLayout.module.scss";
 
 const cx = classNames.bind(style);
 function DefaultLayout({ children }) {
-  //   const navigate = useNavigate();
-  //   const [userDetails, setUserDetails] = useState({});
+  const navigate = useNavigate();
+  const [_, forceUpdate] = useState(); // State không sử dụng, chỉ để re-render
+  const [isLogin, setIsLogin] = useState(false);
 
-  //   const getUserDetails = async (accessToken) => {
-  //     const response = await fetch("http://localhost:8081/identify/myInfo", {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`, // Set Authorization header
-  //       },
-  //     });
+  const triggerReRender = () => {
+    forceUpdate((prev) => !prev); // Đảo giá trị true/false để buộc re-render
+  };
+  useEffect(() => {
+    const accessToken = getToken();
 
-  //     const data = await response.json();
-
-  //     console.log(data);
-
-  //     setUserDetails(data.data);
-  //   };
-
-  //   useEffect(() => {
-  //     const accessToken = getToken();
-
-  //     if (!accessToken) {
-  //       navigate("/login");
-  //     } else {
-  //       getUserDetails(accessToken);
-  //     }
-  //   }, [navigate]);
+    if (!accessToken) {
+      setIsLogin(false)
+    }else{
+      setIsLogin(true)
+      fetch(`http://localhost:8081/api/user/follower-account/{userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    }
+  }, [_]);
   const USER_DATA = {
     userName: "Nguyen Van Khanh",
     userAvatar:
-      "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+      "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
   };
   const AUTHOR_FOLLOWING_ITEMS = [
     {
@@ -73,11 +68,12 @@ function DefaultLayout({ children }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <Header userData={USER_DATA} />
+        <Header userData={isLogin ? USER_DATA:null } logout={triggerReRender}/>
+        {console.log("re-ren")}
       </div>
       <div className={cx("content")}>
         <div className={cx("sidebar")}>
-          <Sidebar userData={USER_DATA} userFollowingData={AUTHOR_FOLLOWING_ITEMS} />
+          <Sidebar userData={isLogin ? USER_DATA:null} userFollowingData={AUTHOR_FOLLOWING_ITEMS} />
         </div>
         <div className={cx("main-content")}>{children}</div>
       </div>

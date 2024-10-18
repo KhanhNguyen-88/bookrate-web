@@ -1,28 +1,48 @@
 import { Link } from "react-router-dom";
 import classNames from "classnames/bind";
-import style from "./Button.module.scss"
+import style from "./Button.module.scss";
 
-const cx = classNames.bind(style)
-function Button({btnHeader, second, btnGenres, primary, children, onclick, to, href, leftIcon}) {
-    let Com = "button"
-    const Classes = cx("wrapper", {
-        primary, second, btnHeader, btnGenres
-    })
-    const props ={
-        onclick,
-    }
-    if(to){
-        props.to = to;
-        Com = Link;
-    }else if(href){
-        props.href = href;
-        Com = "a";
-    }
-    return (
-        <Com className = {Classes} {...props}>
-            {leftIcon && <span className = {cx("leftIcon")}>{leftIcon}</span>}{children}
-        </Com>
-    );
+const cx = classNames.bind(style);
+function Button({
+  submit,
+  linkAuthor,
+  btnHeader,
+  second,
+  btnGenres,
+  primary,
+  children,
+  onClick,
+  to,
+  href,
+  leftIcon,
+}) {
+  let Com = "button";
+  const Classes = cx("wrapper", {
+    primary,
+    second,
+    btnHeader,
+    btnGenres,
+    linkAuthor,
+  });
+  const props = {
+    onClick,
+  };
+  if (submit) {
+    props.type = submit
+  }
+  if (to) {
+    props.to = to;
+    Com = Link;
+  } else if (href) {
+    props.href = href;
+    Com = "a";
+  }
+  return (
+    <Com className={Classes} {...props}>
+      {leftIcon && <span className={cx("leftIcon")}>{leftIcon}</span>}
+      {children}
+    </Com>
+  );
 }
 
 export default Button;

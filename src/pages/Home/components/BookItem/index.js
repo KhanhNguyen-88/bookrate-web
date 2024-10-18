@@ -55,28 +55,8 @@ function BookItem({ item }) {
           <p>Genres</p>
           {renderBookGenres(item)}
         </div>
-        <div className={cx("editionInfo")}>
-          <ul>
-            <li>
-              <p>Format</p>
-              <p className={cx("detail")}>{item.format}</p>
-            </li>
-            <li>
-              <p>Published</p>
-              <p className={cx("detail")}>{item.published}</p>
-            </li>
-            <li>
-              <p>ISBN</p>
-              <p className={cx("detail")}>{item.ISBN}</p>
-            </li>
-            <li>
-              <p>Language</p>
-              <p className={cx("detail")}>{item.language}</p>
-            </li>
-          </ul>
-        </div>
         <div className={cx("author")}>
-          <p>About author</p>
+          <p>Author</p>
           <AuthorItem authorInfo={item.author} />
         </div>
       </div>

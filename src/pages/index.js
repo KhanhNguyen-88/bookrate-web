@@ -4,5 +4,8 @@ import Following from "./Following";
 import Ranking from "./Ranking";
 import Profile from "./Profile";
 import Login from "./Login";
+import NewExplore from "./NewExplore";
+import BookDetail from "./BookDetail";
+import Register from "./Register";
 
-export {Home, Explore, Following, Ranking, Profile, Login}
+export {Home, Explore, NewExplore, Following, Ranking, Profile, Login, BookDetail, Register}

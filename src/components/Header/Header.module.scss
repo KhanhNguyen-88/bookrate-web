@@ -29,7 +29,7 @@
         border-radius: 999px;
         background-color: rgb(228, 232, 236);
         &:focus{
-            border: 1px solid var(--special-color);
+            border: 1px solid black;
             + .searchIcon{
                 color:black;
             }
@@ -39,9 +39,9 @@
         position: absolute;
         right: 30px;
         bottom: 9px;
-        width: 1px;
+        width: 0.5px;
         height: 30px;
-        background-color: gray;
+        background-color: rgb(210, 210, 210);
     }
     .searchIcon{
         height: 30px;
@@ -55,14 +55,14 @@
         font-size: 10px;
         position: absolute;
         right: 38px;
-        color: var(--special-color);
+        color: gray;
 
     }
     .loadIcon{
         font-size: 10px;
         position: absolute;
         right: 38px;
-        color: var(--special-color);
+        color: gray;
     }
     
 }
@@ -84,14 +84,24 @@
 .actionLogin{
     display: flex;
     align-items: center;
+    flex-wrap: nowrap;
     justify-content: space-between;
     a{
-        color: var(--button-primary);
+        color: black;
         font-size: 20px;
         margin: 0 4px;
         &:hover{
             color: var(--main-color);
         }
+    }
+}
+.actionNotLogin{
+    display: flex;
+    align-items: center;
+    text-wrap: nowrap;
+    flex-wrap: nowrap;
+    >li:first-child{
+        margin-right: 8px;
     }
 }
 .moreMenu{

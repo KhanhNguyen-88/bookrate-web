@@ -5,6 +5,7 @@ import Button from "../../../../components/Button";
 
 import style from "./UserComment.module.scss";
 import AvatarWrapper from "../../../../components/AvatarWrapper";
+import ShowStars from "../../../../components/ShowStars";
 
 const cx = classNames.bind(style);
 function UserComment({userFirstComment}) {
@@ -18,13 +19,11 @@ function UserComment({userFirstComment}) {
       </AvatarWrapper>
       <div className={cx("mainCom")}>
         <div className = {cx("wrapperContentCom")}>
+          <ShowStars points={2} smallBook/>
           <div className={cx("contentCom")}>
               <h5>{userFirstComment.userName}</h5>
               <p>{userFirstComment.userComment}</p>
           </div>
-          <Button to>
-            <FontAwesomeIcon icon={faEllipsisH} />
-          </Button>
         </div>
         <div className={cx("interact")}>
           <ul>
@@ -33,12 +32,6 @@ function UserComment({userFirstComment}) {
             </li>
             <li>
               <Button to>Like</Button>
-            </li>
-            <li>
-              <Button to>Reply</Button>
-            </li>
-            <li>
-              <Button to>Share</Button>
             </li>
           </ul>
           <strong>{userFirstComment.totalLikes} Likes</strong>

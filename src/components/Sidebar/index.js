@@ -7,31 +7,31 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
+import AuthorItem from "../AuthorItem";
 import Button from "../Button";
 import MenuItem from "../MenuItem";
 import UnderLine from "../UnderLine";
 import style from "./Sidebar.module.scss";
-import UserItem from "../UserItem";
-import AuthorItem from "../AuthorItem";
+import { useLocation } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
-function Sidebar({ userData, userFollowingData}) {
-  
-  const renderUserFollowing = () =>{
-    return userFollowingData.map((userFollowing, index)=>{
-      return <AuthorItem authorInfo={userFollowing} key={index}></AuthorItem>
-    })
-  }
+function Sidebar({ userData, userFollowingData }) {
+  const location = useLocation();
+  const renderUserFollowing = () => {
+    return userFollowingData.map((userFollowing, index) => {
+      return <AuthorItem authorInfo={userFollowing} key={index}></AuthorItem>;
+    });
+  };
   const SIDEBAR_ITEMS = [
-    { name: "Trang chủ", path: "/", icon: <FontAwesomeIcon icon={faHome} /> },
+    { name: "Trang Chủ", path: "/", icon: <FontAwesomeIcon icon={faHome} /> },
     {
-      name: "Khám phá",
+      name: "Khám Phá",
       path: "/explore",
       icon: <FontAwesomeIcon icon={faCompass} />,
     },
     {
-      name: "Yêu thích",
+      name: "Yêu Thích",
       path: "/follow",
       icon: <FontAwesomeIcon icon={faAddressBook} />,
     },
@@ -41,15 +41,19 @@ function Sidebar({ userData, userFollowingData}) {
       icon: <FontAwesomeIcon icon={faRankingStar} />,
     },
     {
-      name: "Cá nhân",
+      name: "Cá Nhân",
       path: "/profile",
-      icon: !userData ? <img src={userData.userAvatar}></img> : <FontAwesomeIcon icon={faUser} /> ,
+      icon: userData ? (
+        <img src={userData.userAvatar} alt="avatar"></img>
+      ) : (
+        <FontAwesomeIcon icon={faUser} />
+      ),
     },
   ];
   const renderMenuItems = () => {
     return SIDEBAR_ITEMS.map((item, index) => {
       return (
-        <li>
+        <li key={index}>
           <MenuItem
             sidebarItem
             className={cx("sidebarItem")}
@@ -57,24 +61,23 @@ function Sidebar({ userData, userFollowingData}) {
             to={item.path}
             leftIcon={item.icon}
             nameItem={item.name}
+            active={location.pathname === item.path ? true : false}
           ></MenuItem>
         </li>
       );
     });
   };
   return (
-    <div className = {cx("wrapper")}>
+    <div className={cx("wrapper")}>
       <ul className={cx("menu")}>
         {renderMenuItems()}
         <UnderLine />
       </ul>
-      {userFollowingData ? (
-        <div className = {cx("following")}>
+      {userData ? (
+        <div className={cx("following")}>
           <h5>Tác giả đang theo dõi</h5>
-          <ul className = {cx("userFollowing")}>
-            {renderUserFollowing()}
-          </ul>
-          <UnderLine/>
+          <ul className={cx("userFollowing")}>{renderUserFollowing()}</ul>
+          <UnderLine />
         </div>
       ) : (
         <div className={cx("loginTip")}>

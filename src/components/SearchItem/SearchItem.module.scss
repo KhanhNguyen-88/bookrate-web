@@ -1,0 +1,59 @@
+:root{
+    --search-height: 30px
+}
+.search{
+    margin: 0 20px;
+    position: relative;
+    width: 200px;
+    height: var(--search-height);
+    z-index: 0;
+    input{
+        background-color: var(--special-color);
+        width: 100%;
+        height: 100%;
+        padding-left: 10px;
+        border-radius: 99px;
+        &:focus{
+            border: 1px solid black;
+            + .searchIcon{
+                color:black;
+            }
+        }
+    }
+}
+.clearIcon{
+    position: absolute;
+    right: 40px;
+    line-height: var(--search-height);
+    font-size: 10px;
+    color: gray;
+}
+.loadIcon{
+    position: absolute;
+    right: 40px;
+    line-height: var(--search-height);
+    font-size: 10px;
+    color: gray;
+}
+.line{
+    position: absolute;
+    right: 30px;
+    width: 1px;
+    height: var(--search-height);
+    background-color: gray;
+}
+.searchIcon{
+    position: absolute;
+    right: 10px;
+    line-height: var(--search-height);
+    color: gray;
+}
+
+.search:hover{
+    .searchIcon{
+        color:black;
+    }
+    input{
+        border: 1px solid black;
+    }
+}

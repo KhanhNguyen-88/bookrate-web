@@ -5,6 +5,7 @@ import SmallBookItem from "./components/SmallBookItem";
 import PaginatedItems from "./components/PaginatedItems";
 import AuthorItem from "../../components/AuthorItem";
 import UnderLine from "../../components/UnderLine";
+import SearchItem from "../../components/SearchItem";
 const BOOK_ITEMS = [
   {
     thumbnail:
@@ -194,7 +195,10 @@ function Explore() {
       </div>
       <div className={cx("content")}>
         <div className={cx("containerSmallBook")}>
-          <h3>Thể loại: Tất cả</h3>
+          <div className = {cx("header")}>
+            <h3>Thể loại: Tất cả</h3>
+            <UnderLine/>
+          </div>
           <div className={cx("books")}>
             <PaginatedItems itemsPerPage={4} items={BOOK_ITEMS} />
           </div>

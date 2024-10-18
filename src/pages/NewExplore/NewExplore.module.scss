@@ -1,0 +1,40 @@
+.filterBar{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    input{
+        width: 162px;
+        height: 30px;
+        border: 1px solid gray;
+        margin: 10px 50px;
+        border-radius: 4px;
+    }
+    select{
+        width: 162px;
+        margin: 10px 0;
+        height: 30px;
+        border: 1px solid gray;
+        padding: 5px 20px;
+        border-radius: 4px;
+    }
+}
+.btnSubmit{
+    margin-left: 10px;
+}
+.containerBooks{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.wrapperSug{
+    >li:first-child{
+        border-bottom: 1px solid gray;
+        p{
+            font-size: 10px;
+            color: gray;
+            text-align: end;
+        }
+    }
+}

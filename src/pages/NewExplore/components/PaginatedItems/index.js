@@ -1,38 +1,25 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
-import SmallBookItem from "../SmallBookItem";
 import classNames from "classnames/bind";
 import style from "./PaginatedItems.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-
+import Book from "../../../NewExplore/components/Book";
 
 const cx = classNames.bind(style);
-function PaginatedItems({ itemsPerPage, items, explore}) {
-  const [itemOffset, setItemOffset] = useState(0);
-  const endOffset = itemOffset + itemsPerPage;
-  console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
-
-  // Invoke when user click to request another page.
+function PaginatedItems({items, pageCount, onPageChange}) {
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
-    console.log(
-      event.selected, itemsPerPage,
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+    onPageChange(event.selected);
   };
 
-  const renderSmallBook = () => {
-    return currentItems.map((item, index) => {
-      return <SmallBookItem key={index} smallBook={item} />;
+  const renderBook = () =>{
+    return items.map((item, index) => {
+      return <Book key={index} book={item} />;
     });
-  };
+  }
   return (
-    <>
-      {renderSmallBook()}
+    <div className = {cx("wrapper")}>
+      <div className = {cx("books")}>{renderBook()}</div>
       <ReactPaginate
         breakLabel="..."
         nextLabel={<FontAwesomeIcon icon={faArrowRight}/>}
@@ -52,7 +39,7 @@ function PaginatedItems({ itemsPerPage, items, explore}) {
         breakLinkClassName={cx("pagination__item")}
         activeClassName={cx("active")}
       />
-    </>
+    </div>
   );
 }
 

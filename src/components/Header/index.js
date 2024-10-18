@@ -10,20 +10,20 @@ import {
   faSearch,
   faSpinner,
   faSun,
-  faXmarkCircle
+  faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
-
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import { logOut } from "../../services/authenticationService";
 import AvatarWrapper from "../AvatarWrapper";
 import Button from "../Button";
 import HeaderMenu from "../HeaderMenu";
 import MenuItem from "../MenuItem";
 import WrapperMenu from "../WrapperMenu";
 import style from "./Header.module.scss";
-import { Link } from "react-router-dom";
 
 const MENU_ITEMS = [
   {
@@ -55,7 +55,7 @@ const MENU_ITEMS = [
 ];
 
 const cx = classNames.bind(style);
-function Header({ userData }) {
+function Header({ userData, logout}) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const lastItem = history[history.length - 1];
   const renderMenuItems = () => {
@@ -82,16 +82,20 @@ function Header({ userData }) {
   const renderHeaderMenu = () => {
     return <HeaderMenu title={lastItem.title} onClick={onBack} />;
   };
+  const handleLogout =()=>{
+    logOut(); // remove token
+    logout();// re-render layout
+  }
   //
   return (
     <div className={cx("wrapper")}>
       <div className={cx("logo")}>
-       <Link to={"/"}>
+        <Link to={"/"}>
           <img
             src="https://s.gr-assets.com/assets/layout/header/goodreads_logo.svg"
             alt="logo"
           ></img>
-       </Link>
+        </Link>
       </div>
       <div className={cx("search")}>
         <input placeholder="Tìm kiếm sách!..."></input>
@@ -107,31 +111,43 @@ function Header({ userData }) {
         </span>
       </div>
       <div className={cx("action")}>
-        {!userData ? (
+        {userData ? (
           <div className={cx("actionLogin")}>
-            <Button
-              to
-              leftIcon={<FontAwesomeIcon icon={faMessage} />}
-            ></Button>
+            <Button to leftIcon={<FontAwesomeIcon icon={faMessage} />}></Button>
             <Button
               to
               leftIcon={<FontAwesomeIcon icon={faPaperPlane} />}
             ></Button>
             <AvatarWrapper>
-              <img
-                src={userData.userAvatar}
-                alt="avatar"
-              />
+              <Tippy
+                delay={[0, 500]}
+                interactive
+                render={() => {
+                  return (
+                    <div>
+                      <ul>
+                        <li onClick={handleLogout}>Logout</li>
+                      </ul>
+                    </div>
+                  );
+                }}
+              >
+                <img src={userData.userAvatar} alt="avatar" />
+              </Tippy>
             </AvatarWrapper>
           </div>
         ) : (
           <div className={cx("actionNotLogin")}>
-            <Button btnHeader primary to={"/login"}>
-              Đăng nhập
-            </Button>
-            <Button btnHeader primary to>
-              Đăng ký
-            </Button>
+            <li>
+              <Button btnHeader to={"/login"}>
+                Đăng nhập
+              </Button>
+            </li>
+            <li>
+              <Button btnHeader to={"/register"}>
+                Đăng ký
+              </Button>
+            </li>
             <Tippy
               delay={[0, 500]}
               // visible

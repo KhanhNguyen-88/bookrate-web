@@ -1,6 +1,7 @@
 .wrapper{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     >:last-child{
         background-color: var(--main-color);
         color: white;

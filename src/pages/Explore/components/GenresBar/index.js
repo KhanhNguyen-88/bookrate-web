@@ -11,6 +11,7 @@ import {
   faPencilAlt,
   faUtensils,
   faPlusCircle,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import GenresItem from "../GenresItem";
 import classNames from "classnames/bind";
@@ -21,34 +22,43 @@ const GENRES_ITEMS = [
   {
     icon: <FontAwesomeIcon icon={faBook} />,
     name: "Tiểu thuyết",
+    path: "/tieu-thuyet",
   },
   {
     icon: <FontAwesomeIcon icon={faRocket} />,
     name: "Khoa học & viễn tưởng",
+    path: "/kh-vt",
+
   },
   {
     icon: <FontAwesomeIcon icon={faUserSecret} />,
     name: "Huyền Bí",
+    path: "/huyen-bi",
   },
   {
     icon: <FontAwesomeIcon icon={faSeedling} />,
     name: "Phát triển bản thân",
+    path: "/self-help",
   },
   {
     icon: <FontAwesomeIcon icon={faPen} />,
     name: "Tự truyện",
+    path: "/tu-truyen",
   },
   {
     icon: <FontAwesomeIcon icon={faBriefcase} />,
     name: "Kinh doanh",
+    path: "/kinh-doanh",
   },
   {
     icon: <FontAwesomeIcon icon={faChild} />,
     name: "Trẻ thơ",
+    path: "/tre-tho",
   },
   {
     icon: <FontAwesomeIcon icon={faUtensils} />,
     name: "Nấu ăn",
+    path: "/nau-an",
   },
   //   {
   //     icon: <FontAwesomeIcon icon={faPencilAlt} />,
@@ -70,7 +80,7 @@ function GenresBar() {
     <ul className={cx("wrapper")}>
       <Button btnGenres>Tất cả</Button>
       {renderGenresItems()}
-      <Button btnGenres>...</Button>
+      <Button btnGenres><FontAwesomeIcon icon={faSearch}/></Button>
     </ul>
   );
 }

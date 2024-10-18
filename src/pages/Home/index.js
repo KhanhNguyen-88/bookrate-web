@@ -10,6 +10,7 @@ import ActionBar from "./components/ActionBar";
 import BookItem from "./components/BookItem";
 import style from "./Home.module.scss";
 import { getToken } from "../../services/localStorageService";
+import UnderLine from "../../components/UnderLine";
 
 const cx = classNames.bind(style);
 const ACTION_ITEMS = [
@@ -44,7 +45,7 @@ const BOOK_ITEMS = [
     },
     firstComment: {
       userAvatar:
-        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       userName: "Nguyen Van Khanh",
       userComment: "Bad book!",
       commentPublished: "10d",
@@ -79,7 +80,7 @@ const BOOK_ITEMS = [
     },
     firstComment: {
       userAvatar:
-        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       userName: "Hoang Tuan An",
       userComment: "Amazing book!",
       commentPublished: "2d",
@@ -114,7 +115,7 @@ const BOOK_ITEMS = [
     },
     firstComment: {
       userAvatar:
-        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       userName: "Nguyen Van Khanh",
       userComment: "Good book!",
       commentPublished: "2d",
@@ -149,7 +150,7 @@ const BOOK_ITEMS = [
     },
     firstComment: {
       userAvatar:
-        "https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tos-alisg-avt-0068/dbb3d05918086047edfdc37e479fa70d.jpeg?lk3s=a5d48078&nonce=41884&refresh_token=803d2856c7f576c21b63ee113f2d4775&x-expires=1727607600&x-signature=Albw7wOX4LQFMvIPxv%2Fs9ncqYw8%3D&shp=a5d48078&shcp=81f88b70",
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       userName: "Nguyen Van Khanh",
       userComment: "Good book!",
       commentPublished: "2d",
@@ -159,53 +160,17 @@ const BOOK_ITEMS = [
   },
 ];
 function Home() {
-  // const navigate = useNavigate();
-  // const [userDetails, setUserDetails] = useState({});
-
-  // const getUserDetails = async (accessToken) => {
-  //   const response = await fetch(
-  //     "http://localhost:8081/identify/myInfo",
-  //     {
-  //       method: "GET",
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`, // Set Authorization header
-  //       },
-  //     }
-  //   );
-
-  //   const data = await response.json();
-
-  //   console.log(data);
-
-  //   setUserDetails(data.data);
-  // };
-
-  // useEffect(() => {
-  //   const accessToken = getToken();
-
-  //   if (!accessToken) {
-  //     navigate("/login");
-  //   } else {
-  //     getUserDetails(accessToken);
-  //   }
-  // }, [navigate]);
-
   const renderBookContainer = () => {
     return BOOK_ITEMS.map((item, index) => {
       return (
         <div className={cx("containerBook")}>
           <BookItem key={index} item={item} />
+          <UnderLine/>
           <div className={cx("bar")}>
-            <div className={cx("subBar")}>
-              <li>{item.interactiveInfo.totalComment} Comments</li>
-              <li>{item.interactiveInfo.totalShare} Shares</li>
-            </div>
-            <div className={cx("actionBar")}>
-              <ActionBar items={ACTION_ITEMS} />
-            </div>
             <div className={cx("comment")}>
               <div className={cx("viewMoreCom")}>
                 <Button to>See more comments</Button>
+                <p>{item.interactiveInfo.totalComment} Comments</p>
               </div>
               <div className={cx("firstCom")}>
                 <UserComment

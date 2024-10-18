@@ -5,7 +5,7 @@ const cx = classNames.bind(style);
 function GenresItem({ genresItem }) {
   return (
     <li className={cx("wrapper")}>
-      <Button btnGenres leftIcon={genresItem.icon}>
+      <Button to={genresItem.path} btnGenres leftIcon={genresItem.icon}>
         {genresItem.name}
       </Button>
     </li>
