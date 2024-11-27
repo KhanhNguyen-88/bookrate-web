@@ -12,8 +12,8 @@ function Book({ book}) {
         <img src={book.bookImage}></img>
       </div>
       <div className={cx("ratings")}>
-          <strong>{book.average_rating} <FontAwesomeIcon icon={faStar}/></strong>
-          <p>{book.ratingCount} ratings</p>
+          <strong>{book.averageRating} <FontAwesomeIcon icon={faStar}/></strong>
+          <p>{book.totalRating} ratings</p>
         </div>
       <div className={cx("info")}>
         <h6 className={cx("title")}>{book.bookName}</h6>

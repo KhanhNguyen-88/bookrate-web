@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import {Home, Following, Ranking, Profile, Login, NewExplore, BookDetail, Register} from "../pages";
+import {Home, Following, Ranking, Profile, Login, NewExplore, BookDetail, Register, User} from "../pages";
 
 export const publicRoutes = [
     {
@@ -28,7 +28,7 @@ export const publicRoutes = [
         com: Ranking
     },
     {
-        path: "/profile",
+        path: "user/profile",
         com: Profile
     },
     {
@@ -40,4 +40,9 @@ export const publicRoutes = [
         com: Register,
         layout: Fragment
     },
+    {
+        path: "/user/:userId",
+        com: User,
+    },
+    
 ]

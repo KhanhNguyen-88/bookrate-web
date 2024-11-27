@@ -88,3 +88,16 @@
         color: var(--button-primary);
     }
 }
+.unFollow{
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    padding: 6px 8px;
+    background-color: gray;
+    border-radius: 4px;
+
+    &:hover {
+        color: white;
+       opacity: 0.6;
+    }
+}

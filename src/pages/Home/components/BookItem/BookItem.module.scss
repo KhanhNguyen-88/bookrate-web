@@ -1,9 +1,14 @@
 .book {
     height: fit-content;
+    padding: 20px 0;
+    width: 550px;
     margin: 18px 0;
     padding-right: 8px;
     display: flex;
-    width: 100%;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 4px gray;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 .thumbnail {
     width: 40%;
@@ -47,8 +52,18 @@
         }
     }
 }
+.creator{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    p{
+        font-size: 10px;
+        color: gray;
+    }
+}
 .info {
-    padding: 0 12px;
+    padding: 12px;
     width: 60% ;
     height: 60%;
 }
@@ -127,11 +142,12 @@
     p{
         width: 100px;
     }
-    a{
+    strong>a{
         font-weight: 600;
         &:hover{
             text-decoration: underline var(--second-color) 2px;
             transition: all ease-in-out 0.3s;
+            cursor: pointer;
         }
     }
 }

@@ -28,7 +28,6 @@ function BookDetail() {
   return (
     <div className={cx("wrapper")}>
       <BookItem item={data} feedBackList={feedBacks} />
-      <div></div>
     </div>
   );
 }

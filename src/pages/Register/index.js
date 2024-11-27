@@ -77,8 +77,8 @@ export default function Register() {
       setSnackBarOpen(true);
       return;
     }
-    alert("Đăng ký thành công! Hãy tận hưởng nào ^v^")
-    navigate("/login")
+    alert("Đăng ký thành công! Hãy tận hưởng nào ^v^");
+    navigate("/login");
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -291,14 +291,7 @@ export default function Register() {
                 nested
               >
                 {(close) => (
-                  <Card
-                  // sx={{
-                  // //   minWidth: 400,
-                  // //   maxWidth: 500,
-                  // //   marginX: "auto",
-                  // //   paddingX: 2,
-                  // }}
-                  >
+                  <Card>
                     <Button className="close" onClick={close}>
                       &times;
                     </Button>

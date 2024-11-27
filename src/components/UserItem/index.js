@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 
 const cx = classNames.bind(style)
 function UserItem({userFollowing}) {
-    return <Link to={"/account"} className = {cx("wrapper")}>
-        <AvatarWrapper><img src={userFollowing.userAvatar} alt="avatar"/></AvatarWrapper>
+    return <Link to={"/user/1"} className = {cx("wrapper")}>
+        <AvatarWrapper><img src={userFollowing.userImage} alt="avatar"/></AvatarWrapper>
         <div>
-            <h6>{userFollowing.userName}</h6>
-            <h6>{userFollowing.userSlogan}</h6>
+            <strong>{userFollowing.userName}</strong>
+            <h6>{userFollowing.userFullName}</h6>
         </div>
     </Link>;
 }

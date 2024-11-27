@@ -15,7 +15,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logOut } from "../../services/authenticationService";
 import AvatarWrapper from "../AvatarWrapper";
@@ -24,6 +24,7 @@ import HeaderMenu from "../HeaderMenu";
 import MenuItem from "../MenuItem";
 import WrapperMenu from "../WrapperMenu";
 import style from "./Header.module.scss";
+import ItemBookSearch from "../ItemBookSearch";
 
 const MENU_ITEMS = [
   {
@@ -55,9 +56,13 @@ const MENU_ITEMS = [
 ];
 
 const cx = classNames.bind(style);
-function Header({ userData, logout}) {
+function Header({ userData, logout }) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const lastItem = history[history.length - 1];
+  const [suggestions, setSuggestions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState();
+  const [data, setData] = useState();
+
   const renderMenuItems = () => {
     return lastItem.data.map((item, index) => {
       const isParent = !!item.children;
@@ -82,10 +87,45 @@ function Header({ userData, logout}) {
   const renderHeaderMenu = () => {
     return <HeaderMenu title={lastItem.title} onClick={onBack} />;
   };
-  const handleLogout =()=>{
+  const handleLogout = () => {
     logOut(); // remove token
-    logout();// re-render layout
-  }
+    logout(); // re-render layout
+  };
+
+  const handleSuggestionClick = (author, e) => {
+    e.preventDefault();
+    setSearchTerm(author);
+    setSuggestions([]); // Xóa gợi ý sau khi chọn
+  };
+
+  const handleChangeInput = (e) => {
+    setSearchTerm(e.target.value);
+    if (!e.target.value.trim()) {
+      setSearchTerm(null);
+      setSuggestions([]);
+    } else {
+      setSuggestions(data);
+    }
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/book/search-common/${searchTerm}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setData(result.result);
+      });
+  }, [searchTerm]);
+  const handleClearSearch = () => {
+    console.log("click");
+    setSearchTerm(null);
+  };
   //
   return (
     <div className={cx("wrapper")}>
@@ -98,15 +138,35 @@ function Header({ userData, logout}) {
         </Link>
       </div>
       <div className={cx("search")}>
-        <input placeholder="Tìm kiếm sách!..."></input>
+        <Tippy
+          placement="bottom"
+          visible={suggestions.length > 0}
+          interactive
+          render={() => {
+            return suggestions.length > 0 ? (
+              <ul className={cx("wrapperSug")}>
+                <p>Gợi ý sách</p>
+                {suggestions.map((item, index) => (
+                  <ItemBookSearch key={index} item={item} />
+                ))}
+              </ul>
+            ) : null; // Không render gì nếu không có gợi ý
+          }}
+        >
+          <input
+            placeholder="Tìm kiếm sách!..."
+            value={searchTerm}
+            onChange={(e) => handleChangeInput(e)}
+          ></input>
+        </Tippy>
         <span className={cx("searchIcon")}>
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </span>
         <span className={cx("line")}></span>
-        <span className={cx("loadIcon")}>
+        {/* <span className={cx("loadIcon")}>
           <FontAwesomeIcon icon={faSpinner} />
-        </span>
-        <span className={cx("clearIcon")}>
+        </span> */}
+        <span className={cx("clearIcon")} onClick={handleClearSearch}>
           <FontAwesomeIcon icon={faXmarkCircle} />
         </span>
       </div>
@@ -126,13 +186,13 @@ function Header({ userData, logout}) {
                   return (
                     <div>
                       <ul>
-                        <li onClick={handleLogout}>Logout</li>
+                        <Button primary onClick={handleLogout}>Logout</Button>
                       </ul>
                     </div>
                   );
                 }}
               >
-                <img src={userData.userAvatar} alt="avatar" />
+                <img src={userData.userImage} alt="avatar" />
               </Tippy>
             </AvatarWrapper>
           </div>

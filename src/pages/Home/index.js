@@ -1,6 +1,6 @@
 import { faComment, faShareNodes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import classNames from "classnames/bind";
 
@@ -11,6 +11,7 @@ import BookItem from "./components/BookItem";
 import style from "./Home.module.scss";
 import { getToken } from "../../services/localStorageService";
 import UnderLine from "../../components/UnderLine";
+import PaginatedItems from "./components/PaginatedItems";
 
 const cx = classNames.bind(style);
 const ACTION_ITEMS = [
@@ -23,10 +24,11 @@ const BOOK_ITEMS = [
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1660145160i/61718053.jpg",
     title: "Happy Place",
     author: {
-      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
+      avatar:
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       name: "Emily Henry",
-      totalBooks:17,
-      followers:10,
+      totalBooks: 17,
+      followers: 10,
     },
     intro:
       "Harriet and Wyn have been the perfect couple since they met in college—they go together like salt and pepper, honey and tea, lobster and rolls. Except, now—for reasons they’re still not discussing—they don’t.",
@@ -40,8 +42,8 @@ const BOOK_ITEMS = [
     ISBN: "9780593441275 ",
     language: "English",
     interactiveInfo: {
-      totalComment:100,
-      totalShare: 10
+      totalComment: 100,
+      totalShare: 10,
     },
     firstComment: {
       userAvatar:
@@ -51,17 +53,18 @@ const BOOK_ITEMS = [
       commentPublished: "10d",
       totalLikes: 2,
     },
-    cost:"$11.1",
+    cost: "$11.1",
   },
   {
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1692118145i/195820807.jpg",
     title: "Just for the Summer",
     author: {
-      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
+      avatar:
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
       name: "Abby Jimenez",
-      totalBooks:17,
-      followers:10,
+      totalBooks: 17,
+      followers: 10,
     },
     intro:
       "Justin has a curse, and thanks to a Reddit thread, it's now all over the internet. Every woman he dates goes on to find their soul mate the second they break up. When a woman slides into his DMs with the same problem, they come up with a plan: They'll date each other and break up. Their curses will cancel each other’s out, and they’ll both go on to find the love of their lives. It’s a bonkers idea… and it just might work.",
@@ -75,8 +78,8 @@ const BOOK_ITEMS = [
     ISBN: null,
     language: "English",
     interactiveInfo: {
-      totalComment:100,
-      totalShare: 10
+      totalComment: 100,
+      totalShare: 10,
     },
     firstComment: {
       userAvatar:
@@ -86,17 +89,18 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
-    cost:"$11.1",
+    cost: "$11.1",
   },
   {
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1664729357i/62848145.jpg",
     title: "The Housemaid's Secret",
     author: {
-      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1701487498i/7244758._UX200_CR0,4,200,200_.jpg",
+      avatar:
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1701487498i/7244758._UX200_CR0,4,200,200_.jpg",
       name: "Freida McFadden",
-      totalBooks:17,
-      followers:10,
+      totalBooks: 17,
+      followers: 10,
     },
     intro:
       "As he continues showing me their incredible penthouse apartment, I have a terrible feeling about the woman behind closed doors. But I can't risk losing this job – not if I want to keep my darkest secret safe . . .",
@@ -110,8 +114,8 @@ const BOOK_ITEMS = [
     ISBN: "9781837901319",
     language: "English",
     interactiveInfo: {
-      totalComment:100,
-      totalShare: 10
+      totalComment: 100,
+      totalShare: 10,
     },
     firstComment: {
       userAvatar:
@@ -121,17 +125,18 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
-    cost:"$11.1",
+    cost: "$11.1",
   },
   {
     thumbnail:
       "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1394264018i/21094869.jpg",
     title: "The Lovely Bones",
     author: {
-      avatar:"https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/user/u_700x933.png",
+      avatar:
+        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/user/u_700x933.png",
       name: "BookRags",
-      totalBooks:17,
-      followers:10,
+      totalBooks: 17,
+      followers: 10,
     },
     intro:
       "The 'The Lovely Bones' lesson plan contains a variety of teaching materials that cater to all learning styles. Inside you'll find 30 Daily Lessons, 20 Fun Activities, 180 Multiple Choice Questions, 60 Short Essay Questions, 20 Essay Questions, Quizzes/Homework Assignments, Tests, and more.",
@@ -145,8 +150,8 @@ const BOOK_ITEMS = [
     ISBN: "",
     language: "English",
     interactiveInfo: {
-      totalComment:100,
-      totalShare: 10
+      totalComment: 100,
+      totalShare: 10,
     },
     firstComment: {
       userAvatar:
@@ -156,16 +161,54 @@ const BOOK_ITEMS = [
       commentPublished: "2d",
       totalLikes: 2,
     },
-    cost:"$11.1",
+    cost: "$11.1",
   },
 ];
 function Home() {
+  const { id } = useParams();
+  console.log(id);
+  const [data, setData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectOption1, setSelectOption1] = useState(id);
+  const [selectOption2, setSelectOption2] = useState();
+  const [page, setPage] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
+
+  useEffect(() => {
+    fetch("http://localhost:8081/api/book/get-explore-page", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json", // Set the content type to JSON
+      },
+      body: JSON.stringify({
+        pageNumber: page,
+        pageSize: 10,
+        filter: {
+          bookAuthor: searchTerm,
+          categoryId: selectOption1,
+          rating: selectOption2,
+        },
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setData(result.result);
+        console.log(result.result);
+        setPageCount(Math.ceil(result.dataCount / 10));
+      });
+  }, [page, searchTerm, selectOption1, selectOption2, id]);
+
+  const handleChangePage = (currentPage) => {
+    setPage(currentPage);
+  };
   const renderBookContainer = () => {
     return BOOK_ITEMS.map((item, index) => {
       return (
         <div className={cx("containerBook")}>
           <BookItem key={index} item={item} />
-          <UnderLine/>
+          <UnderLine />
           <div className={cx("bar")}>
             <div className={cx("comment")}>
               <div className={cx("viewMoreCom")}>
@@ -173,9 +216,9 @@ function Home() {
                 <p>{item.interactiveInfo.totalComment} Comments</p>
               </div>
               <div className={cx("firstCom")}>
-                <UserComment
+                {/* <UserComment
                   userFirstComment={item.firstComment}
-                ></UserComment>
+                ></UserComment> */}
               </div>
             </div>
           </div>
@@ -183,7 +226,15 @@ function Home() {
       );
     });
   };
-  return <div className={cx("wrapper")}>{renderBookContainer()}</div>;
+  return (
+    <div>
+      <PaginatedItems
+        items={data}
+        pageCount={pageCount}
+        onPageChange={handleChangePage}
+      ></PaginatedItems>
+    </div>
+  );
 }
 
 export default Home;

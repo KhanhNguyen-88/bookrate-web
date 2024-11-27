@@ -31,20 +31,15 @@ function Sidebar({ userData, userFollowingData }) {
       icon: <FontAwesomeIcon icon={faCompass} />,
     },
     {
-      name: "Yêu Thích",
-      path: "/follow",
-      icon: <FontAwesomeIcon icon={faAddressBook} />,
-    },
-    {
       name: "BXH",
       path: "/rank",
       icon: <FontAwesomeIcon icon={faRankingStar} />,
     },
     {
       name: "Cá Nhân",
-      path: "/profile",
+      path: "/user/profile",
       icon: userData ? (
-        <img src={userData.userAvatar} alt="avatar"></img>
+        <img src={userData.userImage} alt="avatar"></img>
       ) : (
         <FontAwesomeIcon icon={faUser} />
       ),
@@ -75,7 +70,7 @@ function Sidebar({ userData, userFollowingData }) {
       </ul>
       {userData ? (
         <div className={cx("following")}>
-          <h5>Tác giả đang theo dõi</h5>
+          <h5>Đang theo dõi</h5>
           <ul className={cx("userFollowing")}>{renderUserFollowing()}</ul>
           <UnderLine />
         </div>

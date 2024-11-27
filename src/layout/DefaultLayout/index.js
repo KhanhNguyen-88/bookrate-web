@@ -11,25 +11,54 @@ function DefaultLayout({ children }) {
   const navigate = useNavigate();
   const [_, forceUpdate] = useState(); // State không sử dụng, chỉ để re-render
   const [isLogin, setIsLogin] = useState(false);
+  const [profileData, setProfileData] = useState({});
+  const [following, setFollowing] = useState([]);
 
   const triggerReRender = () => {
     forceUpdate((prev) => !prev); // Đảo giá trị true/false để buộc re-render
   };
+  const accessToken = getToken();
   useEffect(() => {
-    const accessToken = getToken();
 
     if (!accessToken) {
       setIsLogin(false)
     }else{
       setIsLogin(true)
-      fetch(`http://localhost:8081/api/user/follower-account/{userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
     }
   }, [_]);
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/user/detail-by-token`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setProfileData(result.result);
+        console.log(accessToken);
+        console.log(result.result);
+      });
+  }, [accessToken]);
+  useEffect(()=>{
+    fetch(`http://localhost:8081/api/user/following-account-by-token`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${accessToken}`, // Set the content type to JSON
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setFollowing(result.result);
+        console.log(result);
+      });
+  }, [accessToken])
   const USER_DATA = {
     userName: "Nguyen Van Khanh",
     userAvatar:
@@ -68,12 +97,12 @@ function DefaultLayout({ children }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <Header userData={isLogin ? USER_DATA:null } logout={triggerReRender}/>
+        <Header userData={isLogin ? profileData :null } logout={triggerReRender}/>
         {console.log("re-ren")}
       </div>
       <div className={cx("content")}>
         <div className={cx("sidebar")}>
-          <Sidebar userData={isLogin ? USER_DATA:null} userFollowingData={AUTHOR_FOLLOWING_ITEMS} />
+          <Sidebar userData={isLogin ? profileData :null} userFollowingData={following} />
         </div>
         <div className={cx("main-content")}>{children}</div>
       </div>

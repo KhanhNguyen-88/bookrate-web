@@ -15,6 +15,7 @@ function Button({
   to,
   href,
   leftIcon,
+  unFollow,
 }) {
   let Com = "button";
   const Classes = cx("wrapper", {
@@ -23,6 +24,7 @@ function Button({
     btnHeader,
     btnGenres,
     linkAuthor,
+    unFollow,
   });
   const props = {
     onClick,

@@ -1,0 +1,35 @@
+.wrapper{
+    padding: 4px 10px;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    img{
+        width: 40px;
+        height: 50px;
+        margin: 0 4px;
+    }
+    &:hover{
+        background-color: rgb(206, 182, 182);
+        cursor: pointer;
+    }
+}
+.info{
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    strong{
+        display: flex;
+        height: 50%;
+        font-size: 14px;
+        align-items: center;
+
+    }
+    h5{
+        display: flex;
+        height: 50%;
+        font-size: 12px;
+        font-style: italic;
+        color: gray;
+        align-items: center;
+    }
+}

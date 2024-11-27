@@ -13,28 +13,28 @@ function UserComment({userFirstComment}) {
     <div className={cx("wrapper")}>
       <AvatarWrapper>
         <img
-          src={userFirstComment.userAvatar}
+          src={userFirstComment.userImage}
           alt="avatar"
         ></img>
       </AvatarWrapper>
       <div className={cx("mainCom")}>
         <div className = {cx("wrapperContentCom")}>
-          <ShowStars points={2} smallBook/>
+          <ShowStars points={userFirstComment.rating} smallBook/>
           <div className={cx("contentCom")}>
               <h5>{userFirstComment.userName}</h5>
-              <p>{userFirstComment.userComment}</p>
+              <p>{userFirstComment.comment}</p>
           </div>
         </div>
         <div className={cx("interact")}>
           <ul>
             <li>
-              <Button to>{userFirstComment.commentPublished}</Button>
+              <Button to>{userFirstComment.createdAt}</Button>
             </li>
             <li>
               <Button to>Like</Button>
             </li>
           </ul>
-          <strong>{userFirstComment.totalLikes} Likes</strong>
+          {/* <strong>{userFirstComment.totalLikes} Likes</strong> */}
         </div>
       </div>
     </div>

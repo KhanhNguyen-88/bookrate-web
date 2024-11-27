@@ -6,11 +6,14 @@ import Button from "../../../../components/Button";
 import ShowStars from "../../../../components/ShowStars";
 import UnderLine from "../../../../components/UnderLine";
 import style from "./BookItem.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import RateChartItem from "../RateChartItem";
+import UserComment from "../../../Home/components/UserComment";
 
 const cx = classNames.bind(style);
 function BookItem({ item, feedBackList }) {
   const [categories, setCategories] = useState([]);
+  const targetRef = useRef(null);
   const allRating = feedBackList.map((itemFB, index) => {
     return itemFB.rating;
   });
@@ -20,7 +23,7 @@ function BookItem({ item, feedBackList }) {
   const avg = Math.round((sum / allRating.length) * 10) / 10;
   console.log(avg);
   const ratings = feedBackList.length;
- 
+
   useEffect(() => {
     const paramsBookId = {
       bookId: item.id || 0,
@@ -34,13 +37,14 @@ function BookItem({ item, feedBackList }) {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }
-    ).then((response) => {
-      return response.json()
-    })
-    .then((result)=>{
-      setCategories(result.result);
-      console.log(result.result)
-    })
+    )
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setCategories(result.result);
+        console.log(result.result);
+      });
   }, [item.id]);
   const renderBookGenres = () => {
     return categories.map((item, index) => {
@@ -51,7 +55,19 @@ function BookItem({ item, feedBackList }) {
       );
     });
   };
-
+  const renderUserComment = () => {
+    return feedBackList.map((cur, index) => {
+      return (
+        <div>
+          <UserComment userFirstComment={cur} key={index}></UserComment>
+          <UnderLine />
+        </div>
+      );
+    });
+  };
+  const handleClickRate = ()=>{
+    targetRef.current.scrollIntoView({ behavior: "smooth" })
+  }
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
@@ -70,7 +86,7 @@ function BookItem({ item, feedBackList }) {
       <div className={cx("info")}>
         <h3 className={cx("title")}>{item.bookName}</h3>
         <div>
-          <div className={cx("rate")}>
+          <div className={cx("rate")} onClick={handleClickRate}>
             <div className={cx("points")}>
               <ShowStars points={avg} />
               <p>{avg === NaN ? 0 : avg}</p>
@@ -87,13 +103,13 @@ function BookItem({ item, feedBackList }) {
         <div className={cx("intro")}>
           <p>{item.bookDescription}</p>
         </div>
-        <UnderLine/>
+        <UnderLine />
         <div className={cx("genres")}>
           <p>Thể loại</p>
           {renderBookGenres()}
         </div>
         <div className={cx("author")}>
-          <p>Author</p>
+          <p>Tác giả</p>
           {/* <AuthorItem authorInfo={} /> */}
           <li>{item.bookAuthor}</li>
         </div>
@@ -105,17 +121,46 @@ function BookItem({ item, feedBackList }) {
               <p className={cx("detail")}>{item.bookFormat}</p>
             </li>
             <li>
-              <p>Published</p>
+              <p>Phát hành</p>
               <p className={cx("detail")}>{item.publishedDate}</p>
             </li>
             <li>
-              <p>Language</p>
-              <p className={cx("detail")}>{}</p>
+              <p>Ngôn ngữ</p>
+              <p className={cx("detail")}>English</p>
             </li>
           </ul>
         </div>
         <UnderLine></UnderLine>
-        <div></div>
+        <div className={cx("ratingDetail")} ref={targetRef}>
+          <p>Chi tiết đánh giá</p>
+          <div>
+            <div className={cx("header")}>
+              <p>Tổng</p>
+              <ShowStars points={avg} />
+              <h4>{avg}</h4>
+            </div>
+            <div>
+              <RateChartItem stars={5} ratings={1000} percent={60} />
+            </div>
+            <div>
+              <RateChartItem stars={4} ratings={500} percent={40} />
+            </div>
+            <div>
+              <RateChartItem stars={3} ratings={100} percent={5} />
+            </div>
+            <div>
+              <RateChartItem stars={2} ratings={10} percent={2} />
+            </div>
+            <div>
+              <RateChartItem stars={1} ratings={0} percent={0} />
+            </div>
+          </div>
+        </div>
+        <UnderLine></UnderLine>
+        <div className={cx("allComments")}>
+          <p>Các đánh giá nổi bật</p>
+          <div>{renderUserComment()}</div>
+        </div>
       </div>
     </div>
   );
