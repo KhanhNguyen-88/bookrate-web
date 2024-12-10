@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import {Home, Following, Ranking, Profile, Login, NewExplore, BookDetail, Register, User, CreatePost} from "../pages";
+import {Home, Following, Ranking, Profile, Login, NewExplore, BookDetail, Register, User, CreatePost, Admin} from "../pages";
+
 
 export const publicRoutes = [
     {
@@ -48,4 +49,9 @@ export const publicRoutes = [
         path: "/createPost",
         com: CreatePost,
     },
+    {
+        path:"/admin-dashboard",
+        com: Admin,
+        layout: Fragment,
+    }
 ]
