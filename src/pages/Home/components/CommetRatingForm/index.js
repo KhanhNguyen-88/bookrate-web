@@ -72,12 +72,13 @@ const CommentRatingForm = ({ bookId }) => {
         onChange={(e) => setComment(e.target.value)}
         placeholder="Viết bình luận..."
         style={{
-          flex: "7",
+          flex: "8",
           padding: "10px",
           height: "40px",
           borderRadius: "5px",
           border: "1px solid #ccc",
           resize: "none",
+          overflow: "hidden"
         }}
       />
 

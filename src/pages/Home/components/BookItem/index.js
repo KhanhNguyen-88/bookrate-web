@@ -1,4 +1,4 @@
-import { faChevronDown, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faComment, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import AuthorItem from "../../../../components/AuthorItem";
@@ -126,7 +126,10 @@ function BookItem({ item }) {
             <div className={cx("btnGroup")}>
               {isLike ? (
                 <div className={cx("btnLiked")}>
-                  <Button liked onClick={() => handleUnLike(item.bookResponse.id)}>
+                  <Button
+                    liked
+                    onClick={() => handleUnLike(item.bookResponse.id)}
+                  >
                     Liked
                   </Button>
                 </div>
@@ -139,9 +142,7 @@ function BookItem({ item }) {
                     Quan tâm
                   </Button>
                   <span></span>
-                  <Button
-                    second
-                  >
+                  <Button second>
                     <FontAwesomeIcon icon={faChevronDown} />
                   </Button>
                 </div>
@@ -204,7 +205,14 @@ function BookItem({ item }) {
               nested
             >
               {(close) => (
-                <div className={cx("commentPost")}>{renderComment()}</div>
+                <div className={cx("commentPost")}>
+                  <div className = {cx("headerCom")}>
+                    <h3>All Comment</h3>
+                    <Button onClick={()=>setOpenPopup(false)}><FontAwesomeIcon icon={faXmark}/></Button>
+                  </div>
+                  <div className={cx("comments")}>{renderComment()}</div>
+                  <CommentRatingForm bookId={item.bookResponse.id} />
+                </div>
               )}
             </Popup>
           </div>
