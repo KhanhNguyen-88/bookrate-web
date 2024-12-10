@@ -6,6 +6,7 @@ import {
   faMessage,
   faMoon,
   faPaperPlane,
+  faPlus,
   faQuestion,
   faSearch,
   faSpinner,
@@ -16,7 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from "@tippyjs/react/headless";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logOut } from "../../services/authenticationService";
 import AvatarWrapper from "../AvatarWrapper";
 import Button from "../Button";
@@ -25,6 +26,9 @@ import MenuItem from "../MenuItem";
 import WrapperMenu from "../WrapperMenu";
 import style from "./Header.module.scss";
 import ItemBookSearch from "../ItemBookSearch";
+import CreatePost from "../../pages/CreatePost";
+import Popup from "reactjs-popup";
+
 
 const MENU_ITEMS = [
   {
@@ -56,12 +60,14 @@ const MENU_ITEMS = [
 ];
 
 const cx = classNames.bind(style);
-function Header({ userData, logout }) {
+function Header({ userData, reRender }) {
   const [history, setHistory] = useState([{ data: MENU_ITEMS }]);
   const lastItem = history[history.length - 1];
   const [suggestions, setSuggestions] = useState([]);
   const [searchTerm, setSearchTerm] = useState();
   const [data, setData] = useState();
+  const [openPopup, setOpenPopup] = useState(false);
+  const navigate = useNavigate();
 
   const renderMenuItems = () => {
     return lastItem.data.map((item, index) => {
@@ -88,8 +94,9 @@ function Header({ userData, logout }) {
     return <HeaderMenu title={lastItem.title} onClick={onBack} />;
   };
   const handleLogout = () => {
+    navigate("/")
     logOut(); // remove token
-    logout(); // re-render layout
+    reRender(); // re-render layout
   };
 
   const handleSuggestionClick = (author, e) => {
@@ -126,6 +133,15 @@ function Header({ userData, logout }) {
     console.log("click");
     setSearchTerm(null);
   };
+
+
+  const handleClosePopup = (close) => {
+    const confirmClose = window.confirm("Bạn có chắc chắn muốn hủy bài viết đang tạo?");
+    if (confirmClose) {
+      close(); // Thực sự đóng popup nếu người dùng xác nhận
+    }
+  };
+
   //
   return (
     <div className={cx("wrapper")}>
@@ -173,11 +189,28 @@ function Header({ userData, logout }) {
       <div className={cx("action")}>
         {userData ? (
           <div className={cx("actionLogin")}>
-            <Button to leftIcon={<FontAwesomeIcon icon={faMessage} />}></Button>
+            <div><Button onClick={()=>setOpenPopup(true)} leftIcon={<FontAwesomeIcon icon={faPlus}/>}>Tải lên</Button></div>
+            <Popup
+                open={openPopup} // Kiểm soát mở popup qua trạng thái
+                onClose={() => setOpenPopup(false)} // Đóng popup
+                closeOnDocumentClick={false}
+                modal
+                nested
+              >
+                {(close) => (
+                  <div className = {cx("createPost")}>
+                     <Button className="close" onClick={()=>handleClosePopup(close)}>
+                        &times;
+                      </Button>
+                    <CreatePost handleClose={close}/>
+                  </div>
+                )}
+              </Popup>
+            {/* <Button to leftIcon={<FontAwesomeIcon icon={faMessage} />}></Button>
             <Button
               to
               leftIcon={<FontAwesomeIcon icon={faPaperPlane} />}
-            ></Button>
+            ></Button> */}
             <AvatarWrapper>
               <Tippy
                 delay={[0, 500]}

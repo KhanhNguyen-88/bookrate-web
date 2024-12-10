@@ -167,69 +167,75 @@ const BOOK_ITEMS = [
 function Home() {
   const { id } = useParams();
   console.log(id);
-  const [data, setData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectOption1, setSelectOption1] = useState(id);
-  const [selectOption2, setSelectOption2] = useState();
+  const [books, setBooks] = useState([]);
   const [page, setPage] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(1);
+  const [userId, setUserId] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:8081/api/book/get-explore-page", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Set the content type to JSON
-      },
-      body: JSON.stringify({
-        pageNumber: page,
-        pageSize: 10,
-        filter: {
-          bookAuthor: searchTerm,
-          categoryId: selectOption1,
-          rating: selectOption2,
-        },
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setData(result.result);
+    const fetchUserId = async () => {
+      try {
+        const token = getToken();
+        const response = await fetch("http://localhost:8081/api/user/get-id-by-token", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json", // Set the content type to JSON
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+  
+        const result = await response.json();
+        setUserId(result.result);
         console.log(result.result);
-        setPageCount(Math.ceil(result.dataCount / 10));
-      });
-  }, [page, searchTerm, selectOption1, selectOption2, id]);
+      } catch (error) {
+        console.error("Lỗi khi lấy userId:", error);
+      }
+    };
+  
+    fetchUserId();
+  }, []);
+  
+  useEffect(() => {
+    const eventSource = new EventSource(
+      `http://localhost:8081/api/book/stream/${userId}`
+    );
+
+    const handleEvent = (event) => {
+      console.log("Dữ liệu nhận được từ SSE:", event.data);
+
+      try {
+        const data = JSON.parse(event.data);
+        if (Array.isArray(data)) {
+          setBooks(data);
+        } else {
+          console.error("Dữ liệu không hợp lệ hoặc không phải mảng", data);
+        }
+      } catch (error) {
+        console.error("Lỗi khi parse dữ liệu SSE:", error);
+      }
+    };
+
+    eventSource.addEventListener("post-list-event", handleEvent);
+
+    // Cleanup khi component unmount
+    return () => {
+      eventSource.close();
+      console.log("SSE connection closed");
+    };
+  }, [userId]);
 
   const handleChangePage = (currentPage) => {
     setPage(currentPage);
   };
-  const renderBookContainer = () => {
-    return BOOK_ITEMS.map((item, index) => {
-      return (
-        <div className={cx("containerBook")}>
-          <BookItem key={index} item={item} />
-          <UnderLine />
-          <div className={cx("bar")}>
-            <div className={cx("comment")}>
-              <div className={cx("viewMoreCom")}>
-                <Button to>See more comments</Button>
-                <p>{item.interactiveInfo.totalComment} Comments</p>
-              </div>
-              <div className={cx("firstCom")}>
-                {/* <UserComment
-                  userFirstComment={item.firstComment}
-                ></UserComment> */}
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
+
   return (
     <div>
       <PaginatedItems
-        items={data}
+        items={books}
         pageCount={pageCount}
         onPageChange={handleChangePage}
       ></PaginatedItems>

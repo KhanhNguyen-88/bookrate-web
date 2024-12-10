@@ -35,6 +35,19 @@
         background: var(--button-primary);
     }
 }
+.liked{
+    font-weight: 800;
+    cursor: pointer;
+    color: white;
+    padding: 6px 8px;
+    background-color:gray;
+    border-radius: 4px;
+    border: 1px solid black;
+    &:hover {
+        color: white;
+        background: var(--button-primary);
+    }
+}
 
 .btnGenres {
     font-size: 14px;

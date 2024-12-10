@@ -8,6 +8,7 @@ function Button({
   linkAuthor,
   btnHeader,
   second,
+  liked,
   btnGenres,
   primary,
   children,

@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import AuthorItem from "../AuthorItem";
 
 const cx = classNames.bind(style);
-function UserInfo({ dataPost, dataLove, profileData }) {
+function UserInfo() {
   const { userId } = useParams();
   console.log("userid:" + userId);
   const [openPopup, setOpenPopup] = useState(false);
@@ -23,6 +23,8 @@ function UserInfo({ dataPost, dataLove, profileData }) {
   const [follower, setFollower] = useState([]);
   const [following, setFollowing] = useState([]);
   const [userData, setUserData] = useState({});
+  const [favoriteBooks, setFavoriteBooks] = useState();
+
   
   useEffect(() => {
     fetch(`http://localhost:8081/api/user/detail/${userId}`, {
@@ -38,6 +40,23 @@ function UserInfo({ dataPost, dataLove, profileData }) {
         setUserData(result.result);
         console.log(result);
       });
+  }, [userId]);
+
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/book/get-book-by-userId/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setFavoriteBooks(result.result);
+        console.log(result.result);
+      });
+    // }
   }, [userId]);
 
   const handleOpenFollower = () => {
@@ -155,7 +174,7 @@ function UserInfo({ dataPost, dataLove, profileData }) {
       <div className={cx("wrapperMoreInfo")}>
         <div className={cx("lineAction")}></div>
         <ul className={cx("menu")}>
-          <ProfileMenu dataLove={dataLove} />
+          <ProfileMenu dataLove={favoriteBooks}/>
         </ul>
       </div>
     </div>

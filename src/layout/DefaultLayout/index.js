@@ -19,46 +19,47 @@ function DefaultLayout({ children }) {
   };
   const accessToken = getToken();
   useEffect(() => {
-
     if (!accessToken) {
-      setIsLogin(false)
-    }else{
-      setIsLogin(true)
+      setIsLogin(false);
+    } else {
+      setIsLogin(true);
+      fetch(`http://localhost:8081/api/user/detail-by-token`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          setProfileData(result.result);
+          console.log(accessToken);
+          console.log(result.result);
+        });
+      fetch(`http://localhost:8081/api/user/following-account-by-token`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${accessToken}`, // Set the content type to JSON
+        },
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((result) => {
+          setFollowing(result.result);
+          console.log(result);
+        });
     }
   }, [_]);
-  useEffect(() => {
-    fetch(`http://localhost:8081/api/user/detail-by-token`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setProfileData(result.result);
-        console.log(accessToken);
-        console.log(result.result);
-      });
-  }, [accessToken]);
-  useEffect(()=>{
-    fetch(`http://localhost:8081/api/user/following-account-by-token`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${accessToken}`, // Set the content type to JSON
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setFollowing(result.result);
-        console.log(result);
-      });
-  }, [accessToken])
+  // useEffect(() => {
+
+  // }, [accessToken]);
+  // useEffect(()=>{
+
+  // }, [accessToken])
   const USER_DATA = {
     userName: "Nguyen Van Khanh",
     userAvatar:
@@ -70,7 +71,6 @@ function DefaultLayout({ children }) {
         "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/user/u_700x933.png",
       name: "BookRags",
       totalBooks: 17,
-     
     },
     {
       avatar:
@@ -83,26 +83,30 @@ function DefaultLayout({ children }) {
         "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
       name: "Emily Henry",
       totalBooks: 17,
-     
     },
     {
       avatar:
         "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1701487498i/7244758._UX200_CR0,4,200,200_.jpg",
       name: "Freida McFadden",
       totalBooks: 17,
-     
     },
   ];
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <Header userData={isLogin ? profileData :null } logout={triggerReRender}/>
+        <Header
+          userData={isLogin ? profileData : null}
+          reRender={triggerReRender}
+        />
         {console.log("re-ren")}
       </div>
       <div className={cx("content")}>
         <div className={cx("sidebar")}>
-          <Sidebar userData={isLogin ? profileData :null} userFollowingData={following} />
+          <Sidebar
+            userData={isLogin ? profileData : null}
+            userFollowingData={following}
+          />
         </div>
         <div className={cx("main-content")}>{children}</div>
       </div>

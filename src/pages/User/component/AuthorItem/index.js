@@ -4,11 +4,14 @@ import style from "./AuthorItem.module.scss";
 import { Link } from "react-router-dom";
 import Button from "../../../../components/Button";
 import { getToken } from "../../../../services/localStorageService";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const cx = classNames.bind(style);
 function AuthorItem({ authorInfo}) {
   const [isFollow, setIsFollow] = useState(authorInfo.followBack);
+  useEffect(() => {
+    setIsFollow(authorInfo.followBack);
+  }, [authorInfo.followBack]);
   const token = getToken(); 
   const handleFollow = (id) => {
     fetch(`http://localhost:8081/api/user/follow-account/${id}`, {
@@ -24,6 +27,7 @@ function AuthorItem({ authorInfo}) {
       .then((result) => {
         console.log(result);
       });
+
       setIsFollow(true)
   };
   const handleUnFollow = (id) => {
@@ -40,6 +44,7 @@ function AuthorItem({ authorInfo}) {
       .then((result) => {
         console.log(result);
       });
+
       setIsFollow(false)
   };
   return (

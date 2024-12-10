@@ -110,6 +110,16 @@
             color: var(--main-color);
         }
     }
+    div>button:first-child{
+        font-size: 14px;
+         padding: 5px 15px;
+         background-color: white;
+         border: solid 0.5px rgb(201, 197, 197);
+         cursor: pointer;
+         &:hover{
+            opacity: 0.6;
+         }
+    }
 }
 
 .actionNotLogin {
@@ -143,5 +153,19 @@
         font-size: 14px;
         height: 30px;
         color: gray;
+    }
+}
+.createPost{
+    >div{
+        position: relative;
+    }
+    >button:first-child{
+        z-index: 1;
+        position: absolute;
+        right: 10px;
+        background-color: white;
+        font-size: 20px;
+        border-radius: 99px;
+        cursor: pointer;
     }
 }

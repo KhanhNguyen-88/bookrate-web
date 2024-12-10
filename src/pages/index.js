@@ -8,5 +8,6 @@ import NewExplore from "./NewExplore";
 import BookDetail from "./BookDetail";
 import Register from "./Register";
 import User from "./User";
+import CreatePost from "./CreatePost";
 
-export {Home, Explore, NewExplore, Following, Ranking, Profile, Login, BookDetail, Register, User}
+export {Home, Explore, NewExplore, Following, Ranking, Profile, Login, BookDetail, Register, User, CreatePost}
