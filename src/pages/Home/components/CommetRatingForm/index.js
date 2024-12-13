@@ -70,7 +70,7 @@ const CommentRatingForm = ({ bookId }) => {
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
-        placeholder="Viết bình luận..."
+        placeholder="Bình luận..."
         style={{
           flex: "8",
           padding: "10px",

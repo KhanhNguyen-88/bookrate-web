@@ -1,4 +1,8 @@
-import { faChevronDown, faComment, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronDown,
+  faComment,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import AuthorItem from "../../../../components/AuthorItem";
@@ -21,6 +25,33 @@ function BookItem({ item }) {
   );
   // const [feedBacks, setFeedBacks] = useState(item.feedbackResponseList != null ? item.feedbackResponseList : []);
   const [openPopup, setOpenPopup] = useState(false);
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    fetch(
+      `http://localhost:8081/api/file/preview/${item.bookResponse.bookImage}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          console.log("Ảnh có trên cloud");
+          return response.json();
+        } else {
+          throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+        }
+      })
+      .then((result) => {
+        setImage(result.result);
+      })
+      .catch((e) => {
+        console.log("Ảnh chưa có trên cloud");
+      });
+  });
 
   useEffect(() => {
     const paramsBookId = {
@@ -44,6 +75,7 @@ function BookItem({ item }) {
         console.log(result.result);
       });
   }, [item.id]);
+
   useEffect(() => {
     fetch(`http://localhost:8081/api/user/detail/1`, {
       method: "GET",
@@ -112,6 +144,7 @@ function BookItem({ item }) {
       });
     setIsLike(false);
   };
+
   const handleCommentSubmit = (data) => {
     console.log("Dữ liệu gửi:", data);
     // Gửi dữ liệu đến API hoặc xử lý tại đây
@@ -122,7 +155,7 @@ function BookItem({ item }) {
       <div className={cx("bookWrapper")}>
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
-            <img src={item.bookResponse.bookImage} alt="book-img" />
+            <img src={image !== "" ? image :item.bookResponse.bookImage} alt="book-img" />
             <div className={cx("btnGroup")}>
               {isLike ? (
                 <div className={cx("btnLiked")}>
@@ -206,9 +239,11 @@ function BookItem({ item }) {
             >
               {(close) => (
                 <div className={cx("commentPost")}>
-                  <div className = {cx("headerCom")}>
+                  <div className={cx("headerCom")}>
                     <h3>All Comment</h3>
-                    <Button onClick={()=>setOpenPopup(false)}><FontAwesomeIcon icon={faXmark}/></Button>
+                    <Button onClick={() => setOpenPopup(false)}>
+                      <FontAwesomeIcon icon={faXmark} />
+                    </Button>
                   </div>
                   <div className={cx("comments")}>{renderComment()}</div>
                   <CommentRatingForm bookId={item.bookResponse.id} />

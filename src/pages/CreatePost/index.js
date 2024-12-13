@@ -42,6 +42,7 @@ const theme = createTheme({
 
 function CreatePost({ handleClose }) {
   const [postImage, setPostImage] = useState(null);
+  const [imagePre, setImagePre] = useState(null);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [popupCategories, setPopupCategories] = useState([]);
@@ -73,10 +74,25 @@ function CreatePost({ handleClose }) {
       });
   }, []);
 
-  const handleImageUpload = (e) => {
+  const handleImageUpload = async (e) => {
     const file = e.target.files[0];
+    const formData = new FormData();
     if (file) {
-      setPostImage(URL.createObjectURL(file));
+      formData.append("file", file)
+      const response = await fetch("http://localhost:8081/api/file/upload", {
+        method: "POST",
+        body: formData
+      });
+      const result = await response.json();
+      setPostImage(result.result);
+      const response2 = await fetch(`http://localhost:8081/api/file/preview/${result.result}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
+      const result2 = await response2.json();
+      setImagePre(result2.result);
     }
   };
 
@@ -188,9 +204,9 @@ function CreatePost({ handleClose }) {
               htmlFor="bookImage"
               style={{ cursor: "pointer", display: "block" }}
             >
-              {postImage ? (
+              {imagePre ? (
                 <img
-                  src={postImage}
+                  src={imagePre}
                   alt="Preview"
                   style={{
                     width: "100%",

@@ -56,7 +56,7 @@ function BookDetail() {
       })
       .then((result) => {
         setData(result.result.bookResponse);
-        setFeedbacks(result.result.feedbackResponseList);
+        setFeedbacks(result.result.feedbackResponseList !== null ? result.result.feedbackResponseList: [] ); 
       });
   }, [id, userId]);
   return (

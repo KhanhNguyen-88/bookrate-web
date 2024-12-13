@@ -9,20 +9,56 @@ import style from "./BookItem.module.scss";
 import { useEffect, useRef, useState } from "react";
 import RateChartItem from "../RateChartItem";
 import UserComment from "../../../Home/components/UserComment";
+import { getToken } from "../../../../services/localStorageService";
 
 const cx = classNames.bind(style);
 function BookItem({ item, feedBackList }) {
   const [categories, setCategories] = useState([]);
   const targetRef = useRef(null);
-  const allRating = feedBackList.map((itemFB, index) => {
-    return itemFB.rating;
-  });
-  const sum = allRating.reduce((acc, cur) => {
-    return acc + cur;
-  }, 0);
-  const avg = Math.round((sum / allRating.length) * 10) / 10;
-  console.log(avg);
-  const ratings = feedBackList.length;
+  const [image, setImage] = useState("");
+  const [isLike, setIsLike] = useState(false);
+
+  useEffect(() => {
+    setIsLike(item.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
+  }, [item.isFavorite]);
+  
+  let avg = 0;
+  let ratings = 0;
+
+  if (feedBackList.length > 0) {
+    const allRating = feedBackList.map((itemFB, index) => {
+      return itemFB.rating;
+    });
+    const sum = allRating.reduce((acc, cur) => {
+      return acc + cur;
+    }, 0);
+    avg = Math.round((sum / allRating.length) * 10) / 10;
+    console.log(avg);
+    ratings = feedBackList.length;
+  }
+
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/file/preview/${item.bookImage}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Ảnh có trên cloud");
+          return response.json();
+        } else {
+          throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+        }
+      })
+      .then((result) => {
+        setImage(result.result);
+      })
+      .catch((e) => {
+        console.log("Ảnh chưa có trên cloud");
+      });
+  }, [item.bookImage]);
 
   useEffect(() => {
     const paramsBookId = {
@@ -46,6 +82,7 @@ function BookItem({ item, feedBackList }) {
         console.log(result.result);
       });
   }, [item.id]);
+
   const renderBookGenres = () => {
     return categories.map((item, index) => {
       return (
@@ -55,6 +92,7 @@ function BookItem({ item, feedBackList }) {
       );
     });
   };
+
   const renderUserComment = () => {
     return feedBackList.map((cur, index) => {
       return (
@@ -65,21 +103,69 @@ function BookItem({ item, feedBackList }) {
       );
     });
   };
-  const handleClickRate = ()=>{
-    targetRef.current.scrollIntoView({ behavior: "smooth" })
-  }
+
+  const handleClickRate = () => {
+    targetRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleLike = (bookId) => {
+    const token = getToken();
+    fetch(`http://localhost:8081/api/user/mark-favorite-book/${bookId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`, // Set the content type to JSON
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+      });
+    setIsLike(true);
+  };
+
+  const handleUnLike = (bookId) => {
+    const token = getToken();
+    fetch(`http://localhost:8081/api/user/unmark-favorite-book/${bookId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`, // Set the content type to JSON
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+      });
+    setIsLike(false);
+  };
+
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
-        <img src={item.bookImage} alt="book-img" />
+        <img src={image !== "" ? image : item.bookImage} alt="book-img" />
         <div className={cx("btnGroup")}>
-          <div className={cx("wtRead")}>
-            <Button second>Quan tâm</Button>
-            <span></span>
-            <Button second>
-              <FontAwesomeIcon icon={faChevronDown} />
-            </Button>
-          </div>
+          {isLike ? (
+            <div className={cx("btnLiked")}>
+              <Button liked onClick={() => handleUnLike(item.id)}>
+                Liked
+              </Button>
+            </div>
+          ) : (
+            <div className={cx("wtRead")}>
+              <Button second onClick={() => handleLike(item.id)}>
+                Quan tâm
+              </Button>
+              <span></span>
+              <Button second>
+                <FontAwesomeIcon icon={faChevronDown} />
+              </Button>
+            </div>
+          )}
           <Button second>Tìm mua</Button>
         </div>
       </div>
@@ -89,7 +175,7 @@ function BookItem({ item, feedBackList }) {
           <div className={cx("rate")} onClick={handleClickRate}>
             <div className={cx("points")}>
               <ShowStars points={avg} />
-              <p>{avg === NaN ? 0 : avg}</p>
+              <p>{avg}</p>
             </div>
             <span className={cx("ratings")}>{ratings} ratings</span>
           </div>
@@ -157,10 +243,12 @@ function BookItem({ item, feedBackList }) {
           </div>
         </div>
         <UnderLine></UnderLine>
-        <div className={cx("allComments")}>
-          <p>Các đánh giá nổi bật</p>
-          <div>{renderUserComment()}</div>
-        </div>
+        {feedBackList !== null ? (
+          <div className={cx("allComments")}>
+            <p>Các đánh giá nổi bật</p>
+            <div>{renderUserComment()}</div>
+          </div>
+        ) : null}
       </div>
     </div>
   );

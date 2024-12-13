@@ -217,9 +217,12 @@ function Header({ userData, reRender }) {
                 interactive
                 render={() => {
                   return (
-                    <div>
+                    <div className = {cx("wrapperProfile")}>
                       <ul>
                         <Button primary onClick={handleLogout}>Logout</Button>
+                      </ul>
+                      <ul>
+                        <li>Cá nhân</li>
                       </ul>
                     </div>
                   );
