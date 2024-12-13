@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const cx = classNames.bind(style);
-function ItemBookSearch({ item }) {
+function ItemBookSearch({ item, onClick }) {
   const [image, setImage] = useState("");
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function ItemBookSearch({ item }) {
       })
   }, [item.bookImage]);
   return (
-    <Link to={`/book/${item.id}`} className = {cx("wrapper")}>
+    <Link to={`/book/${item.id}`} className = {cx("wrapper")} onClick={onClick}>
       <img src={image !== "" ? image :item.bookImage}></img>
       <div className = {cx("info")}>
         <strong>{item.bookName}</strong>

@@ -20,9 +20,12 @@ const cx = classNames.bind(style);
 function BookItem({ item }) {
   const [categories, setCategories] = useState([]);
   const [userInfo, setUserInfo] = useState({});
-  const [isLike, setIsLike] = useState(
-    item.bookResponse.isFavorite != 0 ? true : false
-  );
+  const [isLike, setIsLike] = useState(false)
+
+  useEffect(() => {
+    setIsLike(item.bookResponse.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
+  }, [item.bookResponse.isFavorite]);
+  
   // const [feedBacks, setFeedBacks] = useState(item.feedbackResponseList != null ? item.feedbackResponseList : []);
   const [openPopup, setOpenPopup] = useState(false);
   const [image, setImage] = useState("");

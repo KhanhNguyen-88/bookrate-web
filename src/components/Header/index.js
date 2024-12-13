@@ -8,6 +8,7 @@ import {
   faPaperPlane,
   faPlus,
   faQuestion,
+  faRightFromBracket,
   faSearch,
   faSpinner,
   faSun,
@@ -28,7 +29,7 @@ import style from "./Header.module.scss";
 import ItemBookSearch from "../ItemBookSearch";
 import CreatePost from "../../pages/CreatePost";
 import Popup from "reactjs-popup";
-
+import UpdateProfile from "../../pages/UpdateProfile";
 
 const MENU_ITEMS = [
   {
@@ -67,6 +68,7 @@ function Header({ userData, reRender }) {
   const [searchTerm, setSearchTerm] = useState();
   const [data, setData] = useState();
   const [openPopup, setOpenPopup] = useState(false);
+  const [popupProfile, setPopupProfile] = useState(false);
   const navigate = useNavigate();
 
   const renderMenuItems = () => {
@@ -90,18 +92,20 @@ function Header({ userData, reRender }) {
   const onBack = () => {
     setHistory((prev) => prev.slice(0, prev.length - 1));
   };
+
   const renderHeaderMenu = () => {
     return <HeaderMenu title={lastItem.title} onClick={onBack} />;
   };
+
   const handleLogout = () => {
-    navigate("/")
+    navigate("/");
     logOut(); // remove token
     reRender(); // re-render layout
   };
 
-  const handleSuggestionClick = (author, e) => {
-    e.preventDefault();
-    setSearchTerm(author);
+  const handleSuggestionClick = () => {
+    // e.preventDefault();
+    // setSearchTerm(null);
     setSuggestions([]); // Xóa gợi ý sau khi chọn
   };
 
@@ -134,14 +138,18 @@ function Header({ userData, reRender }) {
     setSearchTerm(null);
   };
 
-
   const handleClosePopup = (close) => {
-    const confirmClose = window.confirm("Bạn có chắc chắn muốn hủy bài viết đang tạo?");
+    const confirmClose = window.confirm(
+      "Bạn có chắc chắn muốn hủy bài viết đang tạo?"
+    );
     if (confirmClose) {
       close(); // Thực sự đóng popup nếu người dùng xác nhận
     }
   };
 
+  const handleShowInfo = () => {
+    setPopupProfile(true);
+  };
   //
   return (
     <div className={cx("wrapper")}>
@@ -163,7 +171,13 @@ function Header({ userData, reRender }) {
               <ul className={cx("wrapperSug")}>
                 <p>Gợi ý sách</p>
                 {suggestions.map((item, index) => (
-                  <ItemBookSearch key={index} item={item} />
+                  <ItemBookSearch
+                    key={index}
+                    item={item}
+                    onClick={
+                     ()=> setSuggestions([]) // Xóa gợi ý sau khi chọn
+                    }
+                  />
                 ))}
               </ul>
             ) : null; // Không render gì nếu không có gợi ý
@@ -182,30 +196,58 @@ function Header({ userData, reRender }) {
         {/* <span className={cx("loadIcon")}>
           <FontAwesomeIcon icon={faSpinner} />
         </span> */}
-        <span className={cx("clearIcon")} onClick={handleClearSearch}>
+        <span className={cx("clearIcon")} onClick={() => handleClearSearch}>
           <FontAwesomeIcon icon={faXmarkCircle} />
         </span>
       </div>
       <div className={cx("action")}>
         {userData ? (
           <div className={cx("actionLogin")}>
-            <div><Button onClick={()=>setOpenPopup(true)} leftIcon={<FontAwesomeIcon icon={faPlus}/>}>Tải lên</Button></div>
-            <Popup
-                open={openPopup} // Kiểm soát mở popup qua trạng thái
-                onClose={() => setOpenPopup(false)} // Đóng popup
-                closeOnDocumentClick={false}
-                modal
-                nested
+            <div>
+              <Button
+                onClick={() => setOpenPopup(true)}
+                leftIcon={<FontAwesomeIcon icon={faPlus} />}
               >
-                {(close) => (
-                  <div className = {cx("createPost")}>
-                     <Button className="close" onClick={()=>handleClosePopup(close)}>
-                        &times;
-                      </Button>
-                    <CreatePost handleClose={close}/>
+                Tải lên
+              </Button>
+            </div>
+            <Popup
+              open={openPopup} // Kiểm soát mở popup qua trạng thái
+              onClose={() => setOpenPopup(false)} // Đóng popup
+              closeOnDocumentClick={false}
+              modal
+              nested
+            >
+              {(close) => (
+                <div className={cx("createPost")}>
+                  <Button
+                    className="close"
+                    onClick={() => handleClosePopup(close)}
+                  >
+                    &times;
+                  </Button>
+                  <CreatePost handleClose={close} />
+                </div>
+              )}
+            </Popup>
+            <Popup
+              open={popupProfile} // Kiểm soát mở popup qua trạng thái
+              onClose={() => setPopupProfile(false)} // Đóng popup
+              // closeOnDocumentClick={false}
+              modal
+              nested
+            >
+              {(close) => (
+                <div className={cx("updateProfile")}>
+                  <Button className="close" onClick={close}>
+                    &times;
+                  </Button>
+                  <div>
+                    <UpdateProfile />
                   </div>
-                )}
-              </Popup>
+                </div>
+              )}
+            </Popup>
             {/* <Button to leftIcon={<FontAwesomeIcon icon={faMessage} />}></Button>
             <Button
               to
@@ -217,12 +259,23 @@ function Header({ userData, reRender }) {
                 interactive
                 render={() => {
                   return (
-                    <div className = {cx("wrapperProfile")}>
+                    <div className={cx("wrapperProfile")}>
                       <ul>
-                        <Button primary onClick={handleLogout}>Logout</Button>
-                      </ul>
-                      <ul>
-                        <li>Cá nhân</li>
+                        <Button
+                          primary
+                          onClick={handleLogout}
+                          leftIcon={
+                            <FontAwesomeIcon icon={faRightFromBracket} />
+                          }
+                        >
+                          Logout
+                        </Button>
+                        <li
+                          className={cx("btnProfile")}
+                          onClick={() => handleShowInfo()}
+                        >
+                          <p>Cá nhân</p>
+                        </li>
                       </ul>
                     </div>
                   );

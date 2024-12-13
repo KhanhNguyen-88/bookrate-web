@@ -72,7 +72,7 @@ function CreatePost({ handleClose }) {
       .catch((error) => {
         console.error("Lỗi khi lấy danh mục:", error);
       });
-  }, []);
+  }, [openAddCategoryDialog]);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -164,10 +164,7 @@ function CreatePost({ handleClose }) {
         "http://localhost:8081/api/category/add",
         newCategory
       );
-      setCategories([...categories, response.data]);
-      setPopupCategories([...popupCategories, response.data]);
       setOpenAddCategoryDialog(false);
-      setNewCategory({ cateName: "", cateDescription: "", cateImage: "" });
     } catch (error) {
       console.error("Lỗi khi thêm thể loại mới:", error);
     }
