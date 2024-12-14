@@ -1,4 +1,4 @@
-import { faAddressBook, faCompass } from "@fortawesome/free-regular-svg-icons";
+import {faCompass } from "@fortawesome/free-regular-svg-icons";
 import {
   faHome,
   faRankingStar,
@@ -13,11 +13,39 @@ import MenuItem from "../MenuItem";
 import UnderLine from "../UnderLine";
 import style from "./Sidebar.module.scss";
 import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const cx = classNames.bind(style);
 
 function Sidebar({ userData, userFollowingData }) {
   const location = useLocation();
+  const [imagePre, setImagePre] = useState();
+
+  useEffect(() => {
+    if (userData && userData.userImage) {
+      fetch(`http://localhost:8081/api/file/preview/${userData.userImage}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Ảnh có trên cloud");
+            return response.json();
+          } else {
+            throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+          }
+        })
+        .then((result) => {
+          setImagePre(result.result);
+        })
+        .catch((e) => {
+          console.log("Ảnh chưa có trên cloud");
+        });
+    }
+  }, [userData]); 
+
   const renderUserFollowing = () => {
     return userFollowingData.map((userFollowing, index) => {
       return <AuthorItem authorInfo={userFollowing} key={index}></AuthorItem>;
@@ -39,7 +67,7 @@ function Sidebar({ userData, userFollowingData }) {
       name: "Cá Nhân",
       path: "/user/profile",
       icon: userData ? (
-        <img src={userData.userImage} alt="avatar"></img>
+        <img src={imagePre} alt="avatar"></img>
       ) : (
         <FontAwesomeIcon icon={faUser} />
       ),

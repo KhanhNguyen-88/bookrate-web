@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   Button,
@@ -13,49 +13,122 @@ import {
   IconButton,
 } from "@mui/material";
 import { AddPhotoAlternate } from "@mui/icons-material";
+import { getToken } from "../../services/localStorageService";
 
 const UpdateProfile = () => {
-  const [formData, setFormData] = useState({
-    password: "$2a$10$UQU8HCPFzOne5oEWFMi5OuQHIg6RP0L07f8BqiQzObTEB1ftb4nJ2",
-    userImage: "",
-    fullName: "Huu Duy",
-    userDOB: "2003-06-06",
-    userAddress: "TP Hải Dương, tỉnh Hải Dương",
-    userGender: true,
-    userPhone: "0542857694",
-    userEmail: "huuduy@gmail.com",
-    userLink: "",
-  });
+  const [userData, setUserData] = useState({});
+  const [imagePre, setImagePre] = useState("");
+  const [image, setImage] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [userDOB, setUserDOB] = useState("");
+  const [userAddress, setUserAddress] = useState("");
+  const [userGender, setUserGender] = useState("");
+  const [userPhone, setUserPhone] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  useEffect(() => {
+    const accessToken = getToken();
+    fetch(`http://localhost:8081/api/user/user-token`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setUserData(result.result);
+        console.log("data user",result.result)
+      });
+  }, []);
+  
 
-  const handleImageChange = (e) => {
+
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/file/preview/${userData.userImage}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Ảnh có trên cloud");
+          return response.json();
+        } else {
+          throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+        }
+      })
+      .then((result) => {
+        setImagePre(result.result);
+      })
+      .catch((e) => {
+        console.log("Ảnh chưa có trên cloud");
+      });
+  }, [userData]);
+
+  useEffect(()=>{
+    setImage(userData.userImage);
+    setFullName(userData.fullName);
+    setUserAddress(userData.userAddress);
+    setUserEmail(userData.userEmail);
+    setUserDOB(userData.userDOB);
+    setUserPhone(userData.userPhone);
+    setUserGender(userData.userGender);
+  }, [userData])
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData({ ...formData, userImage: reader.result });
-      };
-      reader.readAsDataURL(file);
+      const formDataImage = new FormData();
+      formDataImage.append("file", file);
+      const response = await fetch("http://localhost:8081/api/file/upload", {
+        method: "POST",
+        body: formDataImage,
+      });
+      const result = await response.json();
+      setImage(result.result);
+
+      const response2 = await fetch(
+        `http://localhost:8081/api/file/preview/${result.result}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const result2 = await response2.json();
+      setImagePre(result2.result);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Updated profile:", formData);
+    console.log("ImageUpload", image);
     // Make an API call here with JSON payload
     fetch("http://localhost:8081/api/user/update/1", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        password: userData.password,
+        userImage: image,
+        fullName: fullName,
+        userDOB: userDOB,
+        userAddress: userAddress,
+        userGender: userGender,
+        userPhone: userPhone,
+        userEmail: userEmail,
+        userLink: userData.userLink,
+      }),
     })
       .then((response) => response.json())
-      .then((data) => console.log("Success:", data))
+      .then((data) =>{
+        alert("Cập nhật thành công!");
+      })
       .catch((error) => console.error("Error:", error));
   };
 
@@ -71,7 +144,7 @@ const UpdateProfile = () => {
       }}
     >
       <Typography variant="h5" gutterBottom>
-        Update Profile
+        Cập nhật thông tin cá nhân
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
@@ -94,18 +167,18 @@ const UpdateProfile = () => {
                 onChange={handleImageChange}
               />
               <Avatar
-                src={formData.userImage || ""}
+                src={imagePre || ""}
                 alt="User Avatar"
                 sx={{
                   width: 200,
                   height: 200,
-                  backgroundColor: !formData.userImage ? "gray" : "transparent",
+                  backgroundColor: !imagePre ? "gray" : "transparent",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
                 }}
               >
-                {!formData.userImage && (
+                {!imagePre && (
                   <IconButton
                     sx={{
                       color: "white",
@@ -127,8 +200,8 @@ const UpdateProfile = () => {
               fullWidth
               label="Họ và tên"
               name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               margin="normal"
               size="small"
             />
@@ -138,8 +211,8 @@ const UpdateProfile = () => {
               label="Ngày sinh"
               type="date"
               name="userDOB"
-              value={formData.userDOB}
-              onChange={handleChange}
+              value={userDOB}
+              onChange={(e) => setUserDOB(e.target.value)}
               InputLabelProps={{ shrink: true }}
               margin="normal"
               size="small"
@@ -149,8 +222,8 @@ const UpdateProfile = () => {
               fullWidth
               label="Email"
               name="userEmail"
-              value={formData.userEmail}
-              onChange={handleChange}
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
               margin="normal"
               size="small"
             />
@@ -159,8 +232,8 @@ const UpdateProfile = () => {
               fullWidth
               label="Số điện thoại"
               name="userPhone"
-              value={formData.userPhone}
-              onChange={handleChange}
+              value={userPhone}
+              onChange={(e) => setUserPhone(e.target.value)}
               margin="normal"
               size="small"
             />
@@ -169,29 +242,22 @@ const UpdateProfile = () => {
               fullWidth
               label="Địa chỉ"
               name="userAddress"
-              value={formData.userAddress}
-              onChange={handleChange}
+              value={userAddress}
+              onChange={(e) => setUserAddress(e.target.value)}
               margin="normal"
               size="small"
             />
 
-            <FormControl sm={6} margin="normal">
+            <FormControl fullWidth margin="normal">
               <InputLabel>Giới tính</InputLabel>
               <Select
                 name="userGender"
-                value={formData.userGender ? "true" : "false"}
-                onChange={(e) =>
-                  handleChange({
-                    target: {
-                      name: "userGender",
-                      value: e.target.value === "true",
-                    },
-                  })
-                }
+                value={userGender ? "true" : "false"}
+                onChange={(e) => setUserGender(e.target.value)}
                 size="small"
               >
-                <MenuItem value="true">Nam</MenuItem>
-                <MenuItem value="false">Nữ</MenuItem>
+                <MenuItem value="false">Nam</MenuItem>
+                <MenuItem value="true">Nữ</MenuItem>
               </Select>
             </FormControl>
           </Grid>

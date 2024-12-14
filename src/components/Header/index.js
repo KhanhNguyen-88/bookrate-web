@@ -3,14 +3,11 @@ import {
   faE,
   faEarthAmerica,
   faEllipsisV,
-  faMessage,
   faMoon,
-  faPaperPlane,
   faPlus,
   faQuestion,
   faRightFromBracket,
   faSearch,
-  faSpinner,
   faSun,
   faXmarkCircle,
 } from "@fortawesome/free-solid-svg-icons";
@@ -69,6 +66,7 @@ function Header({ userData, reRender }) {
   const [data, setData] = useState();
   const [openPopup, setOpenPopup] = useState(false);
   const [popupProfile, setPopupProfile] = useState(false);
+  const [imagePre, setImagePre] = useState();
   const navigate = useNavigate();
 
   const renderMenuItems = () => {
@@ -103,12 +101,6 @@ function Header({ userData, reRender }) {
     reRender(); // re-render layout
   };
 
-  const handleSuggestionClick = () => {
-    // e.preventDefault();
-    // setSearchTerm(null);
-    setSuggestions([]); // Xóa gợi ý sau khi chọn
-  };
-
   const handleChangeInput = (e) => {
     setSearchTerm(e.target.value);
     if (!e.target.value.trim()) {
@@ -118,6 +110,31 @@ function Header({ userData, reRender }) {
       setSuggestions(data);
     }
   };
+
+  useEffect(() => {
+    if (userData && userData.userImage) {
+      fetch(`http://localhost:8081/api/file/preview/${userData.userImage}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Ảnh có trên cloud");
+            return response.json();
+          } else {
+            throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+          }
+        })
+        .then((result) => {
+          setImagePre(result.result);
+        })
+        .catch((e) => {
+          console.log("Ảnh chưa có trên cloud");
+        });
+    }
+  }, [userData]); 
 
   useEffect(() => {
     fetch(`http://localhost:8081/api/book/search-common/${searchTerm}`, {
@@ -133,6 +150,8 @@ function Header({ userData, reRender }) {
         setData(result.result);
       });
   }, [searchTerm]);
+
+
   const handleClearSearch = () => {
     console.log("click");
     setSearchTerm(null);
@@ -248,11 +267,7 @@ function Header({ userData, reRender }) {
                 </div>
               )}
             </Popup>
-            {/* <Button to leftIcon={<FontAwesomeIcon icon={faMessage} />}></Button>
-            <Button
-              to
-              leftIcon={<FontAwesomeIcon icon={faPaperPlane} />}
-            ></Button> */}
+            
             <AvatarWrapper>
               <Tippy
                 delay={[0, 500]}
@@ -281,7 +296,7 @@ function Header({ userData, reRender }) {
                   );
                 }}
               >
-                <img src={userData.userImage} alt="avatar" />
+                <img src={imagePre} alt="avatar" />
               </Tippy>
             </AvatarWrapper>
           </div>
