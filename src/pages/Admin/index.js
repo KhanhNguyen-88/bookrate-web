@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import SidebarAdmin from "./components/SidebarAdmin";
 import PostChart from "./components/PostChart";
 import UserTable from "./components/UserTable";
+import ReviewBook from "./components/ReviewBook";
 
 function Admin() {
     const [view, setView] = useState("dashboard");
@@ -58,6 +59,7 @@ function Admin() {
             <div style={{ flex: 1, padding: "20px" }}>
                 {view === "dashboard" && <PostChart data={postData} />}
                 {view === "users" && <UserTable users={users} onDelete={(id)=>handleDelete(id) } />}
+                {view === "review" && <ReviewBook/>}
             </div>
         </div>
     );

@@ -18,6 +18,12 @@ const SidebarAdmin = ({ onSelect }) => (
                 </ListItemIcon>
                 <ListItemText primary="Quản lý User" />
             </ListItem>
+            <ListItem button onClick={() => onSelect("review")}>
+                <ListItemIcon>
+                    <PeopleIcon />
+                </ListItemIcon>
+                <ListItemText primary="Duyệt sách" />
+            </ListItem>
         </List>
     </Box>
 );
