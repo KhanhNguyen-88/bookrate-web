@@ -17,7 +17,10 @@ function BookItem({ item, feedBackList }) {
   const targetRef = useRef(null);
   const [image, setImage] = useState("");
   const [isLike, setIsLike] = useState(false);
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN"); // Định dạng ngày tháng năm theo tiếng Việt
+  };
   useEffect(() => {
     setIsLike(item.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
   }, [item.isFavorite]);

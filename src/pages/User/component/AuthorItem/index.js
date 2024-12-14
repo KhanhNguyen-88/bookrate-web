@@ -9,6 +9,32 @@ import { useState, useEffect } from "react";
 const cx = classNames.bind(style);
 function AuthorItem({ authorInfo}) {
   const [isFollow, setIsFollow] = useState(authorInfo.followBack);
+  const [imagePre, setImagePre] = useState();
+  useEffect(() => {
+    if (authorInfo && authorInfo.userImage) {
+      fetch(`http://localhost:8081/api/file/preview/${authorInfo.userImage}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Ảnh có trên cloud");
+            return response.json();
+          } else {
+            throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+          }
+        })
+        .then((result) => {
+          setImagePre(result.result);
+        })
+        .catch((e) => {
+          console.log("Ảnh chưa có trên cloud");
+        });
+    }
+  }, [authorInfo]);  
+
   useEffect(() => {
     setIsFollow(authorInfo.followBack);
   }, [authorInfo.followBack]);
@@ -51,7 +77,7 @@ function AuthorItem({ authorInfo}) {
     <div className={cx("mainWrapper")}>
       <Link to={`/user/${authorInfo.userId}`} className={cx("wrapper")}>
         {/* <AvatarWrapper> */}
-        <img src={authorInfo.userImage} alt="author-avatar" />
+        <img src={imagePre} alt="author-avatar" />
         {/* </AvatarWrapper> */}
         <div className={cx("info")}>
           <h4 className={cx("name")}>{authorInfo.userName}</h4>

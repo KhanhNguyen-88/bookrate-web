@@ -20,7 +20,10 @@ const cx = classNames.bind(style);
 function BookItem({ item }) {
   const [categories, setCategories] = useState([]);
   const [isLike, setIsLike] = useState(false)
-
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("vi-VN"); // Định dạng ngày tháng năm theo tiếng Việt
+  };
   useEffect(() => {
     setIsLike(item.bookResponse.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
   }, [item.bookResponse.isFavorite]);
@@ -172,8 +175,8 @@ function BookItem({ item }) {
           </div>
           <div className={cx("info")}>
             <div className={cx("creator")}>
-              <UserItem userImage={item.bookResponse.userImage} userName={item.bookResponse.createdBy}/>
-              <p>{item.bookResponse.createdAt}</p>
+              <UserItem userImage={item.bookResponse.userImage} userName={item.bookResponse.createdBy} userId={item.bookResponse.userId}/>
+              <p>{formatDate(item.bookResponse.createdAt)}</p>
             </div>
             <h3 className={cx("title")}>{item.bookResponse.bookName}</h3>
             <div>

@@ -173,14 +173,17 @@ function Home() {
   const [userId, setUserId] = useState();
 
   useEffect(() => {
-    const fetchUserId = async () => {
+    const fetchUserIdAndConnectSSE = async () => {
       try {
+        // Lấy token
         const token = getToken();
+  
+        // Gọi API để lấy userId
         const response = await fetch("http://localhost:8081/api/user/get-id-by-token", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json", // Set the content type to JSON
+            "Content-Type": "application/json",
           },
         });
   
@@ -189,44 +192,49 @@ function Home() {
         }
   
         const result = await response.json();
-        setUserId(result.result);
-        console.log(result.result);
+        const userId = result.result;
+        setUserId(userId);
+        console.log(userId);
+  
+        // Khởi tạo SSE với userId
+        const eventSource = new EventSource(
+          `http://localhost:8081/api/book/stream/${userId}`
+        );
+  
+        const handleEvent = (event) => {
+          console.log("Dữ liệu nhận được từ SSE:", event.data);
+  
+          try {
+            const data = JSON.parse(event.data);
+            if (Array.isArray(data)) {
+              setBooks(data);
+            } else {
+              console.error("Dữ liệu không hợp lệ hoặc không phải mảng", data);
+            }
+          } catch (error) {
+            console.error("Lỗi khi parse dữ liệu SSE:", error);
+          }
+        };
+  
+        eventSource.addEventListener("post-list-event", handleEvent);
+  
+        // Cleanup khi component unmount
+        return () => {
+          eventSource.close();
+          console.log("SSE connection closed");
+        };
       } catch (error) {
-        console.error("Lỗi khi lấy userId:", error);
+        console.error("Lỗi khi lấy userId hoặc kết nối SSE:", error);
       }
     };
   
-    fetchUserId();
+    fetchUserIdAndConnectSSE();
   }, []);
   
-  useEffect(() => {
-    const eventSource = new EventSource(
-      `http://localhost:8081/api/book/stream/${userId}`
-    );
-
-    const handleEvent = (event) => {
-      console.log("Dữ liệu nhận được từ SSE:", event.data);
-
-      try {
-        const data = JSON.parse(event.data);
-        if (Array.isArray(data)) {
-          setBooks(data);
-        } else {
-          console.error("Dữ liệu không hợp lệ hoặc không phải mảng", data);
-        }
-      } catch (error) {
-        console.error("Lỗi khi parse dữ liệu SSE:", error);
-      }
-    };
-
-    eventSource.addEventListener("post-list-event", handleEvent);
-
-    // Cleanup khi component unmount
-    return () => {
-      eventSource.close();
-      console.log("SSE connection closed");
-    };
-  }, [userId]);
+  
+  // useEffect(() => {
+    
+  // }, [userId]);
 
   const handleChangePage = (currentPage) => {
     setPage(currentPage);

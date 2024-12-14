@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 const cx = classNames.bind(style)
-function UserItem({userFollowing, userName, userImage}) {
+function UserItem({userFollowing, userName, userImage, userId}) {
     const [imagePre, setImagePre] = useState("");
     useEffect(() => {
         if (userName && userImage) {
@@ -31,7 +31,7 @@ function UserItem({userFollowing, userName, userImage}) {
             });
         }
       }, [userImage]); 
-    return <Link to={"/user/1"} className = {cx("wrapper")}>
+    return <Link to={`/user/${userId}`} className = {cx("wrapper")}>
         <AvatarWrapper><img src={imagePre} alt="avatar"/></AvatarWrapper>
         <div>
             <strong>{userName}</strong>

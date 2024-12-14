@@ -54,43 +54,6 @@ function DefaultLayout({ children }) {
         });
     }
   }, [_]);
-  // useEffect(() => {
-
-  // }, [accessToken]);
-  // useEffect(()=>{
-
-  // }, [accessToken])
-  const USER_DATA = {
-    userName: "Nguyen Van Khanh",
-    userAvatar:
-      "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
-  };
-  const AUTHOR_FOLLOWING_ITEMS = [
-    {
-      avatar:
-        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/nophoto/user/u_700x933.png",
-      name: "BookRags",
-      totalBooks: 17,
-    },
-    {
-      avatar:
-        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1651706989i/18446724._UX200_CR0,26,200,200_.jpg",
-      name: "Abby Jimenez",
-      totalBooks: 17,
-    },
-    {
-      avatar:
-        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1573928938i/13905555._UX200_CR0,1,200,200_.jpg",
-      name: "Emily Henry",
-      totalBooks: 17,
-    },
-    {
-      avatar:
-        "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/authors/1701487498i/7244758._UX200_CR0,4,200,200_.jpg",
-      name: "Freida McFadden",
-      totalBooks: 17,
-    },
-  ];
 
   return (
     <div className={cx("wrapper")}>
