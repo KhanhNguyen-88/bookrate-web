@@ -82,8 +82,11 @@ export default function Login() {
 
         setToken(data.result?.token);
         console.log(data.result?.token);
-
-        navigate("/");
+        if(data.result.admin){
+          navigate("/admin-dashboard")
+        }else{
+          navigate("/");
+        }
       })
       .catch((error) => {
         setSnackBarMessage(error.message);
