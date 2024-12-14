@@ -108,7 +108,7 @@ const UpdateProfile = () => {
     e.preventDefault();
     console.log("ImageUpload", image);
     // Make an API call here with JSON payload
-    fetch("http://localhost:8081/api/user/update/1", {
+    fetch(`http://localhost:8081/api/user/update/${userData.id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

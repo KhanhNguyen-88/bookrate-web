@@ -19,7 +19,6 @@ import Popup from "reactjs-popup";
 const cx = classNames.bind(style);
 function BookItem({ item }) {
   const [categories, setCategories] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
   const [isLike, setIsLike] = useState(false)
 
   useEffect(() => {
@@ -79,21 +78,6 @@ function BookItem({ item }) {
       });
   }, [item.id]);
 
-  useEffect(() => {
-    fetch(`http://localhost:8081/api/user/detail/1`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setUserInfo(result.result);
-        console.log(result.result);
-      });
-  }, []);
 
   const renderBookGenres = () => {
     return categories.map((item, index) => {
@@ -188,7 +172,7 @@ function BookItem({ item }) {
           </div>
           <div className={cx("info")}>
             <div className={cx("creator")}>
-              <UserItem userFollowing={userInfo} />
+              <UserItem userImage={item.bookResponse.userImage} userName={item.bookResponse.createdBy}/>
               <p>{item.bookResponse.createdAt}</p>
             </div>
             <h3 className={cx("title")}>{item.bookResponse.bookName}</h3>
