@@ -43,7 +43,7 @@ function ProfileMenu({dataLove, dataPost}) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <CustomTabs value={selectedTab} onChange={handleTabChange} start>
+      <CustomTabs value={selectedTab} onChange={handleTabChange}>
         <CustomTab
           icon={<DescriptionIcon />}
           iconPosition="start"

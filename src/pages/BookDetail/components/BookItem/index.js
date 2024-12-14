@@ -99,8 +99,8 @@ function BookItem({ item, feedBackList }) {
   const renderUserComment = () => {
     return feedBackList.map((cur, index) => {
       return (
-        <div>
-          <UserComment userFirstComment={cur} key={index}></UserComment>
+        <div  key={index}>
+          <UserComment userFirstComment={cur}></UserComment>
           <UnderLine />
         </div>
       );
