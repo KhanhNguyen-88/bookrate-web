@@ -16,6 +16,7 @@ function Profile() {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupFollowing, setOpenPopupFollowing] = useState(false);
   const [favoriteBooks, setFavoriteBooks] = useState();
+  const [imagePre, setImagePre] = useState();
 
   const token = getToken();
 
@@ -38,6 +39,31 @@ function Profile() {
         });
     }
   }, [token]);
+  
+  useEffect(() => {
+      if (profileData && profileData.userImage) {
+        fetch(`http://localhost:8081/api/file/preview/${profileData.userImage}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Ảnh có trên cloud");
+              return response.json();
+            } else {
+              throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+            }
+          })
+          .then((result) => {
+            setImagePre(result.result);
+          })
+          .catch((e) => {
+            console.log("Ảnh chưa có trên cloud");
+          });
+      }
+    }, [profileData]);  
 
   useEffect(() => {
     fetch(
@@ -107,7 +133,7 @@ function Profile() {
   return !token ? <Navigate to={"/login"}/> :
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img src={profileData.userImage} alt="avatar"></img>
+        <img src={imagePre} alt="avatar"></img>
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{profileData.userName}</h2>

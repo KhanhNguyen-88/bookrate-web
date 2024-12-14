@@ -6,14 +6,41 @@ import Button from "../../../../components/Button";
 import style from "./UserComment.module.scss";
 import AvatarWrapper from "../../../../components/AvatarWrapper";
 import ShowStars from "../../../../components/ShowStars";
+import { useState, useEffect } from "react";
 
 const cx = classNames.bind(style);
 function UserComment({userFirstComment}) {
+  const [imagePre, setImagePre] = useState("");
+  useEffect(() => {
+      if (userFirstComment && userFirstComment.userImage) {
+        fetch(`http://localhost:8081/api/file/preview/${userFirstComment.userImage}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Ảnh có trên cloud");
+              return response.json();
+            } else {
+              throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+            }
+          })
+          .then((result) => {
+            setImagePre(result.result);
+          })
+          .catch((e) => {
+            console.log("Ảnh chưa có trên cloud");
+          });
+      }
+    }, [userFirstComment]); 
+
   return (
     <div className={cx("wrapper")}>
       <AvatarWrapper>
         <img
-          src={userFirstComment.userImage}
+          src={imagePre}
           alt="avatar"
         ></img>
       </AvatarWrapper>
