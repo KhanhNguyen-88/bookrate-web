@@ -27,6 +27,9 @@
         border-radius: 0 10px 10px 0;
         margin: 0 auto;
         box-shadow: 1px 1px 10px gray;
+        &:hover{
+            cursor: pointer;
+        }
     }
     .btnGroup{
         margin: 0 auto;

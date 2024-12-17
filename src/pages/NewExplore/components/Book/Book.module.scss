@@ -23,6 +23,7 @@
 }
 
 .ratings {
+    padding: 5px 10px;
     height: 5%;
     width: 100%;
     display: flex;
@@ -48,9 +49,20 @@
     }
 }
 
-.title {}
+.title {
+    white-space: nowrap;  /* Ngừng dòng và hiển thị trên một dòng */
+    overflow: hidden;     /* Ẩn phần văn bản vượt quá */
+    text-overflow: ellipsis;  /* Hiển thị dấu "..." khi văn bản bị cắt */
+    font-size: 16px;      /* Cỡ chữ tùy chọn */
+    font-weight: bold;    /* Tùy chọn, nếu muốn làm đậm tên sách */
+    color: #333; 
+}
 
 .author {
     color: gray;
     font-style: italic;
+    font-size: 14px;
+    white-space: nowrap;  /* Ngừng dòng và hiển thị trên một dòng */
+    overflow: hidden;     /* Ẩn phần văn bản vượt quá */
+    text-overflow: ellipsis;  /* Hiển thị dấu "..." khi văn bản bị cắt */
 }

@@ -35,15 +35,15 @@ function Book({ book }) {
       <div className={cx("thumbnail")}>
         <img src={image}></img>
       </div>
+      <div className={cx("info")}>
+        <h6 className={cx("title")}>{book.bookName}</h6>
+        <h6 className={cx("author")}>{book.bookAuthor}</h6>
+      </div>
       <div className={cx("ratings")}>
         <strong>
           {book.averageRating} <FontAwesomeIcon icon={faStar} />
         </strong>
         <p>{book.totalRating} ratings</p>
-      </div>
-      <div className={cx("info")}>
-        <h6 className={cx("title")}>{book.bookName}</h6>
-        <h6 className={cx("author")}>{book.bookAuthor}</h6>
       </div>
     </Link>
   );

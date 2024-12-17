@@ -15,11 +15,13 @@ import { getToken } from "../../../../services/localStorageService";
 import UserComment from "../../../../components/UserComment";
 import CommentRatingForm from "../CommetRatingForm";
 import Popup from "reactjs-popup";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 function BookItem({ item }) {
   const [categories, setCategories] = useState([]);
-  const [isLike, setIsLike] = useState(false)
+  const [isLike, setIsLike] = useState(false);
+  const navigate = useNavigate();
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("vi-VN"); // Định dạng ngày tháng năm theo tiếng Việt
@@ -27,7 +29,7 @@ function BookItem({ item }) {
   useEffect(() => {
     setIsLike(item.bookResponse.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
   }, [item.bookResponse.isFavorite]);
-  
+
   // const [feedBacks, setFeedBacks] = useState(item.feedbackResponseList != null ? item.feedbackResponseList : []);
   const [openPopup, setOpenPopup] = useState(false);
   const [image, setImage] = useState("");
@@ -80,7 +82,6 @@ function BookItem({ item }) {
         console.log(result.result);
       });
   }, [item.id]);
-
 
   const renderBookGenres = () => {
     return categories.map((item, index) => {
@@ -140,12 +141,19 @@ function BookItem({ item }) {
     // Gửi dữ liệu đến API hoặc xử lý tại đây
     // fetch("API_ENDPOINT", { method: "POST", body: JSON.stringify(data) })
   };
+  const handleShowDetail = (bookId) => {
+    return navigate(`/book/${bookId}`)
+  };
+
   return (
     <Fragment>
       <div className={cx("bookWrapper")}>
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
-            <img src={image !== "" ? image :item.bookResponse.bookImage} alt="book-img" />
+            <img onClick={()=>handleShowDetail(item.bookResponse.id)}
+              src={image !== "" ? image : item.bookResponse.bookImage}
+              alt="book-img"
+            />
             <div className={cx("btnGroup")}>
               {isLike ? (
                 <div className={cx("btnLiked")}>
@@ -175,12 +183,16 @@ function BookItem({ item }) {
           </div>
           <div className={cx("info")}>
             <div className={cx("creator")}>
-              <UserItem userImage={item.bookResponse.userImage} userName={item.bookResponse.createdBy} userId={item.bookResponse.userId}/>
+              <UserItem
+                userImage={item.bookResponse.userImage}
+                userName={item.bookResponse.createdBy}
+                userId={item.bookResponse.userId}
+              />
               <p>{formatDate(item.bookResponse.createdAt)}</p>
             </div>
             <h3 className={cx("title")}>{item.bookResponse.bookName}</h3>
             <div>
-              <div className={cx("rate")}>
+              <div className={cx("rate")} onClick={() => handleShowDetail(item.bookResponse.id)}>
                 <ShowStars points={item.bookResponse.averageRating} />
                 <div className={cx("points")}>
                   {item.bookResponse.averageRating}
