@@ -1,39 +1,25 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Book.module.scss";
+import classNames from "classnames/bind";
 
-function Book({ book }) {
+const cx = classNames.bind(styles);
+
+function Book({ book, rank }) {
   const [image, setImage] = useState("");
+
   useEffect(() => {
-    fetch(`http://localhost:8081/api/file/preview/${book.bookImage}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Ảnh có trên cloud");
-          return response.json();
-        } else {
-          throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
-        }
-      })
-      .then((result) => {
-        setImage(result.result);
-      })
-      .catch((e) => {
-        console.log("Ảnh chưa có trên cloud");
-      });
+    fetch(`http://localhost:8081/api/file/preview/${book.bookImage}`)
+      .then((response) => response.json())
+      .then((result) => setImage(result.result))
+      .catch(() => console.log("Error loading image"));
   }, [book.bookImage]);
+
   return (
-    <div className={styles.item}>
-      <div className={styles.rank}>{book.id}</div>
-      <div className={styles.imageContainer}>
+    <div className={cx("item")}>
+      <div className={cx("rank")}>{rank}</div>
+      <div className={cx("imageContainer")}>
         <img src={image} alt={book.bookName} />
-        <div className={styles.overlay}>
-          {/* <h3>{book.bookName}</h3> */}
-          {/* <span>{book.bookName}</span> */}
-        </div>
+        <div className={cx("overlay")}></div>
       </div>
     </div>
   );

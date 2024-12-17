@@ -1,40 +1,33 @@
 .carouselContainer {
-  margin: 0px auto;
-  width: 1340px;
-  position: relative;
-  background-color: #8b956e;
-  padding: 40px;
-  color: #fff;
-  h2 {
+  width: 1336px;
+  padding: 10px 40px;
+  background: #000; // Màu nền
+  border-radius: 10px;
+
+  .title {
+    text-align: center;
+    color: #fff;
+    font-size: 24px;
     margin-bottom: 20px;
-    font-size: 1.5rem;
   }
-}
 
-.prev,
-.next {
-  position: absolute;
-  top: 40%;
-  z-index: 2;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  font-size: 2rem;
-  cursor: pointer;
-  border-radius: 50%;
-  padding: 10px;
-  transition: 0.3s;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.7);
-    color: #000;
+  .carouselItem {
+    padding: 10px;
   }
-}
 
-.prev {
-  left: -40px;
-}
+  .arrow {
+    font-size: 40px;
+    color: #fff;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 
-.next {
-  right: -40px;
+    &.prev {
+      left: -30px;
+    }
+
+    &.next {
+      right: -30px;
+    }
+  }
 }
