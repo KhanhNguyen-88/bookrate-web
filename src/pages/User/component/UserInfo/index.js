@@ -26,8 +26,8 @@ function UserInfo() {
   const [favoriteBooks, setFavoriteBooks] = useState();
   const [imagePre, setImagePre] = useState("");
   const [isFollowed, setIsFollowed] = useState(false);
+  const [myPosts, setMyPosts] = useState([]);
 
-  
   useEffect(() => {
     fetch(`http://localhost:8081/api/user/detail/${userId}`, {
       method: "GET",
@@ -124,15 +124,12 @@ function UserInfo() {
           console.log("Ảnh chưa có trên cloud");
         });
     }
-  }, [userData]);  
+  }, [userData]);
 
   return (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img
-          src={imagePre}
-          alt="avatar"
-        ></img>
+        <img src={imagePre} alt="avatar"></img>
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{userData.userName}</h2>
@@ -157,10 +154,13 @@ function UserInfo() {
             >
               {(close) => (
                 <div className={cx("wrapperPopup")}>
-                  <button className = {cx("btnClose")} onClick={close}> &times;</button>
+                  <button className={cx("btnClose")} onClick={close}>
+                    {" "}
+                    &times;
+                  </button>
                   <h2>Follower</h2>
                   <div>
-                    {follower.length>0 ? (
+                    {follower.length > 0 ? (
                       renderUserFollow(follower)
                     ) : (
                       <p>Không có dữ liệu</p>
@@ -183,10 +183,13 @@ function UserInfo() {
             >
               {(close) => (
                 <div className={cx("wrapperPopup")}>
-                  <button className = {cx("btnClose")} onClick={close}> &times;</button>
+                  <button className={cx("btnClose")} onClick={close}>
+                    {" "}
+                    &times;
+                  </button>
                   <h2>Đang Follow</h2>
                   <div>
-                    {following.length>0 ? (
+                    {following.length > 0 ? (
                       renderUserFollow(following)
                     ) : (
                       <p>Không có dữ liệu</p>
@@ -202,7 +205,7 @@ function UserInfo() {
       <div className={cx("wrapperMoreInfo")}>
         <div className={cx("lineAction")}></div>
         <ul className={cx("menu")}>
-          <ProfileMenu dataLove={favoriteBooks}/>
+          <ProfileMenu dataLove={favoriteBooks} dataPost={myPosts} />
         </ul>
       </div>
     </div>

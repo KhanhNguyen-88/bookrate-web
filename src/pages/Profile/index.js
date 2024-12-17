@@ -17,6 +17,7 @@ function Profile() {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupFollowing, setOpenPopupFollowing] = useState(false);
   const [favoriteBooks, setFavoriteBooks] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
   const [imagePre, setImagePre] = useState(null);
 
   const token = getToken();
@@ -27,16 +28,21 @@ function Profile() {
         if (!token) return;
 
         // Fetch profile data
-        const userResponse = await fetch("http://localhost:8081/api/user/detail-by-token", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const userResponse = await fetch(
+          "http://localhost:8081/api/user/detail-by-token",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!userResponse.ok) {
-          throw new Error(`Failed to fetch user profile. Status: ${userResponse.status}`);
+          throw new Error(
+            `Failed to fetch user profile. Status: ${userResponse.status}`
+          );
         }
 
         const userResult = await userResponse.json();
@@ -75,12 +81,33 @@ function Profile() {
         );
 
         if (!bookResponse.ok) {
-          throw new Error(`Failed to fetch books. Status: ${bookResponse.status}`);
+          throw new Error(
+            `Failed to fetch books. Status: ${bookResponse.status}`
+          );
         }
 
         const bookResult = await bookResponse.json();
         setFavoriteBooks(bookResult.result);
 
+        //fetch my book
+        const myBooksResponse = await fetch(
+          `http://localhost:8081/api/book/get-posted-by-username/${userData.userName}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!myBooksResponse.ok) {
+          throw new Error(
+            `Failed to fetch books. Status: ${myBooksResponse.status}`
+          );
+        }
+
+        const myBookResult = await myBooksResponse.json();
+        setMyPosts(myBookResult.result);
+        
       } catch (error) {
         console.error("Error fetching profile data:", error);
       }
@@ -91,16 +118,21 @@ function Profile() {
 
   const handleOpenFollower = async () => {
     try {
-      const response = await fetch("http://localhost:8081/api/user/follower-account-by-token", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://localhost:8081/api/user/follower-account-by-token",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch followers. Status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch followers. Status: ${response.status}`
+        );
       }
 
       const result = await response.json();
@@ -113,16 +145,21 @@ function Profile() {
 
   const handleOpenFollowing = async () => {
     try {
-      const response = await fetch("http://localhost:8081/api/user/following-account-by-token", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "http://localhost:8081/api/user/following-account-by-token",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch followings. Status: ${response.status}`);
+        throw new Error(
+          `Failed to fetch followings. Status: ${response.status}`
+        );
       }
 
       const result = await response.json();
@@ -156,7 +193,7 @@ function Profile() {
             </li>
             <li>
               <strong>{profileData.followerAccounts}</strong>
-              <Button onClick={handleOpenFollower}>Follower</Button>
+              <Button to onClick={handleOpenFollower}>Follower</Button>
             </li>
             <Popup
               open={openPopup}
@@ -171,13 +208,17 @@ function Profile() {
                   </button>
                   <h2>Follower</h2>
                   <div>
-                    {follower.length > 0 ? renderUserFollow(follower) : <p>Không có dữ liệu</p>}
+                    {follower.length > 0 ? (
+                      renderUserFollow(follower)
+                    ) : (
+                      <p>Không có dữ liệu</p>
+                    )}
                   </div>
                 </div>
               )}
             </Popup>
             <li>
-              <Button onClick={handleOpenFollowing}>Theo dõi</Button>
+              <Button to onClick={handleOpenFollowing}>Theo dõi</Button>
               <strong>{profileData.followingAccounts}</strong>
             </li>
             <Popup
@@ -193,7 +234,11 @@ function Profile() {
                   </button>
                   <h2>Đang Follow</h2>
                   <div>
-                    {following.length > 0 ? renderUserFollow(following) : <p>Không có dữ liệu</p>}
+                    {following.length > 0 ? (
+                      renderUserFollow(following)
+                    ) : (
+                      <p>Không có dữ liệu</p>
+                    )}
                   </div>
                 </div>
               )}
@@ -205,7 +250,7 @@ function Profile() {
       <div className={cx("wrapperMoreInfo")}>
         <div className={cx("lineAction")}></div>
         <ul className={cx("menu")}>
-          <ProfileMenu dataLove={favoriteBooks} />
+          <ProfileMenu dataLove={favoriteBooks} dataPost={myPosts}/>
         </ul>
       </div>
     </div>

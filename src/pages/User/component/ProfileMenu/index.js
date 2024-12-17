@@ -55,7 +55,7 @@ function ProfileMenu({dataLove, dataPost}) {
           label="Yêu thích"
         />
       </CustomTabs>
-      <TabContent selectedTab={selectedTab} dataLove={dataLove} />
+      <TabContent selectedTab={selectedTab} dataLove={dataLove} dataPost={dataPost} />
     </Box>
   );
 }
@@ -67,9 +67,18 @@ function TabContent({ selectedTab, dataLove, dataPost }) {
         return <Book book={item} key={index}></Book>
     })
   }
+  const renderPost = ()=>{
+    return dataPost.map((item, index)=>{
+        return <Book book={item}key={index}></Book>
+    })
+  }
   switch (selectedTab) {
     case 0:
-      return;
+      return (
+        <div className = {cx("wrapperPosts")}>
+          {renderPost()}
+        </div>
+      )
     case 1:
       return (
         <div className = {cx("wrapperFavor")}>
