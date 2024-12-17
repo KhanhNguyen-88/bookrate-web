@@ -1,11 +1,12 @@
 .carouselContainer {
   width: 1336px;
-  padding: 10px 40px;
-  background: #000; // Màu nền
-  border-radius: 10px;
+  padding: 10px 50px;
+  background: #aba3a3; /* Màu nền */
+  position: relative; /* Cần để các nút điều hướng xuất hiện đúng vị trí */
+  overflow: hidden; /* Ẩn bất kỳ phần tử nào vượt quá kích thước của container */
 
   .title {
-    text-align: center;
+    text-align: left;
     color: #fff;
     font-size: 24px;
     margin-bottom: 20px;
@@ -15,19 +16,35 @@
     padding: 10px;
   }
 
+  /* Ban đầu ẩn các nút prev/next */
   .arrow {
-    font-size: 40px;
-    color: #fff;
-    background: transparent;
+    background-color: rgba(0, 0, 0, 0.5); /* Nền tối cho nút */
     border: none;
+    color: #fff;
+    font-size: 24px;
+    padding: 10px;
     cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    opacity: 0; /* Ban đầu ẩn */
+    transition: opacity 0.3s ease; /* Thêm hiệu ứng khi hiển thị */
+    border-radius: 50%; /* Bo tròn các nút */
+  }
 
-    &.prev {
-      left: -30px;
-    }
+  /* Nút prev */
+  .prev {
+    left: 10px;
+  }
 
-    &.next {
-      right: -30px;
-    }
+  /* Nút next */
+  .next {
+    right: 10px;
+  }
+
+  /* Hiển thị các nút khi hover vào carousel */
+  &:hover .arrow {
+    opacity: 1; /* Hiển thị khi hover */
   }
 }

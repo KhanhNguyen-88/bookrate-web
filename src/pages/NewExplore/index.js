@@ -51,7 +51,7 @@ function NewExplore() {
       },
       body: JSON.stringify({
         pageNumber: page,
-        pageSize: 10,
+        pageSize: 12,
         filter: {
           bookAuthor: searchTerm,
           categoryId: selectOption1,

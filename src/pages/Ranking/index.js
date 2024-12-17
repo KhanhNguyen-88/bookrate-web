@@ -43,7 +43,12 @@ function Ranking() {
     fetchProfileData();
   }, []);
 
-  return <TopTenCarousel books={myPosts} />;
+  return (
+    <div className = {cx("wrapper")}>
+      <TopTenCarousel books={myPosts} className = {cx("top")} />
+      <TopTenCarousel books={myPosts} className = {cx("top")}/>
+    </div>
+  );
 }
 
 export default Ranking;
