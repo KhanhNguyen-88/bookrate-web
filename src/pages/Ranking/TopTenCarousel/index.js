@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-const TopTenCarousel = ({ books }) => {
+const TopTenCarousel = ({ books, title }) => {
   const renderBooks = () =>
     books.map((item, index) => (
       <div key={index} className={cx("carouselItem")}>
@@ -28,7 +28,7 @@ const TopTenCarousel = ({ books }) => {
 
   return (
     <div className={cx("carouselContainer")}>
-      <h2 className={cx("title")}>Top 10 Sách Xu Hướng</h2>
+      <h2 className={cx("title")}>{title}</h2>
       <Slider {...settings}>{renderBooks()}</Slider>
     </div>
   );

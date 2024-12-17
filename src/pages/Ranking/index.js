@@ -45,8 +45,11 @@ function Ranking() {
 
   return (
     <div className = {cx("wrapper")}>
-      <TopTenCarousel books={myPosts} className = {cx("top")} />
-      <TopTenCarousel books={myPosts} className = {cx("top")}/>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách xu hướng"}/>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Xuân 2024"}/>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Hè 2024"}/>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Thu 2024"}/>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Đông 2024"}/>
     </div>
   );
 }
