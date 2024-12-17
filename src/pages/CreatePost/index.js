@@ -78,19 +78,22 @@ function CreatePost({ handleClose }) {
     const file = e.target.files[0];
     const formData = new FormData();
     if (file) {
-      formData.append("file", file)
+      formData.append("file", file);
       const response = await fetch("http://localhost:8081/api/file/upload", {
         method: "POST",
-        body: formData
+        body: formData,
       });
       const result = await response.json();
       setPostImage(result.result);
-      const response2 = await fetch(`http://localhost:8081/api/file/preview/${result.result}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response2 = await fetch(
+        `http://localhost:8081/api/file/preview/${result.result}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
       const result2 = await response2.json();
       setImagePre(result2.result);
     }
@@ -98,7 +101,20 @@ function CreatePost({ handleClose }) {
 
   const handleSubmit = async () => {
     const token = getToken();
-
+    // Kiểm tra các trường bắt buộc
+    if (
+      !bookName.trim() ||
+      !bookDescription.trim() ||
+      !publishedDate ||
+      !bookFormat.trim() ||
+      !bookSaleLink.trim() ||
+      !bookAuthor.trim() ||
+      !postImage ||
+      selectedCategories.length === 0
+    ) {
+      alert("Vui lòng nhập đầy đủ thông tin trước khi đăng bài!");
+      return;
+    }
     // Dữ liệu đầu vào từ state
     const bookData = {
       bookName,
@@ -179,7 +195,7 @@ function CreatePost({ handleClose }) {
     <ThemeProvider theme={theme}>
       <Box
         sx={{
-          maxWidth: "800px", // Increased width
+          maxWidth: "700px", // Increased width
           margin: "0 auto",
           padding: "15px",
           backgroundColor: "#fffdf7",
@@ -189,7 +205,7 @@ function CreatePost({ handleClose }) {
       >
         <Typography
           variant="h5"
-          sx={{ marginBottom: "20px", fontWeight: "bold" }}
+          sx={{ marginBottom: "10px", fontWeight: "bold" }}
         >
           Tạo Bài Viết Mới
         </Typography>
@@ -262,26 +278,33 @@ function CreatePost({ handleClose }) {
               size="small"
             />
             {/* Book Info Fields */}
-            <Grid>
-              <TextField
-                xs={8}
-                label="Ngày xuất bản"
-                type="date"
-                InputLabelProps={{ shrink: true }}
-                value={publishedDate}
-                onChange={(e) => setPublishedDate(e.target.value)}
-                size="small"
-              />
+            <Grid
+              container
+              spacing={2}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Grid item xs={6}>
+                <TextField
+                  label="Ngày xuất bản"
+                  type="date"
+                  InputLabelProps={{ shrink: true }}
+                  value={publishedDate}
+                  onChange={(e) => setPublishedDate(e.target.value)}
+                  size="small"
+                  fullWidth
+                />
+              </Grid>
 
-              <TextField
-                xs={4}
-                label="Format"
-                variant="outlined"
-                value={bookFormat}
-                onChange={(e) => setBookFormat(e.target.value)}
-                size="small"
-                sx={{ marginLeft: 15.5}}
-              />
+              <Grid item xs={6}>
+                <TextField
+                  label="Format"
+                  variant="outlined"
+                  value={bookFormat}
+                  onChange={(e) => setBookFormat(e.target.value)}
+                  size="small"
+                  fullWidth
+                />
+              </Grid>
             </Grid>
 
             <TextField
@@ -442,7 +465,7 @@ function CreatePost({ handleClose }) {
             }
             margin="normal"
           />
-          <TextField
+          {/* <TextField
             fullWidth
             label="Ảnh thể loại (URL)"
             value={newCategory.cateImage}
@@ -450,7 +473,7 @@ function CreatePost({ handleClose }) {
               setNewCategory({ ...newCategory, cateImage: e.target.value })
             }
             margin="normal"
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
           <Button

@@ -1,0 +1,10 @@
+.wrapperRank{
+    width: 1000px;
+    >div:first-child{
+        background-color: white;
+    }
+    button{
+        background-color: black;
+        color: white;
+    }
+}

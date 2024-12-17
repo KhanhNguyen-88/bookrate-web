@@ -1,13 +1,6 @@
 import classNames from "classnames/bind";
 import style from "./UserInfo.module.scss";
 import Button from "../../../../components/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faHeart,
-  faShare,
-  faSignsPost,
-} from "@fortawesome/free-solid-svg-icons";
-import UnderLine from "../../../../components/UnderLine";
 import ProfileMenu from "../ProfileMenu";
 import Popup from "reactjs-popup";
 import { useEffect, useState } from "react";
@@ -29,19 +22,41 @@ function UserInfo() {
   const [myPosts, setMyPosts] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8081/api/user/detail/${userId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json", // Set the content type to JSON
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        setUserData(result.result);
-        console.log(result);
+    const fetchDataUser = async()=>{
+      //fetch user nae data
+      const userDataResponse = await fetch(`http://localhost:8081/api/user/detail/${userId}`, {
+        method: "GET",
+        headers:{
+          "Content-Type": "application/json",
+        }
       });
+      if(!userDataResponse.ok){
+        throw new Error(
+          `Failed to fetch books. Status: ${userDataResponse.status}`
+        );
+      }
+      const userResult = await userDataResponse.json(); 
+      setUserData(userResult.result);
+       //fetch my book
+       const myBooksResponse = await fetch(
+        `http://localhost:8081/api/book/get-posted-by-username/${userResult.result.userName}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!myBooksResponse.ok) {
+        throw new Error(
+          `Failed to fetch books. Status: ${myBooksResponse.status}`
+        );
+      }
+
+      const myBookResult = await myBooksResponse.json();
+      setMyPosts(myBookResult.result);
+    }
+    fetchDataUser();
   }, [userId]);
 
   useEffect(() => {
@@ -125,7 +140,12 @@ function UserInfo() {
         });
     }
   }, [userData]);
-
+  const handleUnFollow = () => {
+    setIsFollowed(false);
+  };
+  const handleFollow = () => {
+    setIsFollowed(true);
+  };
   return (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
@@ -133,7 +153,15 @@ function UserInfo() {
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{userData.userName}</h2>
-            <Button primary>Theo dõi</Button>
+            {isFollowed ? (
+              <Button unFollow onClick={handleUnFollow}>
+                UnFollow
+              </Button>
+            ) : (
+              <Button primary onClick={handleFollow}>
+                Theo dõi
+              </Button>
+            )}
           </div>
           <ul className={cx("info")}>
             <li>

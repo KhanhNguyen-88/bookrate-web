@@ -1,10 +1,9 @@
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import UserInfo from "./component/UserInfo";
 import style from "./User.module.scss";
 import { getToken } from "../../services/localStorageService";
-import Profile from "../Profile";
 
 const cx = classNames.bind(style);
 

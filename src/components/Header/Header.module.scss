@@ -201,9 +201,14 @@
 }
 
 .updateProfile {
-    >div {
-        
-    }
+    display: flex;
+    flex-direction: column;
     background-color: white;
     border-radius: 2px;
+    >button{
+        align-self: end;
+        cursor: pointer;
+        background-color: white;
+        font-size: 20px;
+    }
 }

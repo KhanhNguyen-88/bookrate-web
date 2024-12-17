@@ -143,7 +143,7 @@ const UpdateProfile = () => {
         boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
       }}
     >
-      <Typography variant="h5" gutterBottom>
+      <Typography variant="h5" gutterBottom sx={{textAlign: "center"}}>
         Cập nhật thông tin cá nhân
       </Typography>
       <form onSubmit={handleSubmit}>
