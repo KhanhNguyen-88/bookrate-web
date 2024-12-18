@@ -149,7 +149,7 @@ function UserInfo() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img src={imagePre} alt="avatar"></img>
+        <img src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`} alt="avatar"></img>
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{userData.userName}</h2>

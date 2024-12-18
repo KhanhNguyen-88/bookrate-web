@@ -77,7 +77,7 @@ function AuthorItem({ authorInfo}) {
     <div className={cx("mainWrapper")}>
       <Link to={`/user/${authorInfo.userId}`} className={cx("wrapper")}>
         {/* <AvatarWrapper> */}
-        <img src={imagePre} alt="author-avatar" />
+        <img src={`http://103.216.116.98:9000/book-rating/${authorInfo.userImage}`} alt="author-avatar" />
         {/* </AvatarWrapper> */}
         <div className={cx("info")}>
           <h4 className={cx("name")}>{authorInfo.userName}</h4>

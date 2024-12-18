@@ -181,7 +181,7 @@ function Profile() {
   ) : (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img src={imagePre} alt="avatar" />
+        <img src={`http://103.216.116.98:9000/book-rating/${profileData.userImage}`} alt="avatar" />
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{profileData.userName}</h2>

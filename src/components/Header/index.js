@@ -296,7 +296,7 @@ function Header({ userData, reRender }) {
                   );
                 }}
               >
-                <img src={imagePre} alt="avatar" />
+                <img src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`} alt="avatar" />
               </Tippy>
             </AvatarWrapper>
           </div>

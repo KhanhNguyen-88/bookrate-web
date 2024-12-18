@@ -9,8 +9,8 @@ const cx = classNames.bind(styles);
 function Ranking() {
   const [myPosts, setMyPosts] = useState([]);
 
+  const token = getToken();
   useEffect(() => {
-    const token = getToken();
     const fetchProfileData = async () => {
       try {
         if (!token) return;
@@ -28,7 +28,7 @@ function Ranking() {
 
         const userResult = await userResponse.json();
         const myBooksResponse = await fetch(
-          `http://localhost:8081/api/book/get-posted-by-username/${userResult.result.userName}`
+          `http://localhost:8081/api/book/ranking-favorite`
         );
 
         if (!myBooksResponse.ok) throw new Error("Error fetching books");
@@ -41,7 +41,7 @@ function Ranking() {
     };
 
     fetchProfileData();
-  }, []);
+  }, [token]);
 
   return (
     <div className = {cx("wrapper")}>

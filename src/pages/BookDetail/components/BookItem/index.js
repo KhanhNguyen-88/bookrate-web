@@ -6,13 +6,13 @@ import Button from "../../../../components/Button";
 import ShowStars from "../../../../components/ShowStars";
 import UnderLine from "../../../../components/UnderLine";
 import style from "./BookItem.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import RateChartItem from "../RateChartItem";
 import UserComment from "../../../Home/components/UserComment";
 import { getToken } from "../../../../services/localStorageService";
 
 const cx = classNames.bind(style);
-function BookItem({ item, feedBackList }) {
+function BookItem({ item, feedBackList, percent }) {
   const [categories, setCategories] = useState([]);
   const targetRef = useRef(null);
   const [image, setImage] = useState("");
@@ -24,7 +24,7 @@ function BookItem({ item, feedBackList }) {
   useEffect(() => {
     setIsLike(item.isFavorite !== 0); // Cập nhật dựa trên giá trị mới
   }, [item.isFavorite]);
-  
+
   let avg = 0;
   let ratings = 0;
 
@@ -99,14 +99,26 @@ function BookItem({ item, feedBackList }) {
   const renderUserComment = () => {
     return feedBackList.map((cur, index) => {
       return (
-        <div  key={index}>
+        <div key={index}>
           <UserComment userFirstComment={cur}></UserComment>
           <UnderLine />
         </div>
       );
     });
   };
-
+  const renderChart = () => {
+    return percent.map((item, index) => {
+      return (
+        <div key={index}>
+          <RateChartItem
+            stars={item.levelStar}
+            ratings={item.countStar}
+            percent={item.percent}
+          ></RateChartItem>
+        </div>
+      );
+    });
+  };
   const handleClickRate = () => {
     targetRef.current.scrollIntoView({ behavior: "smooth" });
   };
@@ -150,7 +162,7 @@ function BookItem({ item, feedBackList }) {
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
-        <img src={image !== "" ? image : item.bookImage} alt="book-img" />
+        <img src={`http://103.216.116.98:9000/book-rating/${item.bookImage}`} alt="book-img" />
         <div className={cx("btnGroup")}>
           {isLike ? (
             <div className={cx("btnLiked")}>
@@ -228,21 +240,27 @@ function BookItem({ item, feedBackList }) {
               <ShowStars points={avg} />
               <h4>{avg}</h4>
             </div>
-            <div>
-              <RateChartItem stars={5} ratings={1000} percent={60} />
-            </div>
-            <div>
-              <RateChartItem stars={4} ratings={500} percent={40} />
-            </div>
-            <div>
-              <RateChartItem stars={3} ratings={100} percent={5} />
-            </div>
-            <div>
-              <RateChartItem stars={2} ratings={10} percent={2} />
-            </div>
-            <div>
-              <RateChartItem stars={1} ratings={0} percent={0} />
-            </div>
+            {percent.length > 0 ? (
+              renderChart()
+            ) : (
+              <Fragment>
+                <div>
+                  <RateChartItem stars={5} ratings={0} percent={0} />
+                </div>
+                <div>
+                  <RateChartItem stars={4} ratings={0} percent={0} />
+                </div>
+                <div>
+                  <RateChartItem stars={3} ratings={0} percent={0} />
+                </div>
+                <div>
+                  <RateChartItem stars={2} ratings={0} percent={0} />
+                </div>
+                <div>
+                  <RateChartItem stars={1} ratings={0} percent={0} />
+                </div>
+              </Fragment>
+            )}
           </div>
         </div>
         <UnderLine></UnderLine>

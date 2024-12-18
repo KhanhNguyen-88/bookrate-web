@@ -67,7 +67,7 @@ function Sidebar({ userData, userFollowingData }) {
       name: "Cá Nhân",
       path: "/user/profile",
       icon: userData ? (
-        <img src={imagePre} alt="avatar"></img>
+        <img src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`} alt="avatar"></img>
       ) : (
         <FontAwesomeIcon icon={faUser} />
       ),

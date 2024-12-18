@@ -44,7 +44,7 @@ const UserComment = ({ commentData }) => {
 
   return (
     <div className={styles.commentContainer}>
-      <img className={styles.userImage} src={imagePre} alt={userName} />
+      <img className={styles.userImage} src={`http://103.216.116.98:9000/book-rating/${commentData.userImage}`} alt={userName} />
       <div className={styles.commentDetails}>
         <div className={styles.userInfo}>
           <span className={styles.userName}>{userName}</span>

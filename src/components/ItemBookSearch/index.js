@@ -31,7 +31,7 @@ function ItemBookSearch({ item, onClick }) {
   }, [item.bookImage]);
   return (
     <Link to={`/book/${item.id}`} className = {cx("wrapper")} onClick={onClick}>
-      <img src={image !== "" ? image :item.bookImage}></img>
+      <img src={`http://103.216.116.98:9000/book-rating/${item.bookImage}`}></img>
       <div className = {cx("info")}>
         <strong>{item.bookName}</strong>
         <h5>{item.bookAuthor}</h5>

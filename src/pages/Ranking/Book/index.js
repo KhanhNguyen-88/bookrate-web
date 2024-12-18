@@ -18,7 +18,7 @@ function Book({ book, rank }) {
     <div className={cx("item")}>
       <div className={cx("rank")}>{rank}</div>
       <div className={cx("imageContainer")}>
-        <img src={image} alt={book.bookName} />
+        <img src={`http://103.216.116.98:9000/book-rating/${book.bookImage}`} alt={book.bookName} />
         <div className={cx("overlay")}></div>
       </div>
     </div>

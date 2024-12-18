@@ -10,6 +10,7 @@ const cx = classNames.bind(style);
 function BookDetail() {
   const [data, setData] = useState([]);
   const [feedBacks, setFeedbacks] = useState([]);
+  const [percent, setPercent] = useState([]);
   const { id } = useParams();
   const [userId, setUserId] = useState();
 
@@ -18,13 +19,16 @@ function BookDetail() {
       try {
         // Lấy userId
         const token = getToken();
-        const userResponse = await fetch("http://localhost:8081/api/user/get-id-by-token", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        });
+        const userResponse = await fetch(
+          "http://localhost:8081/api/user/get-id-by-token",
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!userResponse.ok) {
           throw new Error(`HTTP error! Status: ${userResponse.status}`);
@@ -57,6 +61,11 @@ function BookDetail() {
             ? bookResult.result.feedbackResponseList
             : []
         );
+        setPercent(
+          bookResult.result.percentFeedbackList !== null
+            ? bookResult.result.percentFeedbackList
+            : []
+        );
       } catch (error) {
         console.error("Lỗi khi fetch data:", error);
       }
@@ -67,7 +76,7 @@ function BookDetail() {
 
   return (
     <div className={cx("wrapper")}>
-      <BookItem item={data} feedBackList={feedBacks} />
+      <BookItem item={data} feedBackList={feedBacks} percent={percent} />
     </div>
   );
 }

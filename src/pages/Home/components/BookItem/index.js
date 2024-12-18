@@ -5,7 +5,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
-import AuthorItem from "../../../../components/AuthorItem";
 import Button from "../../../../components/Button";
 import ShowStars from "../../../../components/ShowStars";
 import UserItem from "../../../../components/UserItem";
@@ -81,7 +80,7 @@ function BookItem({ item }) {
         setCategories(result.result);
         console.log(result.result);
       });
-  }, [item.id]);
+  }, [item.bookResponse.id]);
 
   const renderBookGenres = () => {
     return categories.map((item, index) => {
@@ -151,7 +150,7 @@ function BookItem({ item }) {
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
             <img onClick={()=>handleShowDetail(item.bookResponse.id)}
-              src={image !== "" ? image : item.bookResponse.bookImage}
+              src={`http://103.216.116.98:9000/book-rating/${item.bookResponse.bookImage}`}
               alt="book-img"
             />
             <div className={cx("btnGroup")}>

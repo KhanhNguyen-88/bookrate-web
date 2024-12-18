@@ -26,8 +26,8 @@ const UpdateProfile = () => {
   const [userGender, setUserGender] = useState("");
   const [userPhone, setUserPhone] = useState("");
 
+  const accessToken = getToken();
   useEffect(() => {
-    const accessToken = getToken();
     fetch(`http://localhost:8081/api/user/user-token`, {
       method: "POST",
       headers: {
@@ -40,34 +40,35 @@ const UpdateProfile = () => {
       })
       .then((result) => {
         setUserData(result.result);
+        setImagePre(`http://103.216.116.98:9000/book-rating/${result.result.userImage}`);
         console.log("data user",result.result)
       });
-  }, []);
+  }, [accessToken]);
   
 
 
-  useEffect(() => {
-    fetch(`http://localhost:8081/api/file/preview/${userData.userImage}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log("Ảnh có trên cloud");
-          return response.json();
-        } else {
-          throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
-        }
-      })
-      .then((result) => {
-        setImagePre(result.result);
-      })
-      .catch((e) => {
-        console.log("Ảnh chưa có trên cloud");
-      });
-  }, [userData]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:8081/api/file/preview/${userData.userImage}`, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         console.log("Ảnh có trên cloud");
+  //         return response.json();
+  //       } else {
+  //         throw new Error("Ảnh chưa có trên cloud hoặc server có lỗi.");
+  //       }
+  //     })
+  //     .then((result) => {
+  //       setImagePre(result.result);
+  //     })
+  //     .catch((e) => {
+  //       console.log("Ảnh chưa có trên cloud");
+  //     });
+  // }, [userData]);
 
   useEffect(()=>{
     setImage(userData.userImage);
@@ -89,6 +90,8 @@ const UpdateProfile = () => {
       });
       const result = await response.json();
       setImage(result.result);
+      setImagePre(`http://103.216.116.98:9000/book-rating/${result.result}`);
+
 
       const response2 = await fetch(
         `http://localhost:8081/api/file/preview/${result.result}`,
@@ -100,7 +103,7 @@ const UpdateProfile = () => {
         }
       );
       const result2 = await response2.json();
-      setImagePre(result2.result);
+      // setImagePre(result2.result);
     }
   };
 
