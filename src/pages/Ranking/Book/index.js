@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Book.module.scss";
 import classNames from "classnames/bind";
+import { Link } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
@@ -15,13 +16,13 @@ function Book({ book, rank }) {
   }, [book.bookImage]);
 
   return (
-    <div className={cx("item")}>
+    <Link to={`/book/${book.id}`} className={cx("item")}>
       <div className={cx("rank")}>{rank}</div>
       <div className={cx("imageContainer")}>
         <img src={`http://103.216.116.98:9000/book-rating/${book.bookImage}`} alt={book.bookName} />
         <div className={cx("overlay")}></div>
       </div>
-    </div>
+    </Link>
   );
 }
 

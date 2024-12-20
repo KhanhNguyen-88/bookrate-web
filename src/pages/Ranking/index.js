@@ -8,6 +8,7 @@ const cx = classNames.bind(styles);
 
 function Ranking() {
   const [myPosts, setMyPosts] = useState([]);
+  const [newest, setNewest] = useState([]);
 
   const token = getToken();
   useEffect(() => {
@@ -27,6 +28,7 @@ function Ranking() {
         if (!userResponse.ok) throw new Error("Error fetching user data");
 
         const userResult = await userResponse.json();
+
         const myBooksResponse = await fetch(
           `http://localhost:8081/api/book/ranking-favorite`
         );
@@ -35,6 +37,7 @@ function Ranking() {
 
         const myBookResult = await myBooksResponse.json();
         setMyPosts(myBookResult.result);
+
       } catch (error) {
         console.error("Error:", error);
       }
@@ -43,13 +46,20 @@ function Ranking() {
     fetchProfileData();
   }, [token]);
 
+  useEffect(()=>{
+    fetch(`http://localhost:8081/api/book/ranking-newest`)
+    .then((response)=>{
+        return response.json();
+    })
+    .then((result)=>{
+        setNewest(result.result);
+    })
+  }, [])
+
   return (
-    <div className = {cx("wrapper")}>
-      <TopTenCarousel books={myPosts} title={"Top 10 sách xu hướng"}/>
-      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Xuân 2024"}/>
-      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Hè 2024"}/>
-      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Thu 2024"}/>
-      <TopTenCarousel books={myPosts} title={"Top 10 sách Mùa Đông 2024"}/>
+    <div className={cx("wrapper")}>
+      <TopTenCarousel books={myPosts} title={"Top 10 sách xu hướng"} />
+      <TopTenCarousel books={newest} title={"Top 10 sách mới nhất"} />
     </div>
   );
 }
