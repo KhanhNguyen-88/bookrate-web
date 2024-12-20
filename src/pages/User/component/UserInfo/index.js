@@ -6,6 +6,7 @@ import Popup from "reactjs-popup";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AuthorItem from "../AuthorItem";
+import { getToken } from "../../../../services/localStorageService";
 
 const cx = classNames.bind(style);
 function UserInfo() {
@@ -22,11 +23,13 @@ function UserInfo() {
   const [myPosts, setMyPosts] = useState([]);
 
   useEffect(() => {
+    const token = getToken();
     const fetchDataUser = async()=>{
       //fetch user nae data
       const userDataResponse = await fetch(`http://localhost:8081/api/user/detail/${userId}`, {
         method: "GET",
         headers:{
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         }
       });
@@ -37,6 +40,8 @@ function UserInfo() {
       }
       const userResult = await userDataResponse.json(); 
       setUserData(userResult.result);
+      setIsFollowed(userResult.result.isFollowing);
+      console.log("Follow status",  userResult.result.isFollowing);
        //fetch my book
        const myBooksResponse = await fetch(
         `http://localhost:8081/api/book/get-posted-by-username/${userResult.result.userName}`,
@@ -140,12 +145,44 @@ function UserInfo() {
         });
     }
   }, [userData]);
-  const handleUnFollow = () => {
+
+  const handleUnFollow = (id) => {
+    const token = getToken();
+    fetch(`http://localhost:8081/api/user/unfollow-account/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`, // Set the content type to JSON
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+      });
+
     setIsFollowed(false);
   };
-  const handleFollow = () => {
+
+  const handleFollow = (id) => {
+    const token = getToken();
+    fetch(`http://localhost:8081/api/user/follow-account/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${token}`, // Set the content type to JSON
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log(result);
+      });
     setIsFollowed(true);
   };
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
@@ -154,11 +191,11 @@ function UserInfo() {
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{userData.userName}</h2>
             {isFollowed ? (
-              <Button unFollow onClick={handleUnFollow}>
+              <Button unFollow onClick={()=>handleUnFollow(userData.id)}>
                 UnFollow
               </Button>
             ) : (
-              <Button primary onClick={handleFollow}>
+              <Button primary onClick={()=>handleFollow(userData.id)}>
                 Theo dõi
               </Button>
             )}

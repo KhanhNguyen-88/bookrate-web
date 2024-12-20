@@ -4,12 +4,13 @@ import style from "./AuthorItem.module.scss";
 import { Link } from "react-router-dom";
 import Button from "../../../../components/Button";
 import { getToken } from "../../../../services/localStorageService";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 
 const cx = classNames.bind(style);
-function AuthorItem({ authorInfo}) {
+function AuthorItem({ authorInfo }) {
   const [isFollow, setIsFollow] = useState(authorInfo.followBack);
   const [imagePre, setImagePre] = useState();
+  const [myId, setMyId] = useState(0);
   useEffect(() => {
     if (authorInfo && authorInfo.userImage) {
       fetch(`http://localhost:8081/api/file/preview/${authorInfo.userImage}`, {
@@ -33,12 +34,36 @@ function AuthorItem({ authorInfo}) {
           console.log("Ảnh chưa có trên cloud");
         });
     }
-  }, [authorInfo]);  
+  }, [authorInfo]);
+
+  const token = getToken();
+  useEffect(() => {
+    const fetchUserIdAndConnectSSE = async () => {
+      const response = await fetch(
+        "http://localhost:8081/api/user/get-id-by-token",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      setMyId(result.result);
+    };
+    fetchUserIdAndConnectSSE();
+  }, []);
 
   useEffect(() => {
     setIsFollow(authorInfo.followBack);
   }, [authorInfo.followBack]);
-  const token = getToken(); 
+
   const handleFollow = (id) => {
     fetch(`http://localhost:8081/api/user/follow-account/${id}`, {
       method: "POST",
@@ -54,7 +79,7 @@ function AuthorItem({ authorInfo}) {
         console.log(result);
       });
 
-      setIsFollow(true)
+    setIsFollow(true);
   };
   const handleUnFollow = (id) => {
     fetch(`http://localhost:8081/api/user/unfollow-account/${id}`, {
@@ -71,13 +96,16 @@ function AuthorItem({ authorInfo}) {
         console.log(result);
       });
 
-      setIsFollow(false)
+    setIsFollow(false);
   };
   return (
     <div className={cx("mainWrapper")}>
       <Link to={`/user/${authorInfo.userId}`} className={cx("wrapper")}>
         {/* <AvatarWrapper> */}
-        <img src={`http://103.216.116.98:9000/book-rating/${authorInfo.userImage}`} alt="author-avatar" />
+        <img
+          src={`http://103.216.116.98:9000/book-rating/${authorInfo.userImage}`}
+          alt="author-avatar"
+        />
         {/* </AvatarWrapper> */}
         <div className={cx("info")}>
           <h4 className={cx("name")}>{authorInfo.userName}</h4>
@@ -87,15 +115,19 @@ function AuthorItem({ authorInfo}) {
                 </ul> */}
         </div>
       </Link>
-      {!isFollow ? (
-        <Button primary onClick={() => handleFollow(authorInfo.userId)}>
-          Follow lại
-        </Button>
-      ) : (
-        <Button unFollow onClick={() => handleUnFollow(authorInfo.userId)}>
-          Bỏ Follow
-        </Button>
-      )}
+      {　myId === authorInfo.userId ? <button><Link to={"/user/profile"}>&gt;</Link></button> :
+        <Fragment>
+          {!isFollow ? (
+            <Button primary onClick={() => handleFollow(authorInfo.userId)}>
+              Follow lại
+            </Button>
+          ) : (
+            <Button unFollow onClick={() => handleUnFollow(authorInfo.userId)}>
+              Bỏ Follow
+            </Button>
+          )}
+        </Fragment>
+      }
     </div>
   );
 }
