@@ -90,7 +90,7 @@ function BookReviewItem({ item }) {
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
             <img
-              src={image !== "" ? image : item.bookResponse.bookImage}
+              src={`http://103.216.116.98:9000/book-rating/${item.bookResponse.bookImage}`}
               alt="book-img"
             />
           </div>

@@ -3,18 +3,20 @@ import { getToken } from "../../services/localStorageService";
 import { useEffect, useState } from "react";
 import styles from "./Ranking.module.scss";
 import classNames from "classnames/bind";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function Ranking() {
   const [myPosts, setMyPosts] = useState([]);
   const [newest, setNewest] = useState([]);
+  const navigate = useNavigate();
 
   const token = getToken();
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        if (!token) return;
+        // if (!token) return;
 
         const userResponse = await fetch(
           "http://localhost:8081/api/user/detail-by-token",
@@ -25,7 +27,12 @@ function Ranking() {
           }
         );
 
-        if (!userResponse.ok) throw new Error("Error fetching user data");
+        if (!userResponse.ok) {
+          if (userResponse.status === 401) {
+            console.log("status", userResponse.status);
+            navigate("/login");
+          }
+        }
 
         const userResult = await userResponse.json();
 
@@ -37,7 +44,6 @@ function Ranking() {
 
         const myBookResult = await myBooksResponse.json();
         setMyPosts(myBookResult.result);
-
       } catch (error) {
         console.error("Error:", error);
       }
@@ -46,15 +52,15 @@ function Ranking() {
     fetchProfileData();
   }, [token]);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch(`http://localhost:8081/api/book/ranking-newest`)
-    .then((response)=>{
+      .then((response) => {
         return response.json();
-    })
-    .then((result)=>{
+      })
+      .then((result) => {
         setNewest(result.result);
-    })
-  }, [])
+      });
+  }, []);
 
   return (
     <div className={cx("wrapper")}>

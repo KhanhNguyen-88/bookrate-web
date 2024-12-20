@@ -36,7 +36,7 @@ function AuthorItem({authorInfo}) {
         <div className = {cx("info")}>
             <h5 className = {cx("name")}>{authorInfo.userName}</h5>
             <ul>
-                <li className = {cx("totalBook")}><p>{authorInfo.userId} Posts</p></li>
+                <li className = {cx("totalBook")}><p>{authorInfo.fullName}</p></li>
             </ul>
         </div>
     </Link>;

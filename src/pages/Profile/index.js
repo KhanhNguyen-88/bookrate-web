@@ -188,7 +188,7 @@ function Profile() {
           </div>
           <ul className={cx("info")}>
             <li>
-              <strong>1</strong>
+              <strong>{profileData.bookNumberPost}</strong>
               <Button>Bài viết</Button>
             </li>
             <li>
@@ -211,7 +211,7 @@ function Profile() {
                     {follower.length > 0 ? (
                       renderUserFollow(follower)
                     ) : (
-                      <p>Không có dữ liệu</p>
+                      <p>Chưa được theo dõi bởi ai!</p>
                     )}
                   </div>
                 </div>
@@ -237,7 +237,7 @@ function Profile() {
                     {following.length > 0 ? (
                       renderUserFollow(following)
                     ) : (
-                      <p>Không có dữ liệu</p>
+                      <p>Không theo dõi ai!</p>
                     )}
                   </div>
                 </div>

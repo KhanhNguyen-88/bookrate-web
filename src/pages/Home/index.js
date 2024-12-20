@@ -6,7 +6,7 @@ import style from "./Home.module.scss";
 import { getToken } from "../../services/localStorageService";
 import PaginatedItems from "./components/PaginatedItems";
 import { useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(style);
 
@@ -17,8 +17,12 @@ function Home() {
   const eventSourceRef = useRef(null); // Dùng useRef để lưu EventSource
   const location = useLocation();
   const token = getToken();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if(!token){
+      navigate("/login")
+    }
     const fetchUserIdAndConnectSSE = async () => {
       try {
         const response = await fetch(

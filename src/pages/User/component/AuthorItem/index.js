@@ -8,7 +8,7 @@ import { useState, useEffect, Fragment } from "react";
 
 const cx = classNames.bind(style);
 function AuthorItem({ authorInfo }) {
-  const [isFollow, setIsFollow] = useState(authorInfo.followBack);
+  const [isFollow, setIsFollow] = useState(false);
   const [imagePre, setImagePre] = useState();
   const [myId, setMyId] = useState(0);
   useEffect(() => {
@@ -115,7 +115,7 @@ function AuthorItem({ authorInfo }) {
                 </ul> */}
         </div>
       </Link>
-      {　myId === authorInfo.userId ? <button><Link to={"/user/profile"}>&gt;</Link></button> :
+      {myId === authorInfo.userId ? <button><Link to={"/user/profile"}>&gt;</Link></button> :
         <Fragment>
           {!isFollow ? (
             <Button primary onClick={() => handleFollow(authorInfo.userId)}>

@@ -202,7 +202,7 @@ function UserInfo() {
           </div>
           <ul className={cx("info")}>
             <li>
-              <strong>1</strong>
+              <strong>{userData.bookNumberPost}</strong>
               <Button>Bài viết</Button>
             </li>
             <li>

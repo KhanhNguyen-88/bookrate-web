@@ -18,12 +18,6 @@ function Admin() {
         { date: "Saturday", posts: 15 },
         { date: "Sunday", posts: 9 },
     ];
-
-    // const users = [
-    //     { id: 1, name: "Nguyen Van A", email: "a@gmail.com" },
-    //     { id: 2, name: "Le Thi B", email: "b@gmail.com" },
-    //     { id: 3, name: "Tran Van C", email: "c@gmail.com" },
-    // ];
     useEffect(()=>{
         fetch("http://localhost:8081/api/user/get-all", {
             method: "GET",
@@ -39,24 +33,40 @@ function Admin() {
         })
     }, [users])
 
-    const handleDelete = async (id)=>{
-        const response = await fetch(`http://localhost:8081/api/user/delete/${id}`,{
-            method: "GET",
-            headers :{
-                "Content-Type": "application/x-www-form-urlencoded", 
+    const handleDelete = async (id) => {
+        // Hiển thị hộp thoại xác nhận
+        const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa người dùng này?");
+        
+        if (confirmDelete) {
+            try {
+                const response = await fetch(`http://localhost:8081/api/user/delete/${id}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                });
+    
+                const result = await response.json();
+    
+                // Kiểm tra kết quả xóa
+                if (result.code !== 200) {
+                    alert("Xóa không thành công");
+                } else {
+                    alert("Xóa thành công!");
+                    // Sau khi xóa, cập nhật lại danh sách người dùng
+                    setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+                }
+            } catch (error) {
+                console.error("Có lỗi xảy ra khi xóa:", error);
+                alert("Đã xảy ra lỗi khi xóa người dùng.");
             }
-        })
-         const result = response.json();
-         if(result.code == 200){
-            alert("Xóa không thành công");
-         }else{
-            alert("Xóa thành công!");
-         }
-    }
+        }
+    };
+    
     return (
-        <div style={{ display: "flex" }}>
-            <SidebarAdmin onSelect={setView} />
-            <div style={{ flex: 1, padding: "20px" }}>
+        <div>
+            <SidebarAdmin onSelect={setView}/>
+            <div style={{padding: "20px",  position: "absolute", left: "280px"}}>
                 {view === "dashboard" && <PostChart data={postData} />}
                 {view === "users" && <UserTable users={users} onDelete={(id)=>handleDelete(id) } />}
                 {view === "review" && <ReviewBook/>}
