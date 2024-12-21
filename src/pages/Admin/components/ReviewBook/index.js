@@ -42,9 +42,11 @@ function ReviewBook() {
     });
   };
   return (
-    <div className={cx("wrapperAllBooks")}>
-      {books.length > 0 ? renderBook() : <div>Không có sách cần duyệt</div>}
-    </div>
+   <div>
+      {books.length > 0 ? <div className={cx("wrapperAllBooks")}>
+        {renderBook()}
+      </div> :  <div className = {cx("noneContent")}>Không có sách cần duyệt</div>}
+   </div>
   );
 }
 
