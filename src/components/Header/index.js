@@ -96,9 +96,12 @@ function Header({ userData, reRender }) {
   };
 
   const handleLogout = () => {
-    navigate("/");
-    logOut(); // remove token
-    reRender(); // re-render layout
+    const confirmLogout = window.confirm("Bạn có chắc chắn muốn đăng xuất?");
+    if (confirmLogout) {
+      navigate("/"); // Quay lại trang chủ
+      logOut(); // Xóa token
+      reRender(); // Re-render layout
+    }
   };
 
   const handleChangeInput = (e) => {
@@ -137,6 +140,7 @@ function Header({ userData, reRender }) {
   }, [userData]); 
 
   useEffect(() => {
+    if(searchTerm !== ""){
     fetch(`http://localhost:8081/api/book/search-common/${searchTerm}`, {
       method: "GET",
       headers: {
@@ -148,13 +152,15 @@ function Header({ userData, reRender }) {
       })
       .then((result) => {
         setData(result.result);
-      });
+      });   
+    }
   }, [searchTerm]);
 
 
   const handleClearSearch = () => {
     console.log("click");
-    setSearchTerm(null);
+    setSearchTerm("");
+    setSuggestions([]);
   };
 
   const handleClosePopup = (close) => {
@@ -215,7 +221,7 @@ function Header({ userData, reRender }) {
         {/* <span className={cx("loadIcon")}>
           <FontAwesomeIcon icon={faSpinner} />
         </span> */}
-        <span className={cx("clearIcon")} onClick={() => handleClearSearch}>
+        <span className={cx("clearIcon")} onClick={handleClearSearch}>
           <FontAwesomeIcon icon={faXmarkCircle} />
         </span>
       </div>

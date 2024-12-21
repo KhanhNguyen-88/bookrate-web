@@ -65,7 +65,10 @@
         position: absolute;
         right: 38px;
         color: gray;
-
+        &:hover{
+            color: blue;
+            font-size: 10.5px;
+        }
     }
 
     .loadIcon {
