@@ -2,10 +2,51 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    width: 100%;
-    height: 700px;
 }
 .noneContent{
-    width: 100%;
     margin: 10px;
 }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 20px;
+  }
+  
+  .paginationButton {
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  
+    &:hover {
+      background-color: #007bff;
+      color: white;
+      transform: scale(1.05);
+    }
+  
+    &:disabled {
+      background-color: #e0e0e0;
+      color: #a0a0a0;
+      cursor: not-allowed;
+    }
+  }
+  
+  .paginationText {
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .paginationButton:first-child {
+    border-radius: 5px 0 0 5px; /* Bo góc cho nút Previous */
+  }
+  
+  .paginationButton:last-child {
+    border-radius: 0 5px 5px 0; /* Bo góc cho nút Next */
+  }
+  
