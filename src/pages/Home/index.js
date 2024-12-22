@@ -37,7 +37,11 @@ function Home() {
         );
 
         if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+          if (response.status === 401) {
+            console.log("status", response.status);
+            navigate("/login");
+          }
+          // throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
         const result = await response.json();
