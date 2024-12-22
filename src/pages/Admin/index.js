@@ -16,6 +16,7 @@ const cx = classNames.bind(styles);
 function Admin() {
   const [view, setView] = useState("dashboard");
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:8081/api/user/get-all", {
       method: "GET",
