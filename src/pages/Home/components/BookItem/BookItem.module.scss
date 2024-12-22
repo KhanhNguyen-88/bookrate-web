@@ -1,4 +1,4 @@
-.bookWrapper{
+.bookWrapper {
     height: fit-content;
     padding-top: 20px;
     width: 550px;
@@ -9,11 +9,13 @@
     box-shadow: 0px 0px 4px gray;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
 .book {
-    
+
     display: flex;
-    
+
 }
+
 .thumbnail {
     width: 40%;
     height: 60%;
@@ -21,73 +23,86 @@
     border-radius: 0 10px 10px 0;
     display: flex;
     flex-direction: column;
-    img{
+
+    img {
         width: 85%;
         height: 50%;
         border-radius: 0 10px 10px 0;
         margin: 0 auto;
         box-shadow: 1px 1px 10px gray;
-        &:hover{
+
+        &:hover {
             cursor: pointer;
         }
     }
-    .btnGroup{
+
+    .btnGroup {
         margin: 0 auto;
         height: 40%;
         width: 85%;
         display: flex;
         flex-direction: column;
-        .wtRead{
+
+        .wtRead {
             display: flex;
             margin: 10px 0;
-            span{
+
+            span {
                 width: 2px;
             }
-            >:first-child{
+
+            >:first-child {
                 width: 80%;
                 border-radius: 99px 0px 0px 99px;
             }
-            >:last-child{
+
+            >:last-child {
                 width: 20%;
                 margin: 0;
                 border-radius: 0 99px 99px 0;
             }
         }
-        >:last-child{
+
+        >:last-child {
             border-radius: 99px;
 
         }
     }
 }
-.btnLiked{
-    button{
+
+.btnLiked {
+    button {
         font-weight: 800;
         cursor: pointer;
         color: black;
         padding: 4px 8px;
-        background-color:white;
+        background-color: white;
         border-radius: 99px;
         border: 2px solid black;
         width: 100%;
         margin: 10px 0;
+
         &:hover {
             background: whitesmoke;
         }
     }
 }
-.creator{
+
+.creator {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    p{
+
+    p {
         font-size: 14px;
         color: gray;
     }
 }
+
 .info {
     padding: 12px;
-    width: 60% ;
+    width: 60%;
     height: 60%;
 }
 
@@ -98,7 +113,8 @@
 .author {
     display: flex;
     align-items: center;
-    >p{
+
+    >p {
         font-size: 14px;
         width: 100px;
     }
@@ -110,7 +126,8 @@
     margin: 10px 0;
     padding: 10px;
     align-items: center;
-    &:hover{
+
+    &:hover {
         background-color: var(--special-color);
         border-radius: 8px;
         cursor: pointer;
@@ -120,7 +137,7 @@
 .points {
     font-size: 16px;
     font-weight: bolder;
-    margin-right:  18px;
+    margin-right: 18px;
     margin-left: 8px;
 }
 
@@ -128,7 +145,7 @@
     margin-right: 8px;
     color: gray;
     font-size: 12px;
-    margin: 0px 8px ;
+    margin: 0px 8px;
 }
 
 // .reviews {}
@@ -136,7 +153,8 @@
 .award {
     margin: 14px 0;
     font-size: 12px;
-    >:first-child{
+
+    >:first-child {
         background-color: #f0bf6e;
         padding: 0 12px;
         border-radius: 0 22px;
@@ -147,7 +165,8 @@
     margin-left: 12px;
     font-weight: 600;
     text-decoration: underline;
-    &:hover{
+
+    &:hover {
         opacity: 0.6;
     }
 }
@@ -156,18 +175,27 @@
     font-size: 14px;
     font-style: italic;
     text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .genres {
     font-size: 12px;
     display: flex;
     margin: 8px 0;
-    p{
+
+    p {
         width: 100px;
     }
-    strong>a{
+
+    strong>a {
         font-weight: 600;
-        &:hover{
+
+        &:hover {
             text-decoration: underline var(--second-color) 2px;
             transition: all ease-in-out 0.3s;
             cursor: pointer;
@@ -177,59 +205,72 @@
 
 .editionInfo {
     font-size: 14px;
-    ul{
-        li{
+
+    ul {
+        li {
             display: flex;
-            >:first-child{
+
+            >:first-child {
                 width: 100px;
             }
-            p{
+
+            p {
                 text-align: left;
             }
-            .detail{
+
+            .detail {
                 color: gray;
             }
         }
     }
 }
-.comment{
+
+.comment {
     display: flex;
     flex-direction: column;
     border-top: solid 1px rgb(243, 231, 231);
     padding: 10px;
     margin: auto;
 }
-.commentInfo{
+
+.commentInfo {
     display: flex;
     justify-content: space-between;
-    button{
+
+    button {
         margin-bottom: 10px;
         background-color: white;
-        &:hover{
+
+        &:hover {
             color: rgb(90, 90, 182);
             cursor: pointer;
         }
     }
 }
-.commentPost{
+
+.commentPost {
     width: 400px;
     height: 500px;
     background-color: white;
     border-radius: 8px;
     padding: 10px;
-    .comments{
+
+    .comments {
         height: 350px;
         overflow-y: scroll;
-        >div{
+
+        >div {
             margin: 10px;
         }
     }
-    .headerCom{
+
+    .headerCom {
         width: 370px;
         margin: 10px;
         display: flex;
         justify-content: space-between;
-        button{
+
+        button {
             background-color: white;
             font-size: 20px;
         }
