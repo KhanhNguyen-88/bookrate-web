@@ -60,6 +60,7 @@ function CreatePost({ handleClose }) {
     cateDescription: "",
     cateImage: "",
   });
+  const [allLanguage, setAllLanguage] = useState([]);
   const [searchTerm, setSearchTerm] = useState(""); // State to store search term
 
   useEffect(() => {
@@ -73,6 +74,21 @@ function CreatePost({ handleClose }) {
         console.error("Lỗi khi lấy danh mục:", error);
       });
   }, [openAddCategoryDialog]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/api/language/get-all")
+      .then((response) => {
+        setAllLanguage(response.data.result);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy ngôn ngữ:", error);
+      });
+  }, [allLanguage]);
+  const renderLanguage = () => {
+    return allLanguage.map((item, index) => {
+      return <MenuItem value={item.id} key={index}>{item.languageName}</MenuItem>;
+    });
+  };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -336,9 +352,7 @@ function CreatePost({ handleClose }) {
                 label="Ngôn ngữ"
                 size="small"
               >
-                <MenuItem value="1">Tiếng Việt</MenuItem>
-                <MenuItem value="2">English</MenuItem>
-                <MenuItem value="3">Français</MenuItem>
+                {renderLanguage()}
               </Select>
             </FormControl>
           </Grid>
