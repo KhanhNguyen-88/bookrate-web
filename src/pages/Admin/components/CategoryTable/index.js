@@ -124,12 +124,12 @@ const CategoryTable = () => {
               <TableCell>{category.cateDescription}</TableCell>
               <TableCell>
                 <Button onClick={() => handleViewCategory(category.id)}>Xem</Button>
-                <Button
+                {/* <Button
                   onClick={() => handleDeleteCategory(category.id)}
                   color="error"
                 >
                   Xóa
-                </Button>
+                </Button> */}
               </TableCell>
             </TableRow>
           ))}
