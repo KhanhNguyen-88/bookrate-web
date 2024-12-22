@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 
 
 import style from "./Home.module.scss";
-import { getToken } from "../../services/localStorageService";
+import { getToken, removeToken } from "../../services/localStorageService";
 import PaginatedItems from "./components/PaginatedItems";
 import { useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
