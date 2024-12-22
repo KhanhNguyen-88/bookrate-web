@@ -24,26 +24,29 @@ function UserInfo() {
 
   useEffect(() => {
     const token = getToken();
-    const fetchDataUser = async()=>{
+    const fetchDataUser = async () => {
       //fetch user nae data
-      const userDataResponse = await fetch(`http://localhost:8081/api/user/detail/${userId}`, {
-        method: "GET",
-        headers:{
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
+      const userDataResponse = await fetch(
+        `http://localhost:8081/api/user/detail/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
-      if(!userDataResponse.ok){
+      );
+      if (!userDataResponse.ok) {
         throw new Error(
           `Failed to fetch books. Status: ${userDataResponse.status}`
         );
       }
-      const userResult = await userDataResponse.json(); 
+      const userResult = await userDataResponse.json();
       setUserData(userResult.result);
       setIsFollowed(userResult.result.isFollowing);
-      console.log("Follow status",  userResult.result.isFollowing);
-       //fetch my book
-       const myBooksResponse = await fetch(
+      console.log("Follow status", userResult.result.isFollowing);
+      //fetch my book
+      const myBooksResponse = await fetch(
         `http://localhost:8081/api/book/get-posted-by-username/${userResult.result.userName}`,
         {
           method: "GET",
@@ -60,7 +63,7 @@ function UserInfo() {
 
       const myBookResult = await myBooksResponse.json();
       setMyPosts(myBookResult.result);
-    }
+    };
     fetchDataUser();
   }, [userId]);
 
@@ -82,10 +85,13 @@ function UserInfo() {
   }, [userId]);
 
   const handleOpenFollower = () => {
+    const token = getToken();
+
     setOpenPopup(true);
     fetch(`http://localhost:8081/api/user/follower-account/${userId}`, {
       method: "GET",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json", // Set the content type to JSON
       },
     })
@@ -99,10 +105,13 @@ function UserInfo() {
   };
 
   const handleOpenFollowing = () => {
+    const token = getToken();
+
     setOpenPopupFollowing(true);
     fetch(`http://localhost:8081/api/user/following-account/${userId}`, {
       method: "GET",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json", // Set the content type to JSON
       },
     })
@@ -186,16 +195,19 @@ function UserInfo() {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`} alt="avatar"></img>
+        <img
+          src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`}
+          alt="avatar"
+        ></img>
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{userData.userName}</h2>
             {isFollowed ? (
-              <Button unFollow onClick={()=>handleUnFollow(userData.id)}>
+              <Button unFollow onClick={() => handleUnFollow(userData.id)}>
                 UnFollow
               </Button>
             ) : (
-              <Button primary onClick={()=>handleFollow(userData.id)}>
+              <Button primary onClick={() => handleFollow(userData.id)}>
                 Theo dõi
               </Button>
             )}

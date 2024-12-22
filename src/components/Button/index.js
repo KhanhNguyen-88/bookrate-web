@@ -18,6 +18,7 @@ function Button({
   leftIcon,
   unFollow,
   saleLink,
+  target,
 }) {
   let Com = "button";
   const Classes = cx("wrapper", {
@@ -43,7 +44,7 @@ function Button({
     Com = "a";
   }
   return (
-    <Com className={Classes} {...props} target="_blank" >
+    <Com className={Classes} {...props}>
       {leftIcon && <span className={cx("leftIcon")}>{leftIcon}</span>}
       {children}
     </Com>

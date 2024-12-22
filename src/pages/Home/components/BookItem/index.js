@@ -177,7 +177,7 @@ function BookItem({ item }) {
                   </Button>
                 </div>
               )}
-              <Button second href={item.bookResponse.bookSaleLink} saleLink>Tìm mua</Button>
+              <Button second href={item.bookResponse.bookSaleLink} saleLink target={"_blank"}>Tìm mua</Button>
             </div>
           </div>
           <div className={cx("info")}>

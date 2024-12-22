@@ -181,7 +181,7 @@ function BookItem({ item, feedBackList, percent }) {
               </Button>
             </div>
           )}
-          <Button second>Tìm mua</Button>
+          <Button second href={item.bookSaleLink} saleLink target={"_blank"}>Tìm mua</Button>
         </div>
       </div>
       <div className={cx("info")}>

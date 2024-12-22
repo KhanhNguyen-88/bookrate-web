@@ -119,7 +119,7 @@ function AuthorItem({ authorInfo }) {
         <Fragment>
           {!isFollow ? (
             <Button primary onClick={() => handleFollow(authorInfo.userId)}>
-              Follow lại
+              Follow
             </Button>
           ) : (
             <Button unFollow onClick={() => handleUnFollow(authorInfo.userId)}>
