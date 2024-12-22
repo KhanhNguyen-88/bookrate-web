@@ -41,6 +41,7 @@ function Button({
     Com = Link;
   } else if (href) {
     props.href = href;
+    props.target = target; 
     Com = "a";
   }
   return (
