@@ -20,7 +20,7 @@ const AccessChart = () => {
     // Gọi API để lấy dữ liệu
     const fetchData = async () => {
       try {
-        const response = await fetch('http://103.216.116.98:8081/api/login-history/chart');
+        const response = await fetch('http://localhost:8081/api/login-history/chart');
         const result = await response.json();
         setData(result.result);
       } catch (error) {
@@ -62,6 +62,11 @@ const AccessChart = () => {
           display: true,
           text: 'Ngày',
         },
+        ticks: {
+          autoSkip: false, // Hiển thị toàn bộ nhãn trên trục x
+        },
+        barPercentage: 0.5, // Chiều rộng cột, giá trị từ 0 đến 1
+        categoryPercentage: 0.8, // Khoảng cách giữa các cột, giá trị từ 0 đến 1
       },
       y: {
         title: {
@@ -72,6 +77,7 @@ const AccessChart = () => {
       },
     },
   };
+  
 
   return (
     <div className={styles.container}>

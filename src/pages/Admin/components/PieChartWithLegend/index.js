@@ -17,7 +17,7 @@ const PieChartWithLegend = () => {
     // Gọi API để lấy dữ liệu
     const fetchData = async () => {
       try {
-        const response = await fetch('http://103.216.116.98:8081/api/category/chart');
+        const response = await fetch('http://localhost:8081/api/category/chart');
         const result = await response.json();
         setData(result.result);
       } catch (error) {
@@ -40,6 +40,9 @@ const PieChartWithLegend = () => {
           'rgba(255, 206, 86, 0.6)',
           'rgba(75, 192, 192, 0.6)',
           'rgba(153, 102, 255, 0.6)',
+          'rgba(192, 83, 59, 0.6)',
+          'rgba(45, 81, 96, 0.6)',
+          'rgba(213, 71, 156, 0.6)',
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
