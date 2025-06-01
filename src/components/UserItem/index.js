@@ -32,7 +32,7 @@ function UserItem({userFollowing, userName, userImage, userId}) {
         }
       }, [userImage]); 
     return <Link to={`/user/${userId}`} className = {cx("wrapper")}>
-        <AvatarWrapper><img src={`http://103.216.116.98:9000/book-rating/${userImage}`} alt="avatar"/></AvatarWrapper>
+        <AvatarWrapper><img src={`http://localhost:9000/image-book-rate/${userImage}`} alt="avatar"/></AvatarWrapper>
         <div>
             <strong>{userName}</strong>
             {/* <h6>{userFollowing.userFullName}</h6> */}

@@ -83,7 +83,7 @@ function CreatePost({ handleClose }) {
       .catch((error) => {
         console.error("Lỗi khi lấy ngôn ngữ:", error);
       });
-  }, [allLanguage]);
+  }, []);
   const renderLanguage = () => {
     return allLanguage.map((item, index) => {
       return <MenuItem value={item.id} key={index}>{item.languageName}</MenuItem>;
@@ -155,7 +155,7 @@ function CreatePost({ handleClose }) {
           },
         }
       );
-
+      alert("Bài viết đang được chờ duyệt!");
       // Log thành công
       console.log("Đăng bài thành công:", response.data);
       handleClose();

@@ -41,7 +41,9 @@ function User() {
     }
     fetchUserData();
   }, [token])
-  return (
+  return !token ? (
+    <Navigate to="/login" />
+  ) :(
     <div className={cx("wrapper")}>
       <div className={cx("userInfo")}>
        {userData.id === Number(userId) ? <Navigate to={"/user/profile"}/> :<UserInfo/>} 

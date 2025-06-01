@@ -1,8 +1,8 @@
 .carouselContainer {
   margin: 0 auto;
-  width: 100%;
+  width: 60%;
   padding: 10px 50px;
-  background: #e99393; /* Màu nền */
+  // background: #e99393; /* Màu nền */
   position: relative; /* Cần để các nút điều hướng xuất hiện đúng vị trí */
   overflow: hidden; /* Ẩn bất kỳ phần tử nào vượt quá kích thước của container */
 
@@ -19,11 +19,11 @@
 
   /* Ban đầu ẩn các nút prev/next */
   .arrow {
-    background-color: rgba(0, 0, 0, 0.5); /* Nền tối cho nút */
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Nền tối cho nút */
     border: none;
-    color: #fff;
+    color: black !important;
     font-size: 24px;
-    padding: 10px;
+    padding-left: 10px;
     cursor: pointer;
     position: absolute;
     top: 50%;

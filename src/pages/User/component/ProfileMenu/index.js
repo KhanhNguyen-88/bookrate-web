@@ -1,11 +1,12 @@
 import DescriptionIcon from "@mui/icons-material/Description";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 import { Box, Tab, Tabs, Typography, styled } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import PaginatedItems from "../../../NewExplore/components/PaginatedItems";
 import { useParams } from "react-router-dom";
 import Book from "../../../NewExplore/components/Book";
-import style from "./TabContent.module.scss"
+import style from "./TabContent.module.scss";
 import classNames from "classnames/bind";
 
 const CustomTabs = styled(Tabs)({
@@ -33,13 +34,12 @@ const CustomTab = styled(Tab)({
   },
 });
 
-function ProfileMenu({dataLove, dataPost}) {
+function ProfileMenu({ dataLove, dataPost, unPost }) {
   const [selectedTab, setSelectedTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
   };
- 
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -54,37 +54,46 @@ function ProfileMenu({dataLove, dataPost}) {
           iconPosition="start"
           label="Yêu thích"
         />
+        <CustomTab
+          icon={<BorderColorIcon />}
+          iconPosition="start"
+          label="Chờ duyệt"
+        />
       </CustomTabs>
-      <TabContent selectedTab={selectedTab} dataLove={dataLove} dataPost={dataPost} />
+      <TabContent
+        selectedTab={selectedTab}
+        dataLove={dataLove}
+        dataPost={dataPost}
+        unPost={unPost}
+      />
     </Box>
   );
 }
 
-function TabContent({ selectedTab, dataLove, dataPost }) {
+function TabContent({ selectedTab, dataLove, dataPost, unPost }) {
   const cx = classNames.bind(style);
-  const renderBook = ()=>{
-    return dataLove.map((item, index)=>{
-        return <Book book={item} key={index}></Book>
-    })
-  }
-  const renderPost = ()=>{
-    return dataPost.map((item, index)=>{
-        return <Book book={item}key={index}></Book>
-    })
-  }
+  const renderBook = () => {
+    return dataLove.map((item, index) => {
+      return <Book book={item} key={index}></Book>;
+    });
+  };
+  const renderUnBook = () => {
+    return unPost.map((item, index) => {
+      return <Book book={item} key={index}></Book>;
+    });
+  };
+  const renderPost = () => {
+    return dataPost.map((item, index) => {
+      return <Book book={item} key={index}></Book>;
+    });
+  };
   switch (selectedTab) {
     case 0:
-      return (
-        <div className = {cx("wrapperPosts")}>
-          {renderPost()}
-        </div>
-      )
+      return <div className={cx("wrapperPosts")}>{renderPost()}</div>;
     case 1:
-      return (
-        <div className = {cx("wrapperFavor")}>
-         {renderBook()}
-        </div>
-      );
+      return <div className={cx("wrapperFavor")}>{renderBook()}</div>;
+    case 2:
+      return <div className={cx("wrapperFavor")}>{renderUnBook()}</div>;
     default:
       return null;
   }

@@ -40,7 +40,7 @@ const UpdateProfile = () => {
       })
       .then((result) => {
         setUserData(result.result);
-        setImagePre(`http://103.216.116.98:9000/book-rating/${result.result.userImage}`);
+        setImagePre(`http://localhost:9000/image-book-rate/${result.result.userImage}`);
         console.log("data user",result.result)
       });
   }, [accessToken]);
@@ -90,7 +90,7 @@ const UpdateProfile = () => {
       });
       const result = await response.json();
       setImage(result.result);
-      setImagePre(`http://103.216.116.98:9000/book-rating/${result.result}`);
+      setImagePre(`http://localhost:9000/image-book-rate/${result.result}`);
 
 
       const response2 = await fetch(

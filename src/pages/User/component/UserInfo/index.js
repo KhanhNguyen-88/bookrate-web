@@ -21,6 +21,7 @@ function UserInfo() {
   const [imagePre, setImagePre] = useState("");
   const [isFollowed, setIsFollowed] = useState(false);
   const [myPosts, setMyPosts] = useState([]);
+  const [unPosts, setUnPosts] = useState([]);
 
   useEffect(() => {
     const token = getToken();
@@ -79,6 +80,22 @@ function UserInfo() {
       })
       .then((result) => {
         setFavoriteBooks(result.result);
+        console.log(result.result);
+      });
+    // }
+  }, [userId]);
+  useEffect(() => {
+    fetch(`http://localhost:8081/api/book/get-book-unapprove/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        setUnPosts(result.result);
         console.log(result.result);
       });
     // }
@@ -196,7 +213,7 @@ function UserInfo() {
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
         <img
-          src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`}
+          src={`http://localhost:9000/image-book-rate/${userData.userImage}`}
           alt="avatar"
         ></img>
         <div>
@@ -282,7 +299,11 @@ function UserInfo() {
       <div className={cx("wrapperMoreInfo")}>
         <div className={cx("lineAction")}></div>
         <ul className={cx("menu")}>
-          <ProfileMenu dataLove={favoriteBooks} dataPost={myPosts} />
+          <ProfileMenu
+            dataLove={favoriteBooks}
+            dataPost={myPosts}
+            unPost={unPosts}
+          />
         </ul>
       </div>
     </div>

@@ -21,7 +21,7 @@ function PaginatedItems({items, pageCount, onPageChange}) {
   return (
     <div className = {cx("wrapper")}>
       <div className = {cx("books")}>{renderBook()}</div>
-      <ReactPaginate
+      {/* <ReactPaginate
         breakLabel="..."
         nextLabel={<FontAwesomeIcon icon={faArrowRight}/>}
         onPageChange={handlePageClick}
@@ -39,7 +39,7 @@ function PaginatedItems({items, pageCount, onPageChange}) {
         breakClassName={cx("pagination__item")}
         breakLinkClassName={cx("pagination__item")}
         activeClassName={cx("active")}
-      />
+      /> */}
     </div>
   );
 }

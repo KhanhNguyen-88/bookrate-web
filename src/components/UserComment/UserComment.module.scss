@@ -20,6 +20,12 @@
   
   .commentDetails {
     flex: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .userInfo {
@@ -29,11 +35,18 @@
     font-size: 14px;
     color: #333;
     width: 100%;
+    >div:first-child{
+      display: flex;
+      justify-content: space-between;
+    }
   }
   
   .userName {
     font-weight: bold;
     margin-bottom: 0.1rem; /* Thêm khoảng cách dưới tên người dùng */
+  }
+  .createdAt{
+    padding: 0 20px;
   }
   
   .stars {

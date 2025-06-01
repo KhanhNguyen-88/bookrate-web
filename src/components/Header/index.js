@@ -27,6 +27,7 @@ import ItemBookSearch from "../ItemBookSearch";
 import CreatePost from "../../pages/CreatePost";
 import Popup from "reactjs-popup";
 import UpdateProfile from "../../pages/UpdateProfile";
+import { Navigate } from "react-router-dom";
 
 const MENU_ITEMS = [
   {
@@ -221,9 +222,9 @@ function Header({ userData, reRender }) {
         {/* <span className={cx("loadIcon")}>
           <FontAwesomeIcon icon={faSpinner} />
         </span> */}
-        <span className={cx("clearIcon")} onClick={handleClearSearch}>
+        {/* { searchTerm.length > 0 ? (<span className={cx("clearIcon")} onClick={handleClearSearch}>
           <FontAwesomeIcon icon={faXmarkCircle} />
-        </span>
+        </span>) : <p></p>} */}
       </div>
       <div className={cx("action")}>
         {userData ? (
@@ -302,7 +303,7 @@ function Header({ userData, reRender }) {
                   );
                 }}
               >
-                <img src={`http://103.216.116.98:9000/book-rating/${userData.userImage}`} alt="avatar" />
+                <img src={`http://localhost:9000/image-book-rate/${userData.userImage}`} alt="avatar" />
               </Tippy>
             </AvatarWrapper>
           </div>

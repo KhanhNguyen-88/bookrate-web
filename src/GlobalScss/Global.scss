@@ -44,3 +44,8 @@ input, button{
        border: none;
     }
 }
+.slick-slider {
+    width: 100%; // hoặc 1200px hoặc bất kỳ
+    max-width: 1050px;
+    margin: 0 auto;
+  }

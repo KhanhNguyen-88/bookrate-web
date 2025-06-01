@@ -63,14 +63,14 @@ const UserTable = ({ users, onDelete }) => {
             <TableCell>ID</TableCell>
             <TableCell>Tên</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Hành động</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {paginatedUsers.map((user) => (
             <TableRow key={user.id}>
               <TableCell>{user.id}</TableCell>
-              <TableCell>{user.fullName}</TableCell>
+              <TableCell>{user.username}</TableCell>
               <TableCell>{user.userEmail}</TableCell>
               <TableCell>
                 <Button onClick={() => handleViewUser(user.id)}>Xem</Button>
@@ -121,7 +121,7 @@ const UserTable = ({ users, onDelete }) => {
               <Typography variant="body1">Số Điện Thoại: {selectedUser.userPhone}</Typography>
               {selectedUser.userImage && (
                 <img
-                  src={`http://103.216.116.98:9000/book-rating/${selectedUser.userImage}`}
+                  src={`http://localhost:9000/image-book-rate/${selectedUser.userImage}`}
                   alt="User"
                   style={{ width: "100%", marginTop: "10px", borderRadius: "8px" }}
                 />

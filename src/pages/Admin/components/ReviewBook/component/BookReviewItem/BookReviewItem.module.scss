@@ -91,6 +91,12 @@
 
 .title {
     font-size: 26px;
+     display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .author {
@@ -154,6 +160,12 @@
     font-size: 14px;
     font-style: italic;
     text-align: justify;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .genres {
@@ -235,4 +247,6 @@
 }
 .btnAccept{
     margin: 10px auto;
+    margin-top: 30px;
+    padding: 10px;
 }

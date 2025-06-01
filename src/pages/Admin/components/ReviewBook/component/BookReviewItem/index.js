@@ -70,27 +70,47 @@ function BookReviewItem({ item }) {
       );
     });
   };
-  const handleAccept = async (bookId)=>{
-    const token = getToken()
-    const response = await fetch(`http://localhost:8081/api/book/admin-approve/${bookId}`,{
+  const handleAccept = async (bookId) => {
+    const token = getToken();
+    const response = await fetch(
+      `http://localhost:8081/api/book/admin-approve/${bookId}`,
+      {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        }
-    })
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     const result = await response.json();
-    if(result.code === 200){
-        alert("Duyệt thành công");
+    if (result.code === 200) {
+      alert("Duyệt thành công");
     }
-  }
+  };
+   const handleCancel = async (bookId) => {
+    const token = getToken();
+    const response = await fetch(
+      `http://localhost:8081/api/book/admin-cancel/${bookId}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const result = await response.json();
+    if (result.code === 200) {
+      alert("Sách đã bị hủy");
+    }
+  };
   return (
     <Fragment>
       <div className={cx("bookWrapper")}>
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
             <img
-              src={`http://103.216.116.98:9000/book-rating/${item.bookResponse.bookImage}`}
+              src={`http://localhost:9000/image-book-rate/${item.bookResponse.bookImage}`}
               alt="book-img"
             />
           </div>
@@ -100,7 +120,19 @@ function BookReviewItem({ item }) {
                 userImage={item.bookResponse.userImage}
                 userName={item.bookResponse.createdBy}
               />
-              <p>{item.bookResponse.createdAt}</p>
+              <p>
+                {new Date(item.bookResponse.createdAt)
+                  .toLocaleString("vi-VN", {
+                    day: "2-digit",
+                    month: "2-digit",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                    timeZone: "UTC", // hoặc bỏ nếu muốn giờ local
+                  })
+                  .replace(",", "")}
+              </p>
             </div>
             <h3 className={cx("title")}>{item.bookResponse.bookName}</h3>
             <div className={cx("intro")}>
@@ -114,8 +146,19 @@ function BookReviewItem({ item }) {
               <p>Author</p>
               <strong>{item.bookResponse.bookAuthor}</strong>
             </div>
-            <div className = {cx("btnAccept")}>
-              <Button primary onClick={()=>handleAccept(item.bookResponse.id)}>Duyệt</Button>
+            <div className={cx("btnAccept")}>
+              <Button
+                primary
+                onClick={() => handleAccept(item.bookResponse.id)}
+              >
+                Duyệt
+              </Button>
+              <Button
+                primary
+                onClick={() => handleCancel(item.bookResponse.id)}
+              >
+                Hủy
+              </Button>
             </div>
           </div>
         </div>

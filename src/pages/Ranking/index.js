@@ -66,6 +66,8 @@ function Ranking() {
     <div className={cx("wrapper")}>
       <TopTenCarousel books={myPosts} title={"Top 10 sách xu hướng"} />
       <TopTenCarousel books={newest} title={"Top 10 sách mới nhất"} />
+      <TopTenCarousel books={newest} title={"Top 10 sách kinh tế"} />
+      <TopTenCarousel books={myPosts} title={"Top 10 sách tiểu thuyết"} />
     </div>
   );
 }

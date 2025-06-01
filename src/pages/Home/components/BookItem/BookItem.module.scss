@@ -108,6 +108,12 @@
 
 .title {
     font-size: 26px;
+     display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .author {

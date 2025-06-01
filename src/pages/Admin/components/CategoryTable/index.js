@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   TablePagination,
+  TextField,
 } from "@mui/material";
 
 const CategoryTable = () => {
@@ -18,14 +19,19 @@ const CategoryTable = () => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0); // Trang hiện tại (bắt đầu từ 0)
   const [rowsPerPage, setRowsPerPage] = useState(5); // Số dòng hiển thị trên mỗi trang
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [id, setId] = useState(0);
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [name, description, open]);
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/api/category/get-all`);
+      const response = await fetch(
+        `http://localhost:8081/api/category/get-all`
+      );
       const data = await response.json();
 
       if (data.code === 0) {
@@ -47,7 +53,10 @@ const CategoryTable = () => {
       const data = await response.json();
 
       if (data.code === 200) {
-        setSelectedCategory(data.result); // Lưu thông tin thể loại vào state
+        setSelectedCategory(data.result);
+        setName(data.result.cateName); // Lưu thông tin thể loại vào state
+        setDescription(data.result.cateDescription); 
+        setId(data.result.id);// Lưu thông tin thể loại vào state
         setOpen(true); // Mở Modal
       } else {
         alert("Không thể tải thông tin thể loại.");
@@ -57,9 +66,42 @@ const CategoryTable = () => {
       alert("Đã xảy ra lỗi khi lấy thông tin thể loại.");
     }
   };
+  //
+  const handleSave = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8081/api/category/update`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: Number(selectedCategory.id),
+            cateName: name,
+            cateDescription: description,
+            cateImage: "",
+          }),
+        }
+      );
+      const data = await response.json();
 
+      if (data.code === 200) {
+        alert("Update thành công.");
+      } else {
+        alert("Update lỗi");
+      }
+    } catch (error) {
+      console.error("Lỗi khi cập nhật thông tin thể loại:", error);
+      alert("Đã xảy ra lỗi khi cập nhật thông tin thể loại.");
+    }
+    handleClose();
+  };
+  //
   const handleDeleteCategory = async (categoryId) => {
-    const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa thể loại này?");
+    const confirmDelete = window.confirm(
+      "Bạn có chắc chắn muốn xóa thể loại này?"
+    );
     if (confirmDelete) {
       try {
         const response = await fetch(
@@ -113,7 +155,7 @@ const CategoryTable = () => {
             <TableCell>ID</TableCell>
             <TableCell>Tên Thể Loại</TableCell>
             <TableCell>Mô Tả</TableCell>
-            <TableCell>Hành động</TableCell>
+            <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -123,7 +165,9 @@ const CategoryTable = () => {
               <TableCell>{category.cateName}</TableCell>
               <TableCell>{category.cateDescription}</TableCell>
               <TableCell>
-                <Button onClick={() => handleViewCategory(category.id)}>Xem</Button>
+                <Button onClick={() => handleViewCategory(category.id)}>
+                  Xem
+                </Button>
                 {/* <Button
                   onClick={() => handleDeleteCategory(category.id)}
                   color="error"
@@ -162,18 +206,42 @@ const CategoryTable = () => {
             borderRadius: 2,
           }}
         >
-          {selectedCategory ? (
-            <>
-              <Typography variant="h6" component="h2">
-                Thông Tin Thể Loại
-              </Typography>
-              <Typography variant="body1">ID: {selectedCategory.id}</Typography>
-              <Typography variant="body1">Tên: {selectedCategory.name}</Typography>
-              <Typography variant="body1">Mô Tả: {selectedCategory.description}</Typography>
-            </>
-          ) : (
-            <Typography variant="body1">Đang tải...</Typography>
-          )}
+          <Typography variant="h6" component="h2" gutterBottom>
+            Chỉnh sửa Thể Loại
+          </Typography>
+
+          <TextField
+            label="ID"
+            value={selectedCategory?.id || ""}
+            fullWidth
+            margin="normal"
+            InputProps={{ readOnly: true }}
+          />
+          <TextField
+            label="Tên"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Mô tả"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            margin="normal"
+            multiline
+            rows={3}
+          />
+
+          <Box mt={2} display="flex" justifyContent="flex-end">
+            <Button onClick={handleClose} sx={{ mr: 1 }}>
+              Hủy
+            </Button>
+            <Button onClick={() => handleSave()} variant="contained" color="primary">
+              Cập nhật
+            </Button>
+          </Box>
         </Box>
       </Modal>
     </>

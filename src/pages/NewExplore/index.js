@@ -102,6 +102,7 @@ function NewExplore() {
     <div>
       <div className={cx("filterBar")}>
         <select
+        // size={6}
           value={selectOption1}
           onChange={(e) => setSelectOption1(e.target.value)}
         >

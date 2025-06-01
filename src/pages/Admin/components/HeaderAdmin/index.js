@@ -75,7 +75,7 @@ const HeaderAdmin = () => {
         {user && (
           <div className={styles.profile}>
             <img
-              src={`http://103.216.116.98:9000/book-rating/${user.userImage}`}
+              src={`http://localhost:9000/image-book-rate/${user.userImage}`}
               alt="profile"
               className={styles.profileImage}
             />

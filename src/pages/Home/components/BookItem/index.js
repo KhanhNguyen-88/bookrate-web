@@ -150,7 +150,7 @@ function BookItem({ item }) {
         <div className={cx("book")}>
           <div className={cx("thumbnail")}>
             <img onClick={()=>handleShowDetail(item.bookResponse.id)}
-              src={`http://103.216.116.98:9000/book-rating/${item.bookResponse.bookImage}`}
+              src={`http://localhost:9000/image-book-rate/${item.bookResponse.bookImage}`}
               alt="book-img"
             />
             <div className={cx("btnGroup")}>
@@ -197,12 +197,12 @@ function BookItem({ item }) {
                   {item.bookResponse.averageRating}
                 </div>
                 <span className={cx("ratings")}>
-                  {item.bookResponse.totalRating} ratings
+                  {item.feedbackResponseList != null ? item.feedbackResponseList.length : 0} ratings
                 </span>
               </div>
             </div>
             <div className={cx("award")}>
-              <span>Choice Award</span>
+              <span>Giải thưởng</span>
               <span className={cx("awardName")}>
                 {/* <Button to>{item.awards}</Button> */}
               </span>
@@ -211,18 +211,18 @@ function BookItem({ item }) {
               <p>{item.bookResponse.bookDescription}</p>
             </div>
             <div className={cx("genres")}>
-              <p>Genres</p>
+              <p>Thể loại</p>
               <strong>{renderBookGenres()}</strong>
             </div>
             <div className={cx("author")}>
-              <p>Author</p>
+              <p>Tác giả</p>
               <strong>{item.bookResponse.bookAuthor}</strong>
             </div>
           </div>
         </div>
         <div className={cx("comment")}>
           <div className={cx("commentInfo")}>
-            <Button>View more comment</Button>
+            <Button>Xem bình luận</Button>
             <Button
               leftIcon={<FontAwesomeIcon icon={faComment} />}
               onClick={() => setOpenPopup(true)}
@@ -230,7 +230,7 @@ function BookItem({ item }) {
               {item.feedbackResponseList != null
                 ? item.feedbackResponseList.length
                 : 0}{" "}
-              comment
+              Bình luận
             </Button>
             <Popup
               open={openPopup} // Kiểm soát mở popup qua trạng thái
@@ -241,7 +241,7 @@ function BookItem({ item }) {
               {(close) => (
                 <div className={cx("commentPost")}>
                   <div className={cx("headerCom")}>
-                    <h3>All Comment</h3>
+                    <h3>Tất cả đánh giá</h3>
                     <Button onClick={() => setOpenPopup(false)}>
                       <FontAwesomeIcon icon={faXmark} />
                     </Button>

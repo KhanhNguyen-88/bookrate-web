@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styles from './UserComment.module.scss';
+import React, { useState, useEffect } from "react";
+import styles from "./UserComment.module.scss";
 
 const UserComment = ({ commentData }) => {
-  const { comment, userImage, userName, rating } = commentData;
+  const { comment, userImage, userName, rating, createdAt } = commentData;
   const [imagePre, setImagePre] = useState();
   useEffect(() => {
     if (commentData && commentData.userImage) {
@@ -27,27 +27,42 @@ const UserComment = ({ commentData }) => {
           console.log("Ảnh chưa có trên cloud");
         });
     }
-  }, [commentData]); 
+  }, [commentData]);
 
   // Hàm tạo ngôi sao đánh giá
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
-        <span key={i} className={i <= rating ? styles.filledStar : styles.emptyStar}>
+        <span
+          key={i}
+          className={i <= rating ? styles.filledStar : styles.emptyStar}
+        >
           &#9733;
         </span>
       );
     }
     return stars;
   };
-
+  const date = new Date(createdAt); // hoặc một ngày cố định
+  const formattedDate = new Intl.DateTimeFormat("vi-VN", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
   return (
     <div className={styles.commentContainer}>
-      <img className={styles.userImage} src={`http://103.216.116.98:9000/book-rating/${commentData.userImage}`} alt={userName} />
+      <img
+        className={styles.userImage}
+        src={`http://localhost:9000/image-book-rate/${commentData.userImage}`}
+        alt={userName}
+      />
       <div className={styles.commentDetails}>
         <div className={styles.userInfo}>
-          <span className={styles.userName}>{userName}</span>
+          <div>
+            <span className={styles.userName}>{userName}</span>
+            <span className={styles.createdAt}>{formattedDate}</span>
+          </div>
           <div className={styles.stars}>{renderStars(rating)}</div>
         </div>
         <p className={styles.commentText}>{comment}</p>

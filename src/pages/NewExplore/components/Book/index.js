@@ -33,7 +33,7 @@ function Book({ book }) {
   return (
     <Link className={cx("wrapper")} to={`/book/${book.id}`}>
       <div className={cx("thumbnail")}>
-        <img src={`http://103.216.116.98:9000/book-rating/${book.bookImage}`} alt={book.bookName}></img>
+        <img src={`http://localhost:9000/image-book-rate/${book.bookImage}`} alt={book.bookName}></img>
       </div>
       <div className={cx("info")}>
         <h6 className={cx("title")}>{book.bookName}</h6>

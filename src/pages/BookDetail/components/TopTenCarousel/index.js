@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./TopTenCarousel.module.scss";
-import Book from "../Book";
+import Book from "../../../Ranking/Book";
 import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
@@ -20,7 +20,7 @@ const TopTenCarousel = ({ books, title }) => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 6,
+    slidesToShow: 4,
     slidesToScroll: 1,
     prevArrow: <button className={cx("arrow", "prev")}>‹</button>,
     nextArrow: <button className={cx("arrow", "next")}>›</button>,

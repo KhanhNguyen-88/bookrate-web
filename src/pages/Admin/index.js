@@ -11,12 +11,17 @@ import PieChartWithLegend from "./components/PieChartWithLegend";
 import AccessChart from "./components/AccessChart";
 import BookChart from "./components/BookChart";
 import CategoryTable from "./components/CategoryTable";
+import BookTable from "./components/BookTable";
 
 const cx = classNames.bind(styles);
 function Admin() {
   const [view, setView] = useState("dashboard");
   const [users, setUsers] = useState([]);
+  const [notification, setNotification] = useState(0);
 
+  const handleNotification = (data) =>{
+    setNotification(data.length)
+  }
   useEffect(() => {
     fetch("http://localhost:8081/api/user/get-all", {
       method: "GET",
@@ -74,7 +79,7 @@ function Admin() {
       </div>
       <div className = {cx("content")}>
         <div className = {cx("sidebar")}>
-          <SidebarAdmin onSelect={setView} />
+          <SidebarAdmin onSelect={setView} currentView={view} count={notification}/>
         </div>
         <div className={cx("mainContent")}>
           {view === "dashboard" && (
@@ -91,8 +96,9 @@ function Admin() {
           {view === "users" && (
             <UserTable users={users} onDelete={(id) => handleDelete(id)} />
           )}
-          {view === "review" && <ReviewBook />}
+          {view === "review" && <ReviewBook onSendData={handleNotification}/>}
           {view === "cate" && <CategoryTable />}
+          {view === "book" && <BookTable />}
         </div>
       </div>
     </div>

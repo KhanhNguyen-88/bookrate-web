@@ -18,6 +18,7 @@ function Profile() {
   const [openPopupFollowing, setOpenPopupFollowing] = useState(false);
   const [favoriteBooks, setFavoriteBooks] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
+  const [unPosts, setUnPosts] = useState([]);
   const [imagePre, setImagePre] = useState(null);
 
   const token = getToken();
@@ -107,6 +108,25 @@ function Profile() {
 
         const myBookResult = await myBooksResponse.json();
         setMyPosts(myBookResult.result);
+
+        //fetch my book
+        const unBooksResponse = await fetch(
+          `http://localhost:8081/api/book/get-book-unapprove/${userData.id}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!unBooksResponse.ok) {
+          throw new Error(
+            `Failed to fetch books. Status: ${unBooksResponse.status}`
+          );
+        }
+
+        const unBookResult = await unBooksResponse.json();
+        setUnPosts(unBookResult.result);
         
       } catch (error) {
         console.error("Error fetching profile data:", error);
@@ -181,7 +201,7 @@ function Profile() {
   ) : (
     <div className={cx("wrapper")}>
       <div className={cx("wrapperUserInfo")}>
-        <img src={`http://103.216.116.98:9000/book-rating/${profileData.userImage}`} alt="avatar" />
+        <img src={`http://localhost:9000/image-book-rate/${profileData.userImage}`} alt="avatar" />
         <div>
           <div className={cx("action")}>
             <h2 className={cx("userName")}>{profileData.userName}</h2>
@@ -250,7 +270,7 @@ function Profile() {
       <div className={cx("wrapperMoreInfo")}>
         <div className={cx("lineAction")}></div>
         <ul className={cx("menu")}>
-          <ProfileMenu dataLove={favoriteBooks} dataPost={myPosts}/>
+          <ProfileMenu dataLove={favoriteBooks} dataPost={myPosts} unPost={unPosts}/>
         </ul>
       </div>
     </div>

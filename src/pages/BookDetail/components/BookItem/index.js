@@ -162,7 +162,7 @@ function BookItem({ item, feedBackList, percent }) {
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
-        <img src={`http://103.216.116.98:9000/book-rating/${item.bookImage}`} alt="book-img" />
+        <img src={`http://localhost:9000/image-book-rate/${item.bookImage}`} alt="book-img" />
         <div className={cx("btnGroup")}>
           {isLike ? (
             <div className={cx("btnLiked")}>

@@ -5,7 +5,7 @@ import style from "./ReviewBook.module.scss";
 
 const cx = classNames.bind(style);
 
-function ReviewBook() {
+function ReviewBook({onSendData}) {
   const [books, setBooks] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
   const [booksPerPage] = useState(2); // Số sách mỗi trang
@@ -22,6 +22,7 @@ function ReviewBook() {
         const data = JSON.parse(event.data);
         if (Array.isArray(data)) {
           setBooks(data);
+          onSendData(data);
         } else {
           console.error("Dữ liệu không hợp lệ hoặc không phải mảng", data);
         }
@@ -90,7 +91,7 @@ function ReviewBook() {
           </div>
         </div>
       ) : (
-        <div className={cx("noneContent")}>Không có sách cần duyệt</div>
+        <div className={cx("noneContent")}>Đang tải...</div>
       )}
     </div>
   );
