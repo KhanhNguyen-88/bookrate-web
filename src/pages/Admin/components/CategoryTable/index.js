@@ -11,17 +11,29 @@ import {
   Typography,
   TablePagination,
   TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
+import axios from "axios";
 
 const CategoryTable = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState(0); // Trang hiện tại (bắt đầu từ 0)
-  const [rowsPerPage, setRowsPerPage] = useState(5); // Số dòng hiển thị trên mỗi trang
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(6);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [id, setId] = useState(0);
+
+  const [openAddCategoryDialog, setOpenAddCategoryDialog] = useState(false);
+  const [newCategory, setNewCategory] = useState({
+    cateName: "",
+    cateDescription: "",
+    cateImage: "",
+  });
 
   useEffect(() => {
     fetchCategories();
@@ -29,13 +41,10 @@ const CategoryTable = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:8081/api/category/get-all`
-      );
+      const response = await fetch(`http://localhost:8081/api/category/get-all`);
       const data = await response.json();
-
       if (data.code === 0) {
-        setCategories(data.result); // Lưu danh sách thể loại
+        setCategories(data.result);
       } else {
         alert("Không thể tải danh sách thể loại.");
       }
@@ -51,13 +60,12 @@ const CategoryTable = () => {
         `http://localhost:8081/api/category/info-detail/${categoryId}`
       );
       const data = await response.json();
-
       if (data.code === 200) {
         setSelectedCategory(data.result);
-        setName(data.result.cateName); // Lưu thông tin thể loại vào state
-        setDescription(data.result.cateDescription); 
-        setId(data.result.id);// Lưu thông tin thể loại vào state
-        setOpen(true); // Mở Modal
+        setName(data.result.cateName);
+        setDescription(data.result.cateDescription);
+        setId(data.result.id);
+        setOpen(true);
       } else {
         alert("Không thể tải thông tin thể loại.");
       }
@@ -66,7 +74,7 @@ const CategoryTable = () => {
       alert("Đã xảy ra lỗi khi lấy thông tin thể loại.");
     }
   };
-  //
+
   const handleSave = async () => {
     try {
       const response = await fetch(
@@ -85,7 +93,6 @@ const CategoryTable = () => {
         }
       );
       const data = await response.json();
-
       if (data.code === 200) {
         alert("Update thành công.");
       } else {
@@ -97,7 +104,7 @@ const CategoryTable = () => {
     }
     handleClose();
   };
-  //
+
   const handleDeleteCategory = async (categoryId) => {
     const confirmDelete = window.confirm(
       "Bạn có chắc chắn muốn xóa thể loại này?"
@@ -111,12 +118,11 @@ const CategoryTable = () => {
           }
         );
         const data = await response.json();
-
         if (data.code === 200) {
           alert("Xóa thành công!");
           setCategories((prevCategories) =>
             prevCategories.filter((category) => category.id !== categoryId)
-          ); // Xóa thể loại khỏi danh sách
+          );
         } else {
           alert("Xóa không thành công.");
         }
@@ -128,12 +134,12 @@ const CategoryTable = () => {
   };
 
   const handlePageChange = (event, newPage) => {
-    setPage(newPage); // Cập nhật trang hiện tại
+    setPage(newPage);
   };
 
   const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10)); // Cập nhật số dòng mỗi trang
-    setPage(0); // Reset về trang đầu tiên
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const handleClose = () => {
@@ -141,7 +147,34 @@ const CategoryTable = () => {
     setSelectedCategory(null);
   };
 
-  // Lấy dữ liệu của trang hiện tại
+  const handleOpenAddDialog = () => {
+    setNewCategory({ cateName: "", cateDescription: "", cateImage: "" });
+    setOpenAddCategoryDialog(true);
+  };
+
+  const handleCloseAddDialog = () => {
+    setOpenAddCategoryDialog(false);
+  };
+
+  const handleAddCategory = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:8081/api/category/add",
+        newCategory
+      );
+      if (response.data.code === 200 || response.data.code === 0) {
+        alert("Thêm thể loại thành công!");
+        fetchCategories();
+        setOpenAddCategoryDialog(false);
+      } else {
+        alert("Thêm thể loại thất bại!");
+      }
+    } catch (error) {
+      console.error("Lỗi khi thêm thể loại mới:", error);
+      alert("Đã xảy ra lỗi khi thêm thể loại.");
+    }
+  };
+
   const paginatedCategories = categories.slice(
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
@@ -149,6 +182,12 @@ const CategoryTable = () => {
 
   return (
     <>
+      <Box display="flex" justifyContent="flex-end" mb={2}>
+        <Button variant="contained" color="success" onClick={handleOpenAddDialog}>
+          Thêm Thể Loại
+        </Button>
+      </Box>
+
       <Table>
         <TableHead>
           <TableRow>
@@ -168,10 +207,7 @@ const CategoryTable = () => {
                 <Button onClick={() => handleViewCategory(category.id)}>
                   Xem
                 </Button>
-                {/* <Button
-                  onClick={() => handleDeleteCategory(category.id)}
-                  color="error"
-                >
+                {/* <Button onClick={() => handleDeleteCategory(category.id)} color="error">
                   Xóa
                 </Button> */}
               </TableCell>
@@ -180,18 +216,16 @@ const CategoryTable = () => {
         </TableBody>
       </Table>
 
-      {/* Phân trang */}
       <TablePagination
         component="div"
-        count={categories.length} // Tổng số thể loại
+        count={categories.length}
         page={page}
         onPageChange={handlePageChange}
         rowsPerPage={rowsPerPage}
         onRowsPerPageChange={handleRowsPerPageChange}
-        rowsPerPageOptions={[5, 10, 25]} // Các tùy chọn số dòng mỗi trang
+        rowsPerPageOptions={[5, 10, 25]}
       />
 
-      {/* Modal Hiển Thị Thông Tin Thể Loại */}
       <Modal open={open} onClose={handleClose}>
         <Box
           sx={{
@@ -238,12 +272,44 @@ const CategoryTable = () => {
             <Button onClick={handleClose} sx={{ mr: 1 }}>
               Hủy
             </Button>
-            <Button onClick={() => handleSave()} variant="contained" color="primary">
+            <Button onClick={handleSave} variant="contained" color="primary">
               Cập nhật
             </Button>
           </Box>
         </Box>
       </Modal>
+
+      <Dialog open={openAddCategoryDialog} onClose={handleCloseAddDialog}>
+        <DialogTitle>Thêm Thể Loại Mới</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Tên thể loại"
+            value={newCategory.cateName}
+            onChange={(e) =>
+              setNewCategory({ ...newCategory, cateName: e.target.value })
+            }
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Mô tả"
+            value={newCategory.cateDescription}
+            onChange={(e) =>
+              setNewCategory({ ...newCategory, cateDescription: e.target.value })
+            }
+            fullWidth
+            multiline
+            rows={3}
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseAddDialog}>Hủy</Button>
+          <Button onClick={handleAddCategory} variant="contained" color="primary">
+            Thêm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };

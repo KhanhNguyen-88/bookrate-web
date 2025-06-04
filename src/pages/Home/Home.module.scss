@@ -1,50 +1,67 @@
-.wrapper{
+.wrapper {
     width: 100%;
     display: flex;
     flex-direction: column;
     background-color: transparent;
 }
-.containerBook{
-    width: 550px;
+
+.containerBook {
+    height: 100vh;
+    width: 650px;
     margin: 8px auto 8px;
     background: white;
     border-radius: 10px;
     height: fit-content;
-    box-shadow: 0px 0px 4px gray;
+    // box-shadow: 0px 0px 4px gray;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: white;
+
+    >div {
+        >div {
+            >div {
+                margin: 20px auto;
+            }
+        }
+    }
 }
-.bar{
+
+.bar {
     width: 90%;
     margin: 0 auto;
 }
-.actionBar{
+
+.actionBar {
     border: 1px solid var(--special-color);
     border-left: none;
     border-right: none;
 }
-.subBar{
+
+.subBar {
     display: flex;
     justify-content: end;
-    li{
+
+    li {
         padding: 0 4px;
         font-size: 12px;
         color: gray;
 
     }
 }
-.comment{
+
+.comment {
     display: flex;
     flex-direction: column;
 }
-.viewMoreCom{
+
+.viewMoreCom {
     display: flex;
     justify-content: space-between;
     margin: 10px 0;
-    p{
+
+    p {
         color: gray;
         font-size: 14px;
     }
 }
-.firstCom{
 
-}
+.firstCom {}

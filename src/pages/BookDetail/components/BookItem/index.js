@@ -10,6 +10,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import RateChartItem from "../RateChartItem";
 import UserComment from "../../../Home/components/UserComment";
 import { getToken } from "../../../../services/localStorageService";
+import CommentRatingForm from "../../../Home/components/CommetRatingForm";
 
 const cx = classNames.bind(style);
 function BookItem({ item, feedBackList, percent }) {
@@ -158,7 +159,6 @@ function BookItem({ item, feedBackList, percent }) {
       });
     setIsLike(false);
   };
-
   return (
     <div className={cx("book")}>
       <div className={cx("thumbnail")}>
@@ -263,6 +263,8 @@ function BookItem({ item, feedBackList, percent }) {
             )}
           </div>
         </div>
+        {/* <UnderLine></UnderLine> */}
+        <CommentRatingForm bookId={item.id}></CommentRatingForm>
         <UnderLine></UnderLine>
         {feedBackList !== null ? (
           <div className={cx("allComments")}>

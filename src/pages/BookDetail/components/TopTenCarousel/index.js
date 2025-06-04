@@ -12,7 +12,7 @@ const TopTenCarousel = ({ books, title }) => {
   const renderBooks = () =>
     books.map((item, index) => (
       <div key={index} className={cx("carouselItem")}>
-        <Book book={item} rank={index + 1} />
+        <Book book={item} />
       </div>
     ));
 
@@ -20,7 +20,7 @@ const TopTenCarousel = ({ books, title }) => {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 4,
+    slidesToShow: 6,
     slidesToScroll: 1,
     prevArrow: <button className={cx("arrow", "prev")}>‹</button>,
     nextArrow: <button className={cx("arrow", "next")}>›</button>,

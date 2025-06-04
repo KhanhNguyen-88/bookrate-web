@@ -123,7 +123,7 @@ function CreatePost({ handleClose }) {
       !bookDescription.trim() ||
       !publishedDate ||
       !bookFormat.trim() ||
-      !bookSaleLink.trim() ||
+      // !bookSaleLink.trim() ||
       !bookAuthor.trim() ||
       !postImage ||
       selectedCategories.length === 0

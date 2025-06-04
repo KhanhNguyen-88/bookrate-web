@@ -222,9 +222,9 @@ function Header({ userData, reRender }) {
         {/* <span className={cx("loadIcon")}>
           <FontAwesomeIcon icon={faSpinner} />
         </span> */}
-        {/* { searchTerm.length > 0 ? (<span className={cx("clearIcon")} onClick={handleClearSearch}>
+        { suggestions.length > 0 || (searchTerm !== undefined && searchTerm !== "") ? (<span className={cx("clearIcon")} onClick={handleClearSearch}>
           <FontAwesomeIcon icon={faXmarkCircle} />
-        </span>) : <p></p>} */}
+        </span>) : <p></p>}
       </div>
       <div className={cx("action")}>
         {userData ? (

@@ -2,5 +2,15 @@
   margin: 10px 20px;
 }
 .guess{
-  margin-top: 100px;
+  position: absolute;
+  display: flex;
+  h4{
+    width: 150px;
+  }
+  >div{
+    h5{
+      float: right;
+      margin-right: 50px;
+    }
+  }
 }

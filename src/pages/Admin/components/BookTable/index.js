@@ -100,7 +100,7 @@ const BookTable = () => {
               <TableCell>{book.id}</TableCell>
               <TableCell>{book.bookName}</TableCell>
               <TableCell>{book.bookAuthor}</TableCell>
-              <TableCell>{book.createdAt}</TableCell>
+              <TableCell>{new Date(book.createdAt).toLocaleString("vi-VN")}</TableCell>
               <TableCell>
                 <Button onClick={() => handleViewBook(book)}>Xem</Button>
                 <Button onClick={() => onDelete(book.id)} color="error">
